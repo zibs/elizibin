@@ -3,4 +3,4 @@
 ##### simple portfolio site of recent projects
 
 ![Screenshot
-](https://raw.github.com/zibs/bartleby-review/master/img/site.png)
+](https://raw.github.com/zibs/elizibin/master/img/site.png)
