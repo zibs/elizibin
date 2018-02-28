@@ -121,14 +121,14 @@ p {
 }
 h5 {
   font-family: 'Roboto Mono', monospace;
-  text-decoration: underline;
-  margin-bottom: 0;
 }
 h6 {
   font-family: 'Roboto Mono', monospace;
 }
 h3 {
-  font-family: 'Abril Fatface', cursive;
+  font-family: cursive;
+  text-decoration: underline;
+  font-weight: 900;
   margin-bottom: 15px;
   margin-top: 35px;
 }

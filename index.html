@@ -5,14 +5,14 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55771414-15"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
+        window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments)
-    };
-    gtag('js', new Date());
+        function gtag() {
+            dataLayer.push(arguments)
+        };
+        gtag('js', new Date());
 
-    gtag('config', 'UA-55771414-15');
+        gtag('config', 'UA-55771414-15');
 
     </script>
     <meta charset="utf-8">
@@ -24,7 +24,8 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -34,128 +35,45 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <main class="container">
-        <header class="col-sm-8 col-12 mx-auto ">
+        <header class="col-sm-10 col-md-6 col-12 mx-auto ">
             <h1>Eli Zibin</h1>
             <h6>Mobile (React-Native) and Web (Ruby on Rails) Developer</h6>
         </header>
-        <article class="react-native col-sm-8 col-12 mx-auto">
-            <h3>React Native Apps</h3>
-            <section class="mobile">
-                <h5>
-                    <a href="https://expo.io/@elizibin/words">Words</a>
-                </h5>
-                <p><a href="https://github.com/zibs/words-app">code</a></p>
-                <p>I generally look up and write down every word I come across that I don't know. The "Words" app takes all these words and serializes them out to a React Native app from a Rails server. This app allows for quick and easy lookups of definitions, and also provides a little quiz section as a way for me to memorize and familiarize myself with these words further. Give it a shot!</p>
-                <p>This app was built in conjunction with a talk I gave on <a href="https://github.com/infinitered/reactotron">Reactotron</a> at the React-Native Vancouver meetup this autumn. It's built using <a href="https://expo.io/">Expo</a> and uses <a href="https://github.com/reactjs/redux">redux</a>, <a href="https://github.com/redux-saga/redux-saga">redux-saga</a>, and <a href="https://github.com/react-community/react-navigation">react-navigation</a>.</p>
-            </section>
-            <section class="mobile">
-                <h5>
-                    <a href="https://expo.io/@elizibin/tech-talk">Tech Talk</a>
-                </h5>
-                <p><a href="https://github.com/zibs/simple-rn-animations">code</a></p>
-                <p>This simple app supplemented a tech talk I gave at work about animations in React Native. It's not meant to do much other than showcase some of the animation possibilties that React Native harbours. Only one third-party animation library was brought in for this app, otherwise it focuses on <a href="https://facebook.github.io/react-native/docs/layoutanimation.html">Layout Animation</a>, and <a href="https://facebook.github.io/react-native/docs/animated.html">Animated</a>. This app was also built using <a href="https://expo.io/">Expo</a>.</p>
-            </section>
+        <article class="col-sm-10 col-md-6 col-12 mx-auto">
+            <h3>About</h3>
+            <p>Hi, I'm Eli. I'm a mobile (React-Native) and web (Ruby on Rails) developer currently based in Vancouver, BC.</p>
+            <p>I'm currently building React Native apps for
+                <a href="http://www.ycombinator.com/">Y Combinator</a> funded companies. If you'd like to discuss app development or React Native with me, please
+                <a href="mailto:eli@elizibin.com">get in touch!</a>
+            </p>
+            <p>
+                Previously, I worked for
+                <a href="http://laterolabs.com/">Latero Labs</a> building apps for businesses in FinTech and other industries. Outside of tech I enjoy reading,
+                writing, and biking. Feel free to follow or connect with me on
+                <a href="https://twitter.com/elizibin">twitter</a>.
+            </p>
         </article>
-        <article class="rails col-sm-8 col-12 mx-auto">
-            <h3>Ruby on Rails Apps</h3>
-            <section class="rails">
-                <h5>
-                    <a href="https://charcuterie.party">Charcuterie</a>
-                </h5>
-                <p><a href="https://github.com/zibs/charcuterie">code</a></p>
-                <p>I'm the web developer and a co-editor for the Charcuterie publication.</p>
-                <p>I've built its initial web presence as a Ruby on Rails application so that I could take advantage of the amazing open-source gem <a href="http://alongslide.com/">alongslide</a> built by the folks at <a href="https://www.canopycanopycanopy.com/">Triple Canopy</a> to create memorable and unique online reading experiences. Take a look at one of the essays of this publication for an example of how its being used!</p>
-                <p>Charcuterie strives to provide a forum for experimental writing and informed polemics without pedantry. It assembles a polyphony of inquiry and documents the messy landscape of opinion and critique that unravels in close proximity to where we work, live and make art in Vancouver.</p>
-            </section>
-            <section class="rails">
-                <h5>
-                    <a href="https://abcdefghijklnmoqprstuvwxyz.herokuapp.com/">abcdefghijklnmoqprstuvwxyz</a>
-                </h5>
-                <p><a href="https://github.com/zibs/abcdefghijklnmoqprstuvxyz">code</a></p>
-                <p>abcdefghijklnmoqprstuvwxyz is a site for poetry reviews and weblog on contemporary poetics. Currently updated infrequently, I used to design, develop, and write poetry reviews bi-weekly. Having it as a Ruby on Rails app made it easier to automate certain tasks while building it - dealing with assets, reusing partials, generating pages - as well as integrating a mailing list, webscraping (various poetry-related things), and to leave room for future additions such as an <code>ActionCable</code> chat section or something.</p>
-            </section>
-            <!--  ace? -->
-            <section class="rails">
-                <h5>
-                    <a href="http://scanpublication.com/">Scan Publication</a>
-                </h5>
-                <p><a href="https://github.com/zibs/scan-publication">code</a></p>
-                <p>Scan is a contemporary art publication based in Winnipeg, MB run by students at the University of Winnipeg. This Ruby on Rails CMS makes up the online portion of their publication, and allows the students to add issues and essays to the site whenever they please.</p>
-                <p>It's a very simple <code>CRUD</code> app, but it gets the job done.</p>
-            </section>
-        </article>
-        <article class="static col-sm-8 col-12 mx-auto">
-            <h3>Static Sites</h3>
-            <section class="site">
-                <h5>
-                    <a href="http://bartleby.reviews/">Bartleby Review</a>
-                </h5>
-                <p><a href="https://github.com/zibs/bartleby-review">code</a></p>
-                <p>I co-designed and developed the website of the Bartleby publication - a free and occasional leaflet of criticism and other writing published in Vancouver, Canada.</p>
-                <p>This is a simple site using Bootstrap and jQuery/UI to emulate the experience of being able to sift through numerous leaflets, as if they were strewn across a flat surface.</p>
-            </section>
-            <section class="site">
-                <h5>
-                    <a href="http://vickylum.com/">Victoria Lum</a>
-                </h5>
-                <p><a href="https://github.com/zibs/victoria-lum">code</a></p>
-                <p>Victoria Lum is a graphic designer based in Vancouver, Canada, and this is her website.</p>
-            </section>
-            <section class="site">
-                <h5>
-                    <a href="https://herenortherepodcast.com">Here nor There Podcast</a>
-                </h5>
-                <p><a href="https://github.com/zibs/here-nor-there">code</a></p>
-                <p>Here nor There is a podcast series featuring emerging artists/ musicians/writers/ curators/organizers/ et al. based in Vancouver, BC, Canada on unceded Coast Salish, Musqueam, Squamish, Sto:lo and Tsleil-Waututh territories. It is hosted and produced by Gabi Dao, an artist in Vancouver.</p>
-            </section>
-            <section class="site">
-                <h5>
-                    <a href="http://graemewahn.com/">Graeme Wahn</a>
-                </h5>
-                <p><a href="https://github.com/zibs/Graeme-Wahn">code</a></p>
-                <p>An online portfolio of local Vancouver photographer and visual artist Graeme Wahn.</p>
-            </section>
-            <section class="site">
-                <h5>
-                    <a href="http://cdemontreuil.com/">Catherine de Montreuil</a>
-                </h5>
-                <p><a href="https://github.com/zibs/C-deMontreuil/tree/gh-pages">code</a></p>
-                <p>This is an online portfolio of Vancouver visual artist Catherine de Montreuil.</p>
-            </section>
-            <section class="site">
-                <h5>
-                    <a href="https://iwastryingtodescribeyoutosomeone.netlify.com/iwastryingtodescribeyoutosomeone">I Was Trying To Describe You to Someone + Anticipating Distance</a>
-                </h5>
-                <p><a href="https://github.com/zibs/wahngraeme/tree/gh-pages">code</a></p>
-                <p>I Was Trying to Describe You To Someone + Anticipating Distance is a static site which documents the two group exhibitions of Vancouver and Winnipeg artists.</p>
-            </section>
-            <section class="site">
-                <h5>
-                    <a href="https://ignis-fatuus.netlify.com/">Ignis Fatuus</a>
-                </h5>
-                <p><a href="https://github.com/zibs/ignis-fatuus/tree/gh-pages">code</a></p>
-                <p>Ignis Fatuus is the promotional website and fictional blog of Hermes, the neurotic scientist from Ingrid Olauson's "Fort Eff" - a theatrical production staged in Vancouver in June 2015.</p>
-            </section>
-        </article>
-        <article class="col-sm-8 col-12 mx-auto">
+
+        <article class="col-sm-10 col-md-6 col-12 mx-auto">
             <h3>Talks</h3>
-            <h5><a href="https://docs.google.com/presentation/d/e/2PACX-1vTgGd7kwZkIC10FXFiLP2FwfJLCJtdhDSca6lF61V9gQBZFFp0PQKywl78pCXxtwpg3RVNFwbC2-pQm/pub?start=false&loop=false&delayms=60000">Developing React Native Apps with Reactotron</a></h5>
-            <p>I gave a talk on <a href="https://github.com/infinitered/reactotron">Reactotron</a> at the React-Native Vancouver meetup this autumn.</p>
+            <p>
+                <a href="https://docs.google.com/presentation/d/e/2PACX-1vTgGd7kwZkIC10FXFiLP2FwfJLCJtdhDSca6lF61V9gQBZFFp0PQKywl78pCXxtwpg3RVNFwbC2-pQm/pub?start=false&loop=false&delayms=60000">Developing React Native Apps with Reactotron</a>
+            </p>
+            <p>I gave a talk on debugging and developing apps with
+                <a href="https://github.com/infinitered/reactotron">Reactotron</a> at the React-Native Vancouver meetup this autumn.</p>
         </article>
-        <article class="col-sm-8 col-12 mx-auto">
+        <article class="col-sm-10 col-md-6 col-12 mx-auto">
             <h3>Open Source</h3>
-            <p>Contributor to <a href="https://github.com/naoufal/react-native-touch-id">React-Native Touch ID</a>.</p>
+            <p>Contributor to
+                <a href="https://github.com/naoufal/react-native-touch-id">React-Native Touch ID</a>.</p>
             <p>
             </p>
         </article>
-        <article class="col-sm-8 col-12 mx-auto">
-            <h3>About</h3>
-            <p>Hi, I'm Eli. I'm a mobile (React-Native) and web (Ruby on Rails) developer currently based in Vancouver, BC. I work for <a href="http://laterolabs.com/">Latero Labs</a> building apps for businesses in FinTech and other industries. Outside of tech I enjoy reading, writing, and biking. Feel free to follow or connect with me on <a href="https://twitter.com/elizibin">twitter</a> or message me at <a href="mailto:eli@elizibin.com">eli@elizibin.com</a></p>
-        </article>
+
     </main>
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script>
-    window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
 
     </script>
     <script src="js/plugins.js"></script>
