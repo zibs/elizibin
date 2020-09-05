@@ -98,7 +98,7 @@ textarea {
 body {
     height: 100%;
     width: 100%;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 main {
     padding-top: 25px;
@@ -107,30 +107,31 @@ main {
 
 h1 {
     letter-spacing: 1.5px;
-    font-family: 'Great Vibes', cursive;
+    font-family: "Great Vibes", cursive;
     font-size: 4em;
     display: inline-block;
     border-bottom: 5px solid rgba(0, 111, 255, 0.9);
     margin-bottom: 25px;
 }
 header {
-    margin-bottom: 35px;
+    margin-bottom: 45px;
 }
 p {
-    font-family: 'Roboto Mono', monospace;
+    font-family: "Roboto Mono", monospace;
+    margin-bottom: 15px;
 }
 h5 {
-    font-family: 'Roboto Mono', monospace;
+    font-family: "Roboto Mono", monospace;
 }
 h6 {
-    font-family: 'Roboto Mono', monospace;
+    font-family: "Roboto Mono", monospace;
 }
 h3 {
     font-family: cursive;
     text-decoration: underline;
     font-weight: 900;
     margin-bottom: 15px;
-    margin-top: 35px;
+    margin-top: 45px;
 }
 a {
     color: rgb(0, 111, 255);
@@ -217,7 +218,7 @@ a:active {
 
 .clearfix:before,
 .clearfix:after {
-    content: ' '; /* 1 */
+    content: " "; /* 1 */
     display: table; /* 2 */
 }
 
@@ -267,11 +268,11 @@ a:active {
     }
 
     a[href]:after {
-        content: ' (' attr(href) ')';
+        content: " (" attr(href) ")";
     }
 
     abbr[title]:after {
-        content: ' (' attr(title) ')';
+        content: " (" attr(title) ")";
     }
 
     /*
@@ -279,9 +280,9 @@ a:active {
      * or use the `javascript:` pseudo protocol
      */
 
-    a[href^='#']:after,
-    a[href^='javascript:']:after {
-        content: '';
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
     }
 
     pre,
