@@ -744,4 +744,5 @@ __d(function(g,r,i,a,m,e,d){'use strict';Object.defineProperty(e,"__esModule",{v
 __r(102);
 __r(0);
 //# sourceMappingURL=http://127.0.0.1:19001/index.map?dev=false&minify=true&hot=false&platform=android
-//# sourceURL=http://127.0.0.1:19001/index.bundle?dev=false&minify=true&hot=false&platform=android
+
+//# sourceMappingURL=android-a63e644836d42c04764797d4abd3373f.map
