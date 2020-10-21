@@ -745,6 +745,5 @@ __d(function(g,r,i,a,m,e,d){"use strict";var n=this&&this.__spreadArrays||functi
 __d(function(g,r,i,a,m,e,d){var t=r(d[0]),n=r(d[1]);Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(){return l.default.createElement(u.View,{style:s.container},l.default.createElement(u.Text,null,"Open up App.tsx to start working on your app!"),l.default.createElement(u.Pressable,{onPress:function(){throw new Error("My gray js updated Sentry error!")}},l.default.createElement(u.Text,null,"Crash JS")),l.default.createElement(u.Pressable,{onPress:function(){o.nativeCrash()}},l.default.createElement(u.Text,null,"Crash Native")))};var l=n(r(d[2])),u=r(d[3]),o=t(r(d[4]));var s=u.StyleSheet.create({container:{flex:1,backgroundColor:"gray",alignItems:'center',justifyContent:'center'}})},739,[2,1,64,14,673]);
 __r(102);
 __r(0);
-//# sourceMappingURL=http://127.0.0.1:19001/index.map?dev=false&minify=true&hot=false&platform=ios
 
-//# sourceMappingURL=ios-2b7b937b178c2e418c10e9350dc9a174.map
+//# sourceMappingURL=main.jsbundle.map
