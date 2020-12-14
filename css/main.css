@@ -94,11 +94,26 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
+:root {
+    --primary: rgba(0, 111, 255, 0.9);
+}
 body {
     height: 100%;
     width: 100%;
     font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.9rem;
+    background-color: rgb(248, 246, 246);
+    color: rgb(0, 0, 0);
+}
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        --primary: rgba(0, 255, 136, 0.9);
+    }
+    body {
+        background-color: rgb(7, 7, 7);
+        color: rgb(238, 234, 234);
+    }
 }
 main {
     padding-top: 25px;
@@ -110,15 +125,15 @@ h1 {
     font-family: "Great Vibes", cursive;
     font-size: 4em;
     display: inline-block;
-    border-bottom: 5px solid rgba(0, 111, 255, 0.9);
+    border-bottom: 5px solid var(--primary);
     margin-bottom: 25px;
 }
 header {
-    margin-bottom: 45px;
+    margin-bottom: 60px;
 }
 p {
     font-family: "Roboto Mono", monospace;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
 }
 h5 {
     font-family: "Roboto Mono", monospace;
@@ -130,20 +145,23 @@ h3 {
     font-family: cursive;
     text-decoration: underline;
     font-weight: 900;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     margin-top: 45px;
 }
 a {
-    color: rgb(0, 111, 255);
+    font-weight: bold;
+    color: var(--primary);
 }
 a:hover {
-    color: rgb(0, 111, 255);
+    color: var(--primary);
 }
 
 a:visited {
+    color: var(--primary);
 }
 
 a:active {
+    color: var(--primary);
 }
 
 .rails,
