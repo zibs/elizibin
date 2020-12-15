@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: safari >= 4
+*/
+
 /*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
 
 /*
@@ -23,11 +30,6 @@ html {
  * These selection rule sets have to be separate.
  * Customize the background color to match your design.
  */
-
-::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
-}
 
 ::selection {
     background: #b3d4fc;
@@ -96,6 +98,7 @@ textarea {
    ========================================================================== */
 :root {
     --primary: rgba(0, 111, 255, 0.9);
+    --secondary: rgba(255, 0, 255, 0.9);
 }
 body {
     height: 100%;
@@ -109,6 +112,7 @@ body {
 @media screen and (prefers-color-scheme: dark) {
     :root {
         --primary: rgba(0, 255, 136, 0.9);
+        --secondary: rgba(255, 230, 0, 0.9);
     }
     body {
         background-color: rgb(7, 7, 7);
@@ -125,8 +129,25 @@ h1 {
     font-family: "Great Vibes", cursive;
     font-size: 4em;
     display: inline-block;
-    border-bottom: 5px solid var(--primary);
     margin-bottom: 25px;
+}
+.underline {
+    height: 5px;
+
+    width: 100%;
+    display: block;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(var(--primary)),
+        to(var(--secondary))
+    );
+    background-image: linear-gradient(
+        to right,
+        var(--primary),
+        var(--secondary)
+    );
 }
 header {
     margin-bottom: 60px;
@@ -151,6 +172,32 @@ h3 {
 a {
     font-weight: bold;
     color: var(--primary);
+    /* Fallback: Set a background color. */
+    background-color: #ca4246;
+
+    /* Create the gradient. */
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(var(--primary)),
+        to(var(--secondary))
+    );
+    background-image: linear-gradient(
+        to right,
+        var(--primary),
+        var(--secondary)
+    );
+
+    /* Set the background size and repeat properties. */
+    background-size: 100%;
+    background-repeat: repeat;
+
+    /* Use the text as a mask for the background. */
+    /* This will show the gradient as a text color rather than element bg. */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 a:hover {
     color: var(--primary);
@@ -276,6 +323,7 @@ a:active {
         background: transparent !important;
         color: #000 !important; /* Black prints faster:
                                    http://www.sanbeiji.com/archives/953 */
+        -webkit-box-shadow: none !important;
         box-shadow: none !important;
         text-shadow: none !important;
     }
