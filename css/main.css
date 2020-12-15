@@ -170,10 +170,11 @@ h3 {
     margin-top: 45px;
 }
 a {
+    display: inline-block;
     font-weight: bold;
     color: var(--primary);
     /* Fallback: Set a background color. */
-    background-color: #ca4246;
+    background-color: white;
 
     /* Create the gradient. */
     background-image: -webkit-gradient(
@@ -195,8 +196,8 @@ a {
 
     /* Use the text as a mask for the background. */
     /* This will show the gradient as a text color rather than element bg. */
-    -webkit-background-clip: text;
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 a:hover {
