@@ -1,39 +1,6 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
     <head>
-        <!-- Google Tag Manager -->
-        <script>
-            (function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({
-                    "gtm.start": new Date().getTime(),
-                    event: "gtm.js",
-                });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s),
-                    dl = l != "dataLayer" ? "&l=" + l : "";
-                j.async = true;
-                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })(window, document, "script", "dataLayer", "GTM-TWX3DXV");
-        </script>
-        <!-- End Google Tag Manager -->
-        <script src="https://www.googleoptimize.com/optimize.js?id=OPT-NGBXTCX"></script>
-        <!-- Global Site Tag (gtag.js) - Google Analytics -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-55771414-15"
-        ></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-
-            gtag("config", "UA-55771414-15");
-        </script>
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>Eli Zibin</title>
@@ -48,44 +15,72 @@
             href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="css/normalize.css" />
-        <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-            integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="css/main.css" />
-        <script defer src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'media',
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'abril': ['"Abril Fatface"', 'cursive'],
+                            'great-vibes': ['"Great Vibes"', 'cursive'],
+                            'roboto-mono': ['"Roboto Mono"', 'monospace'],
+                        },
+                        colors: {
+                            primary: {
+                                light: 'rgba(0, 111, 255, 0.9)',
+                                dark: 'rgba(0, 255, 136, 0.9)',
+                            },
+                            secondary: {
+                                light: 'rgba(255, 0, 255, 0.9)',
+                                dark: 'rgba(255, 230, 0, 0.9)',
+                            }
+                        }
+                    },
+                },
+            }
+        </script>
+        <style>
+            /* Custom styles for gradient text and underline */
+            .gradient-text {
+                background: linear-gradient(to right, rgba(0, 111, 255, 0.9), rgba(255, 0, 255, 0.9));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+            
+            .gradient-underline {
+                height: 5px;
+                width: 100%;
+                background: linear-gradient(to right, rgba(0, 111, 255, 0.9), rgba(255, 0, 255, 0.9));
+            }
+
+            @media (prefers-color-scheme: dark) {
+                .gradient-text {
+                    background: linear-gradient(to right, rgba(0, 255, 136, 0.9), rgba(255, 230, 0, 0.9));
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    color: transparent;
+                }
+                
+                .gradient-underline {
+                    background: linear-gradient(to right, rgba(0, 255, 136, 0.9), rgba(255, 230, 0, 0.9));
+                }
+            }
+        </style>
     </head>
 
-    <body>
-        <!-- Google Tag Manager (noscript) -->
-        <noscript
-            ><iframe
-                src="https://www.googletagmanager.com/ns.html?id=GTM-TWX3DXV"
-                height="0"
-                width="0"
-                style="display: none; visibility: hidden"
-            ></iframe
-        ></noscript>
-        <!-- End Google Tag Manager (noscript) -->
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">
-                You are using an <strong>outdated</strong> browser. Please
-                <a href="http://browsehappy.com/">upgrade your browser</a> to
-                improve your experience.
-            </p>
-        <![endif]-->
-        <main class="container">
-            <header class="col-sm-10 col-md-8 col-12 mx-auto">
-                <h1>
+    <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+        <main class="container mx-auto px-4 py-8">
+            <header class="max-w-3xl mx-auto mb-16">
+                <h1 class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider">
                     Eli Zibin
-                    <span class="underline"></span>
+                    <span class="gradient-underline absolute bottom-0 left-0"></span>
                 </h1>
             </header>
-            <article class="col-sm-10 col-md-8 col-12 mx-auto">
-                <p>
+            <article class="max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
                     Hi, I'm Eli. I'm a software developer working remotely from
                     Vancouver, BC.
                 </p>
