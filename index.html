@@ -19,70 +19,102 @@
         <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
         <script>
             tailwind.config = {
-                darkMode: 'media',
+                darkMode: "media",
                 theme: {
                     extend: {
                         fontFamily: {
-                            'abril': ['"Abril Fatface"', 'cursive'],
-                            'great-vibes': ['"Great Vibes"', 'cursive'],
-                            'roboto-mono': ['"Roboto Mono"', 'monospace'],
+                            abril: ['"Abril Fatface"', "cursive"],
+                            "great-vibes": ['"Great Vibes"', "cursive"],
+                            "roboto-mono": ['"Roboto Mono"', "monospace"],
                         },
                         colors: {
                             primary: {
-                                light: 'rgba(0, 111, 255, 0.9)',
-                                dark: 'rgba(0, 255, 136, 0.9)',
+                                light: "rgba(0, 111, 255, 0.9)",
+                                dark: "rgba(0, 255, 136, 0.9)",
                             },
                             secondary: {
-                                light: 'rgba(255, 0, 255, 0.9)',
-                                dark: 'rgba(255, 230, 0, 0.9)',
-                            }
-                        }
+                                light: "rgba(255, 0, 255, 0.9)",
+                                dark: "rgba(255, 230, 0, 0.9)",
+                            },
+                        },
                     },
                 },
-            }
+            };
         </script>
         <style>
             /* Custom styles for gradient text and underline */
             .gradient-text {
-                background: linear-gradient(to right, rgba(0, 111, 255, 0.9), rgba(255, 0, 255, 0.9));
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 111, 255, 0.9),
+                    rgba(255, 0, 255, 0.9)
+                );
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
             }
-            
+
             .gradient-underline {
                 height: 5px;
                 width: 100%;
-                background: linear-gradient(to right, rgba(0, 111, 255, 0.9), rgba(255, 0, 255, 0.9));
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 111, 255, 0.9),
+                    rgba(255, 0, 255, 0.9)
+                );
             }
 
             @media (prefers-color-scheme: dark) {
                 .gradient-text {
-                    background: linear-gradient(to right, rgba(0, 255, 136, 0.9), rgba(255, 230, 0, 0.9));
+                    background: linear-gradient(
+                        to right,
+                        rgba(0, 255, 136, 0.9),
+                        rgba(255, 230, 0, 0.9)
+                    );
                     -webkit-background-clip: text;
                     background-clip: text;
                     color: transparent;
                 }
-                
+
                 .gradient-underline {
-                    background: linear-gradient(to right, rgba(0, 255, 136, 0.9), rgba(255, 230, 0, 0.9));
+                    background: linear-gradient(
+                        to right,
+                        rgba(0, 255, 136, 0.9),
+                        rgba(255, 230, 0, 0.9)
+                    );
                 }
             }
         </style>
     </head>
 
-    <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+    <body
+        class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]"
+    >
         <main class="container mx-auto px-4 py-8">
             <header class="max-w-3xl mx-auto mb-16">
-                <h1 class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider">
+                <h1
+                    class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+                >
                     Eli Zibin
-                    <span class="gradient-underline absolute bottom-0 left-0"></span>
+                    <span
+                        class="gradient-underline absolute bottom-0 left-0"
+                    ></span>
                 </h1>
             </header>
             <article class="max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    Hi, I'm Eli. I'm a software developer working remotely from
-                    Vancouver, BC.
+                    Hi, I'm Eli. I'm a staff software developer at
+                    <a
+                        href="https://www.nearform.com"
+                        class="text-primary-light hover:text-primary-dark"
+                        >Nearform</a
+                    >
+                    working remotely from Vancouver, BC.
+                </p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    I have a Bachelor of Arts in English Literature from the
+                    <i>University of British Columbia</i>, as well as a
+                    certificate in software development from <i>CodeCore</i>.
                 </p>
             </article>
         </main>
