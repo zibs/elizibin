@@ -17,12 +17,16 @@ Each project has:
 - `slug`
 - `title`
 - `oneSentence`
-- `paragraph`
+- `paragraphs` (array of paragraph strings)
 - `githubUrl`
 - `socialImageLight` (optional)
 - `socialImageDark` (optional)
 - `socialImage` (optional fallback if you only have one image)
 - `secondaryImage` (optional, displayed below the main image)
+
+You can embed links in paragraph text using markdown-style links:
+
+- `[Link text](https://example.com)`
 
 ### Build
 
@@ -71,10 +75,11 @@ This project is still a plain static site. There is no SSR/runtime requirement.
 ### Recommended flow
 
 1. Edit `content/projects.ts` and add/update images in `img/projects/`.
-2. Run `bun run build`.
-3. Run `npm run typecheck`.
-4. Commit and push.
-5. Deploy the repo as static files.
+2. Do not manually edit generated files in `oss/**` (they are overwritten by build).
+3. Run `bun run build`.
+4. Run `npm run typecheck`.
+5. Commit and push.
+6. Deploy the repo as static files.
 
 ### Netlify (simple setup)
 

@@ -12,6 +12,7 @@ const PRIMARY_LINK_CLASSES =
 const BODY_CLASSES =
     "bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 type RenderTools = {
     outputPath: string;
@@ -352,6 +353,48 @@ function renderProjectsList(tools: RenderTools, projectEntries: Project[]): stri
     `);
 }
 
+function markdownLinkToHtml(label: string, href: string): string {
+    const trimmedHref = href.trim();
+    const externalLink =
+        trimmedHref.startsWith("http://") || trimmedHref.startsWith("https://");
+    const targetAttributes = externalLink ? ` target="_blank" rel="noreferrer"` : "";
+
+    return `<a href="${escapeHtml(trimmedHref)}"${targetAttributes} class="${PRIMARY_LINK_CLASSES}">${escapeHtml(label)}</a>`;
+}
+
+function renderParagraphWithInlineLinks(paragraph: string): string {
+    const matches = Array.from(paragraph.matchAll(MARKDOWN_LINK_PATTERN));
+    if (matches.length === 0) {
+        return escapeHtml(paragraph);
+    }
+
+    let cursor = 0;
+    let rendered = "";
+
+    for (const match of matches) {
+        const fullMatch = match[0];
+        const label = match[1];
+        const href = match[2];
+        const matchIndex = match.index ?? 0;
+
+        rendered += escapeHtml(paragraph.slice(cursor, matchIndex));
+        rendered += markdownLinkToHtml(label, href);
+        cursor = matchIndex + fullMatch.length;
+    }
+
+    rendered += escapeHtml(paragraph.slice(cursor));
+    return rendered;
+}
+
+function renderProjectParagraphs(paragraphs: string[]): string {
+    return paragraphs
+        .map(
+            (paragraph) =>
+                `<p class="font-roboto-mono text-lg leading-relaxed mb-9">${renderParagraphWithInlineLinks(paragraph)}</p>`,
+        )
+        .join("\n                ");
+}
+
 function renderHomePage(tools: RenderTools, projectEntries: Project[]): string {
     return renderLayout({
         tools,
@@ -502,9 +545,7 @@ function renderProjectPage(tools: RenderTools, project: Project): string {
                 <p class="font-roboto-mono text-lg leading-relaxed mb-6">
                     ${escapeHtml(project.oneSentence)}
                 </p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    ${escapeHtml(project.paragraph)}
-                </p>
+                ${renderProjectParagraphs(project.paragraphs)}
                 <p class="font-roboto-mono text-lg leading-relaxed">
                     <a
                         href="${escapeHtml(project.githubUrl)}"
@@ -537,6 +578,33 @@ function validateLocalImagePath(imagePath: string, slug: string, fieldName: stri
     }
 }
 
+function validateParagraphLink(href: string, slug: string, fieldName: string): void {
+    const trimmedHref = href.trim();
+    if (trimmedHref === "") {
+        throw new Error(`Project "${slug}" has an empty markdown link in "${fieldName}".`);
+    }
+
+    if (
+        trimmedHref.startsWith("/") ||
+        trimmedHref.startsWith("#") ||
+        trimmedHref.startsWith("mailto:") ||
+        trimmedHref.startsWith("tel:")
+    ) {
+        return;
+    }
+
+    try {
+        const parsedUrl = new URL(trimmedHref);
+        if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") {
+            throw new Error();
+        }
+    } catch {
+        throw new Error(
+            `Project "${slug}" has an invalid markdown link in "${fieldName}": ${trimmedHref}`,
+        );
+    }
+}
+
 async function validateProjects(projectEntries: Project[]): Promise<void> {
     const seenSlugs = new Set<string>();
 
@@ -544,8 +612,21 @@ async function validateProjects(projectEntries: Project[]): Promise<void> {
         assertNonEmpty(project.slug, "slug", project.slug || "<unknown>");
         assertNonEmpty(project.title, "title", project.slug);
         assertNonEmpty(project.oneSentence, "oneSentence", project.slug);
-        assertNonEmpty(project.paragraph, "paragraph", project.slug);
         assertNonEmpty(project.githubUrl, "githubUrl", project.slug);
+
+        if (project.paragraphs.length === 0) {
+            throw new Error(`Project "${project.slug}" must include at least one paragraph.`);
+        }
+
+        for (const [index, paragraph] of project.paragraphs.entries()) {
+            const fieldName = `paragraphs[${index}]`;
+            assertNonEmpty(paragraph, fieldName, project.slug);
+
+            for (const match of paragraph.matchAll(MARKDOWN_LINK_PATTERN)) {
+                const href = match[2];
+                validateParagraphLink(href, project.slug, fieldName);
+            }
+        }
 
         if (!SLUG_PATTERN.test(project.slug)) {
             throw new Error(
