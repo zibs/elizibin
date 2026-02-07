@@ -1,0 +1,162 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Codesh | Eli Zibin</title>
+    <meta
+        name="description"
+        content="A local-only macOS menu bar app that shows Codex session and weekly usage at a glance."
+    />
+    <link rel="canonical" href="https://elizibin.com/oss/codesh/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Codesh | Eli Zibin" />
+    <meta property="og:description" content="A local-only macOS menu bar app that shows Codex session and weekly usage at a glance." />
+    <meta property="og:url" content="https://elizibin.com/oss/codesh/" />
+    <meta property="og:image" content="https://elizibin.com/img/projects/codesh-social-dark.png" />
+    <meta property="og:image:alt" content="Social preview for Codesh" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Codesh | Eli Zibin" />
+    <meta name="twitter:description" content="A local-only macOS menu bar app that shows Codex session and weekly usage at a glance." />
+    <meta name="twitter:image" content="https://elizibin.com/img/projects/codesh-social-dark.png" />
+    <meta name="twitter:image:alt" content="Social preview for Codesh" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-6">
+                    Codesh
+                </h2>
+                <figure class="mb-9 max-w-2xl mx-auto">
+    <img
+        src="../../img/projects/codesh-social-dark.png"
+        alt="Social preview for Codesh"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+</figure>
+
+                <figure class="mb-9 max-w-2xl mx-auto">
+    <img
+        src="../../img/projects/codesh-social.png"
+        alt="Additional preview for Codesh"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">
+                    A local-only macOS menu bar app that shows Codex session and weekly usage at a glance.
+                </p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    Codesh reads Codex session logs from disk and surfaces session/weekly usage percentages in the menu bar, so usage is visible without opening the main app. I built it as a tiny native utility focused on fast startup, local data only, and useful ambient feedback.
+                </p>
+                <p class="font-roboto-mono text-lg leading-relaxed">
+                    <a
+                        href="https://github.com/zibs/codesh"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                    >
+                        View on GitHub
+                    </a>
+                </p>
+            </article>
+
+                </main>
+            </body>
+        </html>

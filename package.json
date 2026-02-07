@@ -1,0 +1,13 @@
+{
+    "name": "elizibin-site",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "bun run scripts/build.ts",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@types/node": "^25.2.1",
+        "typescript": "^5.9.3"
+    }
+}

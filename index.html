@@ -1,53 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Eli Zibin</title>
-        <meta
-            name="description"
-            content="Eli Zibin is web and mobile software developer in Vancouver, BC"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- Place favicon.ico in the root directory -->
-        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-        <link
-            href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
-            rel="stylesheet"
-        />
-        <!-- Tailwind CSS -->
-        <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
-        <script>
-            tailwind.config = {
-                darkMode: "media",
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            abril: ['"Abril Fatface"', "cursive"],
-                            "great-vibes": ['"Great Vibes"', "cursive"],
-                            "roboto-mono": ['"Roboto Mono"', "monospace"],
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Eli Zibin</title>
+    <meta
+        name="description"
+        content="Eli Zibin is web and mobile software developer in Vancouver, BC"
+    />
+    <link rel="canonical" href="https://elizibin.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Eli Zibin" />
+    <meta property="og:description" content="Eli Zibin is web and mobile software developer in Vancouver, BC" />
+    <meta property="og:url" content="https://elizibin.com/" />
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Eli Zibin" />
+    <meta name="twitter:description" content="Eli Zibin is web and mobile software developer in Vancouver, BC" />
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
                         },
-                        colors: {
-                            primary: {
-                                light: "rgba(0, 111, 255, 0.9)",
-                                dark: "rgba(0, 255, 136, 0.9)",
-                            },
-                            secondary: {
-                                light: "rgba(255, 0, 255, 0.9)",
-                                dark: "rgba(255, 230, 0, 0.9)",
-                            },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
                         },
                     },
                 },
-            };
-        </script>
-        <style>
-            /* Custom styles for gradient text and underline */
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        @media (prefers-color-scheme: dark) {
             .gradient-text {
                 background: linear-gradient(
                     to right,
-                    rgba(0, 111, 255, 0.9),
-                    rgba(255, 0, 255, 0.9)
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
                 );
                 -webkit-background-clip: text;
                 background-clip: text;
@@ -55,53 +86,28 @@
             }
 
             .gradient-underline {
-                height: 5px;
-                width: 100%;
                 background: linear-gradient(
                     to right,
-                    rgba(0, 111, 255, 0.9),
-                    rgba(255, 0, 255, 0.9)
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
                 );
             }
+        }
+    </style>
+</head>
 
-            @media (prefers-color-scheme: dark) {
-                .gradient-text {
-                    background: linear-gradient(
-                        to right,
-                        rgba(0, 255, 136, 0.9),
-                        rgba(255, 230, 0, 0.9)
-                    );
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    color: transparent;
-                }
-
-                .gradient-underline {
-                    background: linear-gradient(
-                        to right,
-                        rgba(0, 255, 136, 0.9),
-                        rgba(255, 230, 0, 0.9)
-                    );
-                }
-            }
-        </style>
-    </head>
-
-    <body
-        class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]"
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
     >
-        <main class="container mx-auto px-4 py-8">
-            <header class="max-w-3xl mx-auto mb-16">
-                <h1
-                    class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
-                >
-                    Eli Zibin
-                    <span
-                        class="gradient-underline absolute bottom-0 left-0"
-                    ></span>
-                </h1>
-            </header>
-            <article class="max-w-3xl mx-auto">
+        Eli Zibin
+        <span class="gradient-underline absolute bottom-0 left-0"></span>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto mb-12">
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
                     Hi, I'm Eli. I'm a staff software developer at
                     <a
@@ -117,6 +123,18 @@
                     certificate in software development from <i>CodeCore</i>.
                 </p>
             </article>
-        </main>
-    </body>
-</html>
+            <section class="max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">
+                    Here are some of the open source projects I'm working on or I've built recently.
+                </p>
+                <ul class="font-roboto-mono text-lg leading-relaxed list-disc pl-7 space-y-4">
+        <li><a href="oss/react-native-paperplane/index.html" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">React Native Paperplane</a>: A tiny CLI that streamlines iOS TestFlight releases for React Native apps.</li>
+        <li><a href="oss/react-native-peekie/index.html" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">React Native Peekie</a>: An iOS Peek and Pop module for React Native and Expo development builds.</li>
+        <li><a href="oss/codesh/index.html" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">Codesh</a>: A local-only macOS menu bar app that shows Codex session and weekly usage at a glance.</li>
+</ul>
+
+            </section>
+
+                </main>
+            </body>
+        </html>
