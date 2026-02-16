@@ -1,9 +1,11 @@
 import { mkdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { projects, type Project } from "../content/projects";
+import { blogPosts, type BlogBlock, type BlogPost } from "../content/blog";
 
 const ROOT_DIR = process.cwd();
 const HOME_PAGE = "index.html";
+const BLOG_INDEX_PAGE = "blog/index.html";
 const DEFAULT_SITE_URL = "https://elizibin.com";
 const SITE_URL = normalizeSiteUrl(process.env.SITE_URL ?? DEFAULT_SITE_URL);
 
@@ -121,6 +123,10 @@ function projectOutputPath(slug: string): string {
     return `oss/${encodeURIComponent(slug)}/index.html`;
 }
 
+function blogPostOutputPath(slug: string): string {
+    return `blog/${encodeURIComponent(slug)}/index.html`;
+}
+
 function outputPathToPublicPath(outputPath: string): string {
     const normalized = toPosixPath(outputPath);
 
@@ -146,6 +152,39 @@ function toAbsoluteShareImageUrl(imagePath: string): string {
     }
 
     return toAbsoluteSiteUrl(`/${normalizeRootRelative(imagePath)}`);
+}
+
+function parsePublishedAt(publishedAt: string): Date | null {
+    const trimmed = publishedAt.trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+        return null;
+    }
+
+    const parsedDate = new Date(`${trimmed}T00:00:00.000Z`);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return null;
+    }
+
+    const isoDate = parsedDate.toISOString().slice(0, 10);
+    if (isoDate !== trimmed) {
+        return null;
+    }
+
+    return parsedDate;
+}
+
+function formatPublishedAt(publishedAt: string): string {
+    const parsedDate = parsePublishedAt(publishedAt);
+    if (!parsedDate) {
+        return publishedAt;
+    }
+
+    return new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+    }).format(parsedDate);
 }
 
 function renderHead(
@@ -353,6 +392,42 @@ function renderProjectsList(tools: RenderTools, projectEntries: Project[]): stri
     `);
 }
 
+function sortBlogPostsByDateDesc(blogEntries: BlogPost[]): BlogPost[] {
+    return [...blogEntries].sort((left, right) => {
+        const leftDate = parsePublishedAt(left.publishedAt);
+        const rightDate = parsePublishedAt(right.publishedAt);
+
+        if (!leftDate || !rightDate) {
+            return right.slug.localeCompare(left.slug);
+        }
+
+        return rightDate.getTime() - leftDate.getTime();
+    });
+}
+
+function renderRecentBlogPostsList(tools: RenderTools, blogEntries: BlogPost[]): string {
+    if (blogEntries.length === 0) {
+        return html(`
+            <p class="font-roboto-mono text-lg leading-relaxed">
+                No posts yet.
+            </p>
+        `);
+    }
+
+    const listItems = blogEntries
+        .map((post) => {
+            const postHref = tools.linkTo(blogPostOutputPath(post.slug));
+            return `<li><a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">${escapeHtml(post.title)}</a> <span class="opacity-70">(${escapeHtml(formatPublishedAt(post.publishedAt))})</span></li>`;
+        })
+        .join("\n                ");
+
+    return html(`
+        <ul class="font-roboto-mono text-lg leading-relaxed list-disc pl-7 space-y-3">
+                ${listItems}
+        </ul>
+    `);
+}
+
 function markdownLinkToHtml(label: string, href: string): string {
     const trimmedHref = href.trim();
     const externalLink =
@@ -395,7 +470,13 @@ function renderProjectParagraphs(paragraphs: string[]): string {
         .join("\n                ");
 }
 
-function renderHomePage(tools: RenderTools, projectEntries: Project[]): string {
+function renderHomePage(
+    tools: RenderTools,
+    projectEntries: Project[],
+    blogEntries: BlogPost[],
+): string {
+    const recentBlogEntries = blogEntries.slice(0, 3);
+
     return renderLayout({
         tools,
         title: "Eli Zibin",
@@ -422,6 +503,12 @@ function renderHomePage(tools: RenderTools, projectEntries: Project[]): string {
                     Here are some of the open source projects I'm working on or I've built recently.
                 </p>
                 ${renderProjectsList(tools, projectEntries)}
+            </section>
+            <section class="max-w-3xl mx-auto mt-14">
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">
+                    I also publish writing in the <a href="${tools.linkTo(BLOG_INDEX_PAGE)}" class="${PRIMARY_LINK_CLASSES}">blog</a>.
+                </p>
+                ${renderRecentBlogPostsList(tools, recentBlogEntries)}
             </section>
         `),
     });
@@ -561,27 +648,248 @@ function renderProjectPage(tools: RenderTools, project: Project): string {
     });
 }
 
-function assertNonEmpty(value: string, fieldName: string, slug: string): void {
+function resolveBlogShareImagePath(post: BlogPost): string | null {
+    if (post.heroImage) {
+        return post.heroImage;
+    }
+
+    const firstImageBlock = post.blocks.find(
+        (block): block is Extract<BlogBlock, { type: "image" }> =>
+            block.type === "image",
+    );
+
+    return firstImageBlock?.src ?? null;
+}
+
+function renderBlogTags(tags: string[] | undefined): string {
+    if (!tags || tags.length === 0) {
+        return "";
+    }
+
+    const tagMarkup = tags
+        .map(
+            (tag) =>
+                `<span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">${escapeHtml(tag)}</span>`,
+        )
+        .join("\n                        ");
+
+    return html(`
+        <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                        ${tagMarkup}
+        </p>
+    `);
+}
+
+function renderBlogBlock(tools: RenderTools, block: BlogBlock): string {
+    if (block.type === "paragraph") {
+        return `<p class="font-roboto-mono text-lg leading-relaxed mb-9">${renderParagraphWithInlineLinks(block.text)}</p>`;
+    }
+
+    if (block.type === "heading") {
+        if (block.level === 2) {
+            return `<h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">${escapeHtml(block.text)}</h2>`;
+        }
+
+        if (block.level === 3) {
+            return `<h3 class="font-roboto-mono text-xl md:text-2xl leading-tight tracking-normal mt-10 mb-5">${escapeHtml(block.text)}</h3>`;
+        }
+
+        return `<h4 class="font-roboto-mono text-lg md:text-xl leading-tight tracking-normal mt-8 mb-4">${escapeHtml(block.text)}</h4>`;
+    }
+
+    const imageSrc = resolveImageSource(tools, block.src);
+    if (!imageSrc) {
+        return "";
+    }
+
+    return html(`
+        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+                src="${escapeHtml(imageSrc)}"
+                alt="${escapeHtml(block.alt)}"
+                loading="lazy"
+                class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+            />
+            ${
+                block.caption
+                    ? `<figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${escapeHtml(block.caption)}</figcaption>`
+                    : ""
+            }
+        </figure>
+    `);
+}
+
+function renderBlogBlocks(tools: RenderTools, blocks: BlogBlock[]): string {
+    return blocks.map((block) => renderBlogBlock(tools, block)).join("\n                ");
+}
+
+function renderBlogIndexPage(tools: RenderTools, blogEntries: BlogPost[]): string {
+    const listMarkup =
+        blogEntries.length === 0
+            ? html(`
+                <p class="font-roboto-mono text-lg leading-relaxed">
+                    No posts published yet.
+                </p>
+            `)
+            : html(`
+                <div class="space-y-10">
+                ${blogEntries
+                    .map((post) => {
+                        const postHref = tools.linkTo(blogPostOutputPath(post.slug));
+                        const tags = post.tags && post.tags.length > 0 ? post.tags.join(", ") : "";
+
+                        return html(`
+                            <article class="border-b border-black/10 dark:border-white/10 pb-8">
+                                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight mb-3">
+                                    <a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">
+                                        ${escapeHtml(post.title)}
+                                    </a>
+                                </h2>
+                                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-3">
+                                    ${escapeHtml(formatPublishedAt(post.publishedAt))}
+                                </p>
+                                <p class="font-roboto-mono text-lg leading-relaxed mb-3">
+                                    ${escapeHtml(post.summary)}
+                                </p>
+                                ${
+                                    tags
+                                        ? `<p class="font-roboto-mono text-sm leading-relaxed opacity-80">Tags: ${escapeHtml(tags)}</p>`
+                                        : ""
+                                }
+                            </article>
+                        `);
+                    })
+                    .join("\n")}
+                </div>
+            `);
+
+    return renderLayout({
+        tools,
+        title: "Blog | Eli Zibin",
+        description: "Writing on software, open source, and process.",
+        headingLinksHome: true,
+        socialMeta: {
+            type: "website",
+        },
+        content: html(`
+            <section class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="${tools.linkTo(HOME_PAGE)}"
+                        class="inline-flex items-center text-2xl leading-none ${PRIMARY_LINK_CLASSES}"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-6">
+                    Blog
+                </h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-10">
+                    Notes, build logs, and longer-form writing.
+                </p>
+                ${listMarkup}
+            </section>
+        `),
+    });
+}
+
+function renderBlogPostPage(tools: RenderTools, post: BlogPost): string {
+    const heroImageSrc = resolveImageSource(tools, post.heroImage);
+    const heroImageMarkup = heroImageSrc
+        ? html(`
+            <figure class="mb-9 max-w-3xl mx-auto">
+                <img
+                    src="${escapeHtml(heroImageSrc)}"
+                    alt="Hero image for ${escapeHtml(post.title)}"
+                    class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+                />
+            </figure>
+        `)
+        : "";
+
+    return renderLayout({
+        tools,
+        title: `${post.title} | Blog | Eli Zibin`,
+        description: post.summary,
+        headingLinksHome: true,
+        socialMeta: {
+            type: "article",
+            imagePath: resolveBlogShareImagePath(post),
+            imageAlt: `Hero image for ${post.title}`,
+        },
+        content: html(`
+            <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="${tools.linkTo(BLOG_INDEX_PAGE)}"
+                        class="inline-flex items-center text-2xl leading-none ${PRIMARY_LINK_CLASSES}"
+                        aria-label="Back to blog"
+                        title="Back to blog"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    ${escapeHtml(post.title)}
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    ${escapeHtml(formatPublishedAt(post.publishedAt))}
+                </p>
+                ${renderBlogTags(post.tags)}
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    ${escapeHtml(post.summary)}
+                </p>
+                ${heroImageMarkup}
+                ${renderBlogBlocks(tools, post.blocks)}
+            </article>
+        `),
+    });
+}
+
+function assertNonEmpty(
+    value: string,
+    fieldName: string,
+    entityType: string,
+    slug: string,
+): void {
     if (value.trim() === "") {
-        throw new Error(`Project "${slug}" is missing a non-empty "${fieldName}" value.`);
+        throw new Error(
+            `${entityType} "${slug}" is missing a non-empty "${fieldName}" value.`,
+        );
     }
 }
 
-function validateLocalImagePath(imagePath: string, slug: string, fieldName: string): void {
+function validateLocalImagePath(
+    imagePath: string,
+    entityType: string,
+    slug: string,
+    fieldName: string,
+): void {
     if (/^https?:\/\//.test(imagePath)) {
         return;
     }
 
     const normalizedPath = normalizeRootRelative(imagePath);
     if (normalizedPath.trim() === "") {
-        throw new Error(`Project "${slug}" has an empty "${fieldName}" path.`);
+        throw new Error(
+            `${entityType} "${slug}" has an empty "${fieldName}" path.`,
+        );
     }
 }
 
-function validateParagraphLink(href: string, slug: string, fieldName: string): void {
+function validateParagraphLink(
+    href: string,
+    entityType: string,
+    slug: string,
+    fieldName: string,
+): void {
     const trimmedHref = href.trim();
     if (trimmedHref === "") {
-        throw new Error(`Project "${slug}" has an empty markdown link in "${fieldName}".`);
+        throw new Error(
+            `${entityType} "${slug}" has an empty markdown link in "${fieldName}".`,
+        );
     }
 
     if (
@@ -600,7 +908,31 @@ function validateParagraphLink(href: string, slug: string, fieldName: string): v
         }
     } catch {
         throw new Error(
-            `Project "${slug}" has an invalid markdown link in "${fieldName}": ${trimmedHref}`,
+            `${entityType} "${slug}" has an invalid markdown link in "${fieldName}": ${trimmedHref}`,
+        );
+    }
+}
+
+async function assertLocalImageExists(
+    imagePath: string,
+    entityType: string,
+    slug: string,
+    fieldName: string,
+): Promise<void> {
+    const absolutePath = path.join(ROOT_DIR, normalizeRootRelative(imagePath));
+
+    let imageStat;
+    try {
+        imageStat = await stat(absolutePath);
+    } catch {
+        throw new Error(
+            `Image for ${entityType.toLowerCase()} "${slug}" not found (${fieldName}): ${imagePath}`,
+        );
+    }
+
+    if (!imageStat.isFile()) {
+        throw new Error(
+            `Image for ${entityType.toLowerCase()} "${slug}" is not a file (${fieldName}): ${imagePath}`,
         );
     }
 }
@@ -609,10 +941,10 @@ async function validateProjects(projectEntries: Project[]): Promise<void> {
     const seenSlugs = new Set<string>();
 
     for (const project of projectEntries) {
-        assertNonEmpty(project.slug, "slug", project.slug || "<unknown>");
-        assertNonEmpty(project.title, "title", project.slug);
-        assertNonEmpty(project.oneSentence, "oneSentence", project.slug);
-        assertNonEmpty(project.githubUrl, "githubUrl", project.slug);
+        assertNonEmpty(project.slug, "slug", "Project", project.slug || "<unknown>");
+        assertNonEmpty(project.title, "title", "Project", project.slug);
+        assertNonEmpty(project.oneSentence, "oneSentence", "Project", project.slug);
+        assertNonEmpty(project.githubUrl, "githubUrl", "Project", project.slug);
 
         if (project.paragraphs.length === 0) {
             throw new Error(`Project "${project.slug}" must include at least one paragraph.`);
@@ -620,11 +952,11 @@ async function validateProjects(projectEntries: Project[]): Promise<void> {
 
         for (const [index, paragraph] of project.paragraphs.entries()) {
             const fieldName = `paragraphs[${index}]`;
-            assertNonEmpty(paragraph, fieldName, project.slug);
+            assertNonEmpty(paragraph, fieldName, "Project", project.slug);
 
             for (const match of paragraph.matchAll(MARKDOWN_LINK_PATTERN)) {
                 const href = match[2];
-                validateParagraphLink(href, project.slug, fieldName);
+                validateParagraphLink(href, "Project", project.slug, fieldName);
             }
         }
 
@@ -663,28 +995,119 @@ async function validateProjects(projectEntries: Project[]): Promise<void> {
                 continue;
             }
 
-            validateLocalImagePath(value, project.slug, fieldName);
+            validateLocalImagePath(value, "Project", project.slug, fieldName);
 
             if (/^https?:\/\//.test(value)) {
                 continue;
             }
 
-            const imagePath = path.join(ROOT_DIR, normalizeRootRelative(value));
+            await assertLocalImageExists(value, "Project", project.slug, fieldName);
+        }
+    }
+}
 
-            let imageStat;
-            try {
-                imageStat = await stat(imagePath);
-            } catch {
-                throw new Error(
-                    `Image for "${project.slug}" not found (${fieldName}): ${value}`,
+async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
+    const seenSlugs = new Set<string>();
+
+    for (const post of postEntries) {
+        assertNonEmpty(post.slug, "slug", "Blog post", post.slug || "<unknown>");
+        assertNonEmpty(post.title, "title", "Blog post", post.slug);
+        assertNonEmpty(post.summary, "summary", "Blog post", post.slug);
+        assertNonEmpty(post.publishedAt, "publishedAt", "Blog post", post.slug);
+
+        if (!SLUG_PATTERN.test(post.slug)) {
+            throw new Error(
+                `Invalid blog slug "${post.slug}". Use lowercase letters, numbers, and hyphens only.`,
+            );
+        }
+
+        if (seenSlugs.has(post.slug)) {
+            throw new Error(`Duplicate blog slug "${post.slug}".`);
+        }
+
+        seenSlugs.add(post.slug);
+
+        if (!parsePublishedAt(post.publishedAt)) {
+            throw new Error(
+                `Blog post "${post.slug}" has invalid "publishedAt" value "${post.publishedAt}". Use YYYY-MM-DD.`,
+            );
+        }
+
+        if (post.tags) {
+            for (const [tagIndex, tag] of post.tags.entries()) {
+                assertNonEmpty(tag, `tags[${tagIndex}]`, "Blog post", post.slug);
+            }
+        }
+
+        if (post.heroImage) {
+            validateLocalImagePath(post.heroImage, "Blog post", post.slug, "heroImage");
+            if (!/^https?:\/\//.test(post.heroImage)) {
+                await assertLocalImageExists(
+                    post.heroImage,
+                    "Blog post",
+                    post.slug,
+                    "heroImage",
+                );
+            }
+        }
+
+        if (post.blocks.length === 0) {
+            throw new Error(`Blog post "${post.slug}" must include at least one block.`);
+        }
+
+        for (const [blockIndex, block] of post.blocks.entries()) {
+            const blockPath = `blocks[${blockIndex}]`;
+
+            if (block.type === "paragraph") {
+                assertNonEmpty(block.text, `${blockPath}.text`, "Blog post", post.slug);
+
+                for (const match of block.text.matchAll(MARKDOWN_LINK_PATTERN)) {
+                    const href = match[2];
+                    validateParagraphLink(
+                        href,
+                        "Blog post",
+                        post.slug,
+                        `${blockPath}.text`,
+                    );
+                }
+                continue;
+            }
+
+            if (block.type === "heading") {
+                assertNonEmpty(block.text, `${blockPath}.text`, "Blog post", post.slug);
+
+                if (![2, 3, 4].includes(block.level)) {
+                    throw new Error(
+                        `Blog post "${post.slug}" has invalid heading level in "${blockPath}.level".`,
+                    );
+                }
+                continue;
+            }
+
+            assertNonEmpty(block.src, `${blockPath}.src`, "Blog post", post.slug);
+            assertNonEmpty(block.alt, `${blockPath}.alt`, "Blog post", post.slug);
+
+            if (block.caption !== undefined) {
+                assertNonEmpty(
+                    block.caption,
+                    `${blockPath}.caption`,
+                    "Blog post",
+                    post.slug,
                 );
             }
 
-            if (!imageStat.isFile()) {
-                throw new Error(
-                    `Image for "${project.slug}" is not a file (${fieldName}): ${value}`,
-                );
+            validateLocalImagePath(block.src, "Blog post", post.slug, `${blockPath}.src`);
+
+            if (/^https?:\/\//.test(block.src)) {
+                continue;
             }
+
+            await assertLocalImageExists(
+                block.src,
+                "Blog post",
+                post.slug,
+                `${blockPath}.src`,
+            );
         }
     }
 }
@@ -719,11 +1142,13 @@ async function validateGeneratedReferences(
             }
 
             const [referencePath] = reference.split(/[?#]/, 1);
-            const resolvedPath = path.posix.normalize(
-                path.posix.join(path.posix.dirname(outputPath), referencePath),
-            );
+            const resolvedPath = referencePath.startsWith("/")
+                ? path.posix.normalize(referencePath.slice(1))
+                : path.posix.normalize(
+                      path.posix.join(path.posix.dirname(outputPath), referencePath),
+                  );
 
-            if (resolvedPath.startsWith("../")) {
+            if (resolvedPath.startsWith("../") || resolvedPath.startsWith("/")) {
                 throw new Error(
                     `Reference escapes project root in "${outputPath}": ${reference}`,
                 );
@@ -746,15 +1171,24 @@ async function validateGeneratedReferences(
 
 async function buildSite(): Promise<void> {
     await validateProjects(projects);
+    await validateBlogPosts(blogPosts);
+
+    const sortedBlogPosts = sortBlogPostsByDateDesc(blogPosts);
 
     await rm(path.join(ROOT_DIR, "oss"), { recursive: true, force: true });
+    await rm(path.join(ROOT_DIR, "blog"), { recursive: true, force: true });
 
     const generatedPages = new Map<string, string>();
 
     const homeTools = createRenderTools(HOME_PAGE);
-    const homeHtml = renderHomePage(homeTools, projects);
+    const homeHtml = renderHomePage(homeTools, projects, sortedBlogPosts);
     generatedPages.set(HOME_PAGE, homeHtml);
     await writePage(HOME_PAGE, homeHtml);
+
+    const blogIndexTools = createRenderTools(BLOG_INDEX_PAGE);
+    const blogIndexHtml = renderBlogIndexPage(blogIndexTools, sortedBlogPosts);
+    generatedPages.set(BLOG_INDEX_PAGE, blogIndexHtml);
+    await writePage(BLOG_INDEX_PAGE, blogIndexHtml);
 
     for (const project of projects) {
         const outputPath = projectOutputPath(project.slug);
@@ -764,8 +1198,18 @@ async function buildSite(): Promise<void> {
         await writePage(outputPath, pageHtml);
     }
 
+    for (const post of sortedBlogPosts) {
+        const outputPath = blogPostOutputPath(post.slug);
+        const pageTools = createRenderTools(outputPath);
+        const pageHtml = renderBlogPostPage(pageTools, post);
+        generatedPages.set(outputPath, pageHtml);
+        await writePage(outputPath, pageHtml);
+    }
+
     await validateGeneratedReferences(generatedPages);
 }
 
 await buildSite();
-console.log(`Built ${projects.length} project page(s).`);
+console.log(
+    `Built ${projects.length} project page(s) and ${blogPosts.length} blog page(s).`,
+);

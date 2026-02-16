@@ -2,7 +2,13 @@
 
 A personal website.
 
-## Open Source Project Pages
+## Blog Planning + Authoring
+
+Blog implementation planning and post authoring conventions are documented in:
+
+- `docs/blog-feature-plan-and-authoring.md`
+
+## Open Source Project Pages + Blog
 
 This site now uses a Bun + TypeScript build step to generate static pages.
 
@@ -11,6 +17,7 @@ This site now uses a Bun + TypeScript build step to generate static pages.
 Add/update projects in:
 
 - `content/projects.ts`
+- `content/blog.ts` (for blog posts)
 
 Each project has:
 
@@ -44,8 +51,10 @@ SITE_URL="https://elizibin.com" bun run build
 
 This generates:
 
-- `index.html` (home page, including the sentence + unordered project list)
+- `index.html` (home page, including projects and recent blog posts)
 - `oss/<slug>/index.html` (project detail pages)
+- `blog/index.html` (blog index)
+- `blog/<slug>/index.html` (blog post pages)
 - `bun.lock` (Bun dependency lockfile)
 
 ### Typecheck
@@ -61,7 +70,9 @@ npm run typecheck
 The build validates:
 
 - project slug format and duplicates
+- blog slug format, dates, and content blocks
 - local social image file existence
+- local blog image file existence
 - generated internal `href` and `src` references
 
 Internal links are emitted as explicit `index.html` paths so local `file://` browsing works consistently.
@@ -74,8 +85,8 @@ This project is still a plain static site. There is no SSR/runtime requirement.
 
 ### Recommended flow
 
-1. Edit `content/projects.ts` and add/update images in `img/projects/`.
-2. Do not manually edit generated files in `oss/**` (they are overwritten by build).
+1. Edit `content/projects.ts` or `content/blog.ts`, and add/update images in `img/projects/` or `img/blog/`.
+2. Do not manually edit generated files in `oss/**` or `blog/**` (they are overwritten by build).
 3. Run `bun run build`.
 4. Run `npm run typecheck`.
 5. Commit and push.
@@ -88,7 +99,7 @@ This project is still a plain static site. There is no SSR/runtime requirement.
 - Publish directory: `.`
 - Optional env var: `SITE_URL=https://your-domain.com` (only needed if Netlify runs the build command)
 
-If you keep generated files committed (`index.html` + `oss/**`), Netlify can deploy directly without running Bun in CI.
+If you keep generated files committed (`index.html` + `oss/**` + `blog/**`), Netlify can deploy directly without running Bun in CI.
 
 ## Dependency Management
 
