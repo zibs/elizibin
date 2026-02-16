@@ -1,5 +1,6 @@
 import { mkdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { createHighlighter } from "shiki";
 import { projects, type Project } from "../content/projects";
 import { blogPosts, type BlogBlock, type BlogPost } from "../content/blog";
 
@@ -15,6 +16,21 @@ const BODY_CLASSES =
     "bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
+const BLOG_CODE_THEME_LIGHT = "catppuccin-latte";
+const BLOG_CODE_THEME_DARK = "catppuccin-mocha";
+const BLOG_CODE_LANGUAGES = ["ts", "tsx", "js", "jsx", "json", "bash"] as const;
+const BLOG_CODE_LANGUAGE_ALIASES: Record<string, (typeof BLOG_CODE_LANGUAGES)[number]> = {
+    ts: "ts",
+    typescript: "ts",
+    tsx: "tsx",
+    js: "js",
+    javascript: "js",
+    jsx: "jsx",
+    json: "json",
+    bash: "bash",
+    sh: "bash",
+    shell: "bash",
+};
 
 type RenderTools = {
     outputPath: string;
@@ -45,6 +61,10 @@ type RenderPageOptions = {
     socialMeta?: SocialMeta;
     content: string;
 };
+
+type BlogCodeLanguage = (typeof BLOG_CODE_LANGUAGES)[number];
+
+type BlogCodeHighlight = (code: string, language: string) => string;
 
 function normalizeRootRelative(value: string): string {
     return value.replace(/^\/+/, "");
@@ -187,6 +207,40 @@ function formatPublishedAt(publishedAt: string): string {
     }).format(parsedDate);
 }
 
+function normalizeBlogCodeLanguage(language: string): BlogCodeLanguage | null {
+    const normalizedLanguage = language.trim().toLowerCase();
+    return BLOG_CODE_LANGUAGE_ALIASES[normalizedLanguage] ?? null;
+}
+
+function formatSupportedBlogCodeLanguages(): string {
+    return [...BLOG_CODE_LANGUAGES].join(", ");
+}
+
+async function createBlogCodeHighlighter(): Promise<BlogCodeHighlight> {
+    const highlighter = await createHighlighter({
+        themes: [BLOG_CODE_THEME_LIGHT, BLOG_CODE_THEME_DARK],
+        langs: [...BLOG_CODE_LANGUAGES],
+    });
+
+    return (code: string, language: string): string => {
+        const normalizedLanguage = normalizeBlogCodeLanguage(language);
+        if (!normalizedLanguage) {
+            throw new Error(
+                `Unsupported blog code language "${language}". Supported languages: ${formatSupportedBlogCodeLanguages()}.`,
+            );
+        }
+
+        return highlighter.codeToHtml(code, {
+            lang: normalizedLanguage,
+            themes: {
+                light: BLOG_CODE_THEME_LIGHT,
+                dark: BLOG_CODE_THEME_DARK,
+            },
+            defaultColor: false,
+        });
+    };
+}
+
 function renderHead(
     tools: RenderTools,
     title: string,
@@ -291,6 +345,26 @@ function renderHead(
                     );
                 }
 
+                .blog-code-block .shiki,
+                .blog-code-block .shiki span {
+                    background-color: var(--shiki-light-bg);
+                    color: var(--shiki-light);
+                }
+
+                .blog-code-block .shiki {
+                    overflow-x: auto;
+                    padding: 1rem 1.125rem;
+                    border-radius: 0.85rem;
+                    border: 1px solid rgba(0, 0, 0, 0.14);
+                    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+                }
+
+                .blog-code-block .shiki code {
+                    font-family: "Roboto Mono", monospace;
+                    font-size: 0.9rem;
+                    line-height: 1.6;
+                }
+
                 @media (prefers-color-scheme: dark) {
                     .gradient-text {
                         background: linear-gradient(
@@ -309,6 +383,17 @@ function renderHead(
                             rgba(0, 255, 136, 0.9),
                             rgba(255, 230, 0, 0.9)
                         );
+                    }
+
+                    .blog-code-block .shiki,
+                    .blog-code-block .shiki span {
+                        background-color: var(--shiki-dark-bg);
+                        color: var(--shiki-dark);
+                    }
+
+                    .blog-code-block .shiki {
+                        border-color: rgba(255, 255, 255, 0.2);
+                        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
                     }
                 }
             </style>
@@ -680,7 +765,11 @@ function renderBlogTags(tags: string[] | undefined): string {
     `);
 }
 
-function renderBlogBlock(tools: RenderTools, block: BlogBlock): string {
+function renderBlogBlock(
+    tools: RenderTools,
+    block: BlogBlock,
+    highlightCode: BlogCodeHighlight,
+): string {
     if (block.type === "paragraph") {
         return `<p class="font-roboto-mono text-lg leading-relaxed mb-9">${renderParagraphWithInlineLinks(block.text)}</p>`;
     }
@@ -695,6 +784,28 @@ function renderBlogBlock(tools: RenderTools, block: BlogBlock): string {
         }
 
         return `<h4 class="font-roboto-mono text-lg md:text-xl leading-tight tracking-normal mt-8 mb-4">${escapeHtml(block.text)}</h4>`;
+    }
+
+    if (block.type === "code") {
+        const normalizedLanguage = normalizeBlogCodeLanguage(block.language);
+        const languageLabel = normalizedLanguage ? normalizedLanguage.toUpperCase() : block.language;
+        const highlightedCode = highlightCode(block.code, block.language);
+
+        return html(`
+            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    ${escapeHtml(languageLabel)}
+                </p>
+                <div class="blog-code-block">
+                    ${highlightedCode}
+                </div>
+                ${
+                    block.caption
+                        ? `<figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${escapeHtml(block.caption)}</figcaption>`
+                        : ""
+                }
+            </figure>
+        `);
     }
 
     const imageSrc = resolveImageSource(tools, block.src);
@@ -719,8 +830,14 @@ function renderBlogBlock(tools: RenderTools, block: BlogBlock): string {
     `);
 }
 
-function renderBlogBlocks(tools: RenderTools, blocks: BlogBlock[]): string {
-    return blocks.map((block) => renderBlogBlock(tools, block)).join("\n                ");
+function renderBlogBlocks(
+    tools: RenderTools,
+    blocks: BlogBlock[],
+    highlightCode: BlogCodeHighlight,
+): string {
+    return blocks
+        .map((block) => renderBlogBlock(tools, block, highlightCode))
+        .join("\n                ");
 }
 
 function renderBlogIndexPage(tools: RenderTools, blogEntries: BlogPost[]): string {
@@ -795,7 +912,11 @@ function renderBlogIndexPage(tools: RenderTools, blogEntries: BlogPost[]): strin
     });
 }
 
-function renderBlogPostPage(tools: RenderTools, post: BlogPost): string {
+function renderBlogPostPage(
+    tools: RenderTools,
+    post: BlogPost,
+    highlightCode: BlogCodeHighlight,
+): string {
     const heroImageSrc = resolveImageSource(tools, post.heroImage);
     const heroImageMarkup = heroImageSrc
         ? html(`
@@ -842,7 +963,7 @@ function renderBlogPostPage(tools: RenderTools, post: BlogPost): string {
                     ${escapeHtml(post.summary)}
                 </p>
                 ${heroImageMarkup}
-                ${renderBlogBlocks(tools, post.blocks)}
+                ${renderBlogBlocks(tools, post.blocks, highlightCode)}
             </article>
         `),
     });
@@ -1084,6 +1205,33 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
                 continue;
             }
 
+            if (block.type === "code") {
+                assertNonEmpty(
+                    block.language,
+                    `${blockPath}.language`,
+                    "Blog post",
+                    post.slug,
+                );
+                assertNonEmpty(block.code, `${blockPath}.code`, "Blog post", post.slug);
+
+                if (!normalizeBlogCodeLanguage(block.language)) {
+                    throw new Error(
+                        `Blog post "${post.slug}" has unsupported code language in "${blockPath}.language": ${block.language}. Supported languages: ${formatSupportedBlogCodeLanguages()}.`,
+                    );
+                }
+
+                if (block.caption !== undefined) {
+                    assertNonEmpty(
+                        block.caption,
+                        `${blockPath}.caption`,
+                        "Blog post",
+                        post.slug,
+                    );
+                }
+
+                continue;
+            }
+
             assertNonEmpty(block.src, `${blockPath}.src`, "Blog post", post.slug);
             assertNonEmpty(block.alt, `${blockPath}.alt`, "Blog post", post.slug);
 
@@ -1174,6 +1322,7 @@ async function buildSite(): Promise<void> {
     await validateBlogPosts(blogPosts);
 
     const sortedBlogPosts = sortBlogPostsByDateDesc(blogPosts);
+    const highlightBlogCode = await createBlogCodeHighlighter();
 
     await rm(path.join(ROOT_DIR, "oss"), { recursive: true, force: true });
     await rm(path.join(ROOT_DIR, "blog"), { recursive: true, force: true });
@@ -1201,7 +1350,7 @@ async function buildSite(): Promise<void> {
     for (const post of sortedBlogPosts) {
         const outputPath = blogPostOutputPath(post.slug);
         const pageTools = createRenderTools(outputPath);
-        const pageHtml = renderBlogPostPage(pageTools, post);
+        const pageHtml = renderBlogPostPage(pageTools, post, highlightBlogCode);
         generatedPages.set(outputPath, pageHtml);
         await writePage(outputPath, pageHtml);
     }

@@ -73,6 +73,26 @@
             );
         }
 
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
         @media (prefers-color-scheme: dark) {
             .gradient-text {
                 background: linear-gradient(
@@ -91,6 +111,17 @@
                     rgba(0, 255, 136, 0.9),
                     rgba(255, 230, 0, 0.9)
                 );
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
             }
         }
     </style>
@@ -154,6 +185,22 @@
     />
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Seed image for the blog system.</figcaption>
 </figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">TypeScript snippet</h2>
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    TS
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">type</span><span style="--shiki-light:#DF8E1D;--shiki-light-font-style:italic;--shiki-dark:#F9E2AF;--shiki-dark-font-style:italic"> BlogCodeBlock </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-light-font-style:italic;--shiki-dark:#CDD6F4;--shiki-dark-font-style:italic">    type</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "</span><span style="--shiki-light:#40A02B;--shiki-light-font-style:italic;--shiki-dark:#A6E3A1;--shiki-dark-font-style:italic">code</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-light-font-style:italic;--shiki-dark:#CDD6F4;--shiki-dark-font-style:italic">    language</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> string</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-light-font-style:italic;--shiki-dark:#CDD6F4;--shiki-dark-font-style:italic">    code</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> string</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-light-font-style:italic;--shiki-dark:#CDD6F4;--shiki-dark-font-style:italic">    caption</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">?:</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> string</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">};</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Blog code block schema (minimal example).</figcaption>
+            </figure>
 
             </article>
 

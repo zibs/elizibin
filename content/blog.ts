@@ -16,7 +16,18 @@ export type BlogImageBlock = {
     caption?: string;
 };
 
-export type BlogBlock = BlogParagraphBlock | BlogHeadingBlock | BlogImageBlock;
+export type BlogCodeBlock = {
+    type: "code";
+    language: string;
+    code: string;
+    caption?: string;
+};
+
+export type BlogBlock =
+    | BlogParagraphBlock
+    | BlogHeadingBlock
+    | BlogImageBlock
+    | BlogCodeBlock;
 
 export type BlogPost = {
     slug: string;
@@ -56,6 +67,22 @@ export const blogPosts: BlogPost[] = [
                 src: "/img/blog/site-blog-launch/system-overview.png",
                 alt: "A sample preview image used by the first blog post.",
                 caption: "Seed image for the blog system.",
+            },
+            {
+                type: "heading",
+                level: 2,
+                text: "TypeScript snippet",
+            },
+            {
+                type: "code",
+                language: "ts",
+                caption: "Blog code block schema (minimal example).",
+                code: `type BlogCodeBlock = {
+    type: "code";
+    language: string;
+    code: string;
+    caption?: string;
+};`,
             },
         ],
     },

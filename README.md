@@ -35,6 +35,13 @@ You can embed links in paragraph text using markdown-style links:
 
 - `[Link text](https://example.com)`
 
+Blog posts support block-based composition:
+
+- `paragraph`
+- `heading`
+- `image`
+- `code` (Shiki-highlighted, light/dark theme aware)
+
 ### Build
 
 Run:
@@ -71,6 +78,7 @@ The build validates:
 
 - project slug format and duplicates
 - blog slug format, dates, and content blocks
+- blog code block language support
 - local social image file existence
 - local blog image file existence
 - generated internal `href` and `src` references
@@ -78,6 +86,14 @@ The build validates:
 Internal links are emitted as explicit `index.html` paths so local `file://` browsing works consistently.
 
 Project detail pages emit Open Graph and Twitter meta tags using the project's share image fields.
+
+### Blog code highlighting
+
+- Blog code blocks are highlighted at build time with Shiki.
+- Theme pairing:
+  - Light: `catppuccin-latte`
+  - Dark: `catppuccin-mocha`
+- Current language support: `ts`, `tsx`, `js`, `jsx`, `json`, `bash` (with aliases documented in `docs/blog-feature-plan-and-authoring.md`).
 
 ## Deploy
 

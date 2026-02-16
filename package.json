@@ -8,6 +8,7 @@
     },
     "devDependencies": {
         "@types/node": "^25.2.1",
+        "shiki": "^3.12.2",
         "typescript": "^5.9.3"
     }
 }
