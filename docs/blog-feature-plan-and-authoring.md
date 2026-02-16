@@ -97,6 +97,87 @@ export type BlogPost = {
 - Code block language is supported.
 - Generated internal `href` / `src` / `srcset` references resolve.
 
+### Excalidraw Diagram Asset Flow
+
+Use the helper command to convert MCP checkpoint JSON into blog assets:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name>
+```
+
+Outputs:
+
+- `img/blog/<slug>/<asset-name>.excalidraw.json` (source of truth)
+- `img/blog/<slug>/<asset-name>.svg` (native Excalidraw style export)
+- `img/blog/<slug>/<asset-name>.png` (default output)
+
+Default style preset: `handdrawn-soft` (applied automatically)
+
+- Shape fill style: `hachure` (least-filled hand-drawn look)
+- Text font family: hand-drawn style
+- Arrow/line sloppiness: medium
+
+Skip PNG generation:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name> --no-png
+```
+
+Disable style preset:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name> --no-style-preset
+```
+
+You can then reference the generated `.png` (or `.svg`) via an `image` block in `content/blog.ts`.
+
+### Excalidraw MCP Runbook (Team)
+
+Use this when creating blog diagrams through Codex + Excalidraw MCP.
+
+1. Confirm MCP is connected in Codex.
+2. Ask Codex to call `mcp__excalidraw__read_me` first.
+3. Build the scene with `mcp__excalidraw__create_view` using Excalidraw elements JSON.
+4. Save the checkpoint with `mcp__excalidraw__save_checkpoint` (keep the checkpoint id).
+5. Read the full checkpoint JSON with `mcp__excalidraw__read_checkpoint`.
+6. Pipe or save that JSON and run:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name>
+```
+
+7. Add the generated image to `content/blog.ts`:
+
+```ts
+{
+    type: "image",
+    src: "/img/blog/<slug>/<asset-name>.png",
+    alt: "Meaningful description of the diagram",
+    caption: "Optional caption",
+}
+```
+
+8. Run:
+   - `bun run build`
+   - `npm run typecheck`
+
+9. Commit:
+   - `img/blog/<slug>/<asset-name>.excalidraw.json` (editable source)
+   - `img/blog/<slug>/<asset-name>.png` (primary blog asset)
+   - `img/blog/<slug>/<asset-name>.svg` (optional but recommended for source fidelity)
+
+10. Optional: publish a live-edit link by exporting with `mcp__excalidraw__export_to_excalidraw`.
+
+#### Styling For A More Hand-Drawn Look
+
+When creating elements, bias toward these values:
+
+- `roughness: 1` for medium sloppiness (default preset target)
+- `fillStyle: "hachure"` for least-filled style (default preset target)
+- `fillStyle: "cross-hatch"` for denser fills
+- `strokeStyle: "dashed"` where appropriate
+- slightly irregular line points for arrows/lines instead of perfect straight geometry
+
 ## Supported Code Languages
 
 Current supported normalized languages:

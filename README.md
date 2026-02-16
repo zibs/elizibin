@@ -64,6 +64,46 @@ This generates:
 - `blog/<slug>/index.html` (blog post pages)
 - `bun.lock` (Bun dependency lockfile)
 
+### Excalidraw blog asset helper
+
+Convert Excalidraw checkpoint JSON (from MCP `read_checkpoint`) into repo-local blog assets:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug my-post --name system-flow
+```
+
+This writes:
+
+- `img/blog/<slug>/<name>.excalidraw.json` (source scene)
+- `img/blog/<slug>/<name>.svg` (native Excalidraw style export)
+- `img/blog/<slug>/<name>.png` (default output for blog embedding)
+
+Default style preset: `handdrawn-soft`
+
+- Shapes: hachure fill, rounded corners (rectangles), medium roughness
+- Text: hand-drawn font family (Virgil-style)
+- Arrows/lines: medium sloppiness with arrowhead defaults
+
+Skip PNG generation:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug my-post --name system-flow --no-png
+```
+
+Disable style preset and keep source styles exactly:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug my-post --name system-flow --no-style-preset
+```
+
+You can also pipe JSON from stdin:
+
+```bash
+cat /tmp/diagram.json | bun run excalidraw:asset -- --slug my-post --name system-flow
+```
+
+Then use the emitted snippet in `content/blog.ts`.
+
 ### Typecheck
 
 Run:
