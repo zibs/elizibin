@@ -1,0 +1,789 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "si-title",
+      "x": 250,
+      "y": 30,
+      "text": "Minimal Agent REPL System",
+      "fontSize": 40,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-subtitle",
+      "x": 210,
+      "y": 88,
+      "text": "LLM + tools + loop with streaming and guardrails",
+      "fontSize": 22,
+      "strokeColor": "#475569",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-zone-ui",
+      "x": 60,
+      "y": 170,
+      "width": 290,
+      "height": 650,
+      "backgroundColor": "#dbe4ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 1,
+      "opacity": 30,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "rectangle",
+      "id": "si-zone-agent",
+      "x": 390,
+      "y": 170,
+      "width": 420,
+      "height": 650,
+      "backgroundColor": "#e5dbff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "strokeWidth": 1,
+      "opacity": 30,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "rectangle",
+      "id": "si-zone-tools",
+      "x": 850,
+      "y": 170,
+      "width": 290,
+      "height": 650,
+      "backgroundColor": "#d3f9d8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "strokeWidth": 1,
+      "opacity": 30,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "text",
+      "id": "si-zone-ui-label",
+      "x": 95,
+      "y": 188,
+      "text": "User / Provider",
+      "fontSize": 20,
+      "strokeColor": "#2563eb",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-zone-agent-label",
+      "x": 520,
+      "y": 188,
+      "text": "Agent Runtime",
+      "fontSize": 20,
+      "strokeColor": "#6d28d9",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-zone-tools-label",
+      "x": 942,
+      "y": 188,
+      "text": "Local Tools",
+      "fontSize": 20,
+      "strokeColor": "#15803d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-user",
+      "x": 100,
+      "y": 250,
+      "width": 210,
+      "height": 95,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Terminal User\nyou>  agent>",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-provider",
+      "x": 90,
+      "y": 610,
+      "width": 230,
+      "height": 110,
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Responses API\nOpenAI / OpenRouter",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-runtime",
+      "x": 450,
+      "y": 260,
+      "width": 300,
+      "height": 115,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "REPL Runtime\nhistory + commands",
+        "fontSize": 20
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-loop",
+      "x": 450,
+      "y": 435,
+      "width": 300,
+      "height": 95,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Inner Tool Loop\ntool call cycle",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-tool-time",
+      "x": 900,
+      "y": 270,
+      "width": 190,
+      "height": 70,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "get_current_time",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-tool-calc",
+      "x": 900,
+      "y": 370,
+      "width": 190,
+      "height": 70,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "calculate",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-tool-read",
+      "x": 900,
+      "y": 470,
+      "width": 190,
+      "height": 70,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "read_workspace_file",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-tool-search",
+      "x": 900,
+      "y": 570,
+      "width": 190,
+      "height": 70,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "search_workspace",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "si-safety",
+      "x": 430,
+      "y": 650,
+      "width": 340,
+      "height": 120,
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "hachure",
+      "strokeColor": "#ef4444",
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Guardrails\n- no absolute paths\n- no ../ traversal\n- byte + result caps",
+        "fontSize": 18
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-user-runtime",
+      "x": 310,
+      "y": 300,
+      "width": 140,
+      "height": 15,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          140,
+          15
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "prompt",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-user",
+        "fixedPoint": [
+          1,
+          0.5
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-runtime",
+        "fixedPoint": [
+          0,
+          0.4
+        ]
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-runtime-provider",
+      "x": 600,
+      "y": 375,
+      "width": -300,
+      "height": 240,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -300,
+          240
+        ]
+      ],
+      "strokeColor": "#8b5cf6",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "/responses request",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-runtime",
+        "fixedPoint": [
+          0.5,
+          1
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-provider",
+        "fixedPoint": [
+          1,
+          0.25
+        ]
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-provider-runtime",
+      "x": 320,
+      "y": 665,
+      "width": 130,
+      "height": -340,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          130,
+          -340
+        ]
+      ],
+      "strokeColor": "#f59e0b",
+      "strokeStyle": "dashed",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "stream + tool call",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-provider",
+        "fixedPoint": [
+          1,
+          0.5
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-runtime",
+        "fixedPoint": [
+          0,
+          0.6
+        ]
+      },
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-runtime-loop",
+      "x": 600,
+      "y": 375,
+      "width": 0,
+      "height": 60,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          60
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "inspect output",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-runtime",
+        "fixedPoint": [
+          0.5,
+          1
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-loop",
+        "fixedPoint": [
+          0.5,
+          0
+        ]
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-loop-tools",
+      "x": 750,
+      "y": 480,
+      "width": 150,
+      "height": -175,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          150,
+          -175
+        ]
+      ],
+      "strokeColor": "#22c55e",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "run handlers",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-loop",
+        "fixedPoint": [
+          1,
+          0.5
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-tool-time",
+        "fixedPoint": [
+          0,
+          0.5
+        ]
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-tools-loop",
+      "x": 900,
+      "y": 610,
+      "width": -150,
+      "height": -125,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -150,
+          -125
+        ]
+      ],
+      "strokeColor": "#22c55e",
+      "strokeStyle": "dashed",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "tool output",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-tool-search",
+        "fixedPoint": [
+          0,
+          0.5
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-loop",
+        "fixedPoint": [
+          1,
+          0.5
+        ]
+      },
+      "strokeWidth": 2,
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "si-a-runtime-user",
+      "x": 450,
+      "y": 300,
+      "width": -140,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -140,
+          0
+        ]
+      ],
+      "strokeColor": "#4a9eed",
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "agent response",
+        "fontSize": 18
+      },
+      "startBinding": {
+        "elementId": "si-runtime",
+        "fixedPoint": [
+          0,
+          0.35
+        ]
+      },
+      "endBinding": {
+        "elementId": "si-user",
+        "fixedPoint": [
+          1,
+          0.35
+        ]
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-user__labelText",
+      "x": 144,
+      "y": 275,
+      "text": "Terminal User\nyou>  agent>",
+      "fontSize": 18,
+      "strokeColor": "#4a9eed",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-provider__labelText",
+      "x": 116,
+      "y": 642,
+      "text": "Responses API\nOpenAI / OpenRouter",
+      "fontSize": 18,
+      "strokeColor": "#f59e0b",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-runtime__labelText",
+      "x": 507,
+      "y": 293,
+      "text": "REPL Runtime\nhistory + commands",
+      "fontSize": 20,
+      "strokeColor": "#8b5cf6",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-loop__labelText",
+      "x": 511,
+      "y": 460,
+      "text": "Inner Tool Loop\ntool call cycle",
+      "fontSize": 18,
+      "strokeColor": "#f59e0b",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-tool-time__labelText",
+      "x": 929,
+      "y": 295,
+      "text": "get_current_time",
+      "fontSize": 18,
+      "strokeColor": "#22c55e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-tool-calc__labelText",
+      "x": 953,
+      "y": 394,
+      "text": "calculate",
+      "fontSize": 18,
+      "strokeColor": "#22c55e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-tool-read__labelText",
+      "x": 916,
+      "y": 495,
+      "text": "read_workspace_file",
+      "fontSize": 18,
+      "strokeColor": "#22c55e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-tool-search__labelText",
+      "x": 929,
+      "y": 595,
+      "text": "search_workspace",
+      "fontSize": 18,
+      "strokeColor": "#22c55e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-safety__labelText",
+      "x": 507,
+      "y": 664,
+      "text": "Guardrails\n- no absolute paths\n- no ../ traversal\n- byte + result caps",
+      "fontSize": 18,
+      "strokeColor": "#ef4444",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-user-runtime__labelText",
+      "x": 366,
+      "y": 324,
+      "text": "prompt",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-runtime-provider__labelText",
+      "x": 398,
+      "y": 452,
+      "text": "/responses request",
+      "fontSize": 18,
+      "strokeColor": "#8b5cf6",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-provider-runtime__labelText",
+      "x": 204,
+      "y": 454,
+      "text": "stream + tool call",
+      "fontSize": 18,
+      "strokeColor": "#f59e0b",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-runtime-loop__labelText",
+      "x": 526,
+      "y": 390,
+      "text": "inspect output",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-loop-tools__labelText",
+      "x": 786,
+      "y": 360,
+      "text": "run handlers",
+      "fontSize": 18,
+      "strokeColor": "#22c55e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-tools-loop__labelText",
+      "x": 706,
+      "y": 542,
+      "text": "tool output",
+      "fontSize": 18,
+      "strokeColor": "#22c55e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "si-a-runtime-user__labelText",
+      "x": 292,
+      "y": 250,
+      "text": "agent response",
+      "fontSize": 18,
+      "strokeColor": "#4a9eed",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

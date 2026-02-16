@@ -1,0 +1,278 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>We Built a Minimal Agent REPL | Blog | Eli Zibin</title>
+    <meta
+        name="description"
+        content="A short build log on turning a tiny terminal REPL into a real tool-calling agent loop."
+    />
+    <link rel="canonical" href="https://elizibin.com/blog/agent-repl-build-log/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="We Built a Minimal Agent REPL | Blog | Eli Zibin" />
+    <meta property="og:description" content="A short build log on turning a tiny terminal REPL into a real tool-calling agent loop." />
+    <meta property="og:url" content="https://elizibin.com/blog/agent-repl-build-log/" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/agent-repl-build-log/system-image.png" />
+    <meta property="og:image:alt" content="Hero image for We Built a Minimal Agent REPL" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="We Built a Minimal Agent REPL | Blog | Eli Zibin" />
+    <meta name="twitter:description" content="A short build log on turning a tiny terminal REPL into a real tool-calling agent loop." />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/agent-repl-build-log/system-image.png" />
+    <meta name="twitter:image:alt" content="Hero image for We Built a Minimal Agent REPL" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back to blog"
+                        title="Back to blog"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    We Built a Minimal Agent REPL
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    February 16, 2026
+                </p>
+                <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">agents</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">repl</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">typescript</span>
+</p>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    A short build log on turning a tiny terminal REPL into a real tool-calling agent loop.
+                </p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/agent-repl-build-log/system-image.png"
+        alt="Hero image for We Built a Minimal Agent REPL"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This project started as a simple idea: build the smallest possible agent runtime that still feels real in daily use. No framework magic, just a clear loop: user input, model response, tool calls, repeat.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">System image</h2>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/agent-repl-build-log/system-image.svg"
+        alt="System view of the minimal agent REPL architecture with provider and local tools."
+        loading="lazy"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">One-screen view: terminal REPL, provider API, and local tools tied together by a tool-call loop.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Live demo</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Quick run from the real REPL.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/agent-repl-build-log/live-repl.gif"
+        alt="Terminal recording of the agent REPL streaming output, running a tool call, and returning a final answer."
+        loading="lazy"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Live terminal pass: prompt -&gt; streamed response -&gt; tool call -&gt; final answer.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Loop diagram</h2>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/agent-repl-build-log/loop-diagram.svg"
+        alt="Agent loop diagram showing responses requests, function calls, tool execution, and resume."
+        loading="lazy"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Two loops: the outer REPL loop and the inner tool-calling loop.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What we built (quick timeline)</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Streaming assistant output in the terminal so we can see progress in real time.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. A thinking indicator before first token so slow turns still feel responsive.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">3. Session save/load so conversations can be resumed.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">4. Safe workspace inspection tools for reading and searching local files.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">5. Per-turn metrics plus Ctrl+C cancellation.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">6. Phase-based reasoning controls for plan/build/review modes.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Safety guardrails</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">We intentionally kept tool access constrained.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">- read_workspace_file blocks absolute paths and parent directory traversal.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">- search_workspace skips .git and node_modules.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">- Both tools cap bytes/results and skip binary content.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Provider flexibility</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The tiny loop that matters</h2>
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    TS
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">let</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> response </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> await</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> responses</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">create</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  input</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> history</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  tools</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  stream</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> true</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">history</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">push</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">...</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">response</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">output)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">while</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> (</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">hasFunctionCalls</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(response</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">output)) </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">  for</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> (</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> call </span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">of</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> getFunctionCalls</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(response</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">output)) </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">    const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> result </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> await</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> runTool</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(call</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">name</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> JSON</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">parse</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(call</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">arguments))</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">    history</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">push</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">      type</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "function_call_output"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">      call_id</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> call</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">call_id</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">      output</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> JSON</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">stringify</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(result)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">    }</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  response </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> await</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> responses</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">create</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">    input</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> history</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">    tools</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">    stream</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> true</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">  }</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  history</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">push</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">...</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">response</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">output)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Minimal tool-call loop: run tool calls, append outputs, continue response.</figcaption>
+            </figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Metrics screenshot</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Single-turn trace with both tool execution and per-turn metrics.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/agent-repl-build-log/metrics.png"
+        alt="Terminal screenshot showing tool call lines and meta metrics output for a completed REPL turn."
+        loading="lazy"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">One frame showing tool&gt; activity and meta&gt; status, request count, and token metrics.</figcaption>
+</figure>
+
+            </article>
+
+                </main>
+            </body>
+        </html>

@@ -168,6 +168,23 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asse
 
 10. Optional: publish a live-edit link by exporting with `mcp__excalidraw__export_to_excalidraw`.
 
+#### Reusable Example Pattern
+
+Use this share-link format when you want a re-editable source attached to a post:
+
+- `https://excalidraw.com/#json=<scene-id>,<scene-key>`
+
+Recommended authoring flow:
+
+1. Keep the share link in your notes/PR description.
+2. Store the exported source in repo as:
+   - `img/blog/<slug>/<asset-name>.excalidraw.json`
+3. Regenerate blog-safe assets any time with:
+
+```bash
+bun run excalidraw:asset -- --input img/blog/<slug>/<asset-name>.excalidraw.json --slug <slug> --name <asset-name>
+```
+
 #### Styling For A More Hand-Drawn Look
 
 When creating elements, bias toward these values:

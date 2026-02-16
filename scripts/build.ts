@@ -16,6 +16,7 @@ const BODY_CLASSES =
     "bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
+const BLOG_LIST_LIKE_PARAGRAPH_PATTERN = /^\s*(?:[-*]\s+|\d+\.\s+)/;
 const BLOG_CODE_THEME_LIGHT = "catppuccin-latte";
 const BLOG_CODE_THEME_DARK = "catppuccin-mocha";
 const BLOG_CODE_LANGUAGES = ["ts", "tsx", "js", "jsx", "json", "bash"] as const;
@@ -65,6 +66,7 @@ type RenderPageOptions = {
 type BlogCodeLanguage = (typeof BLOG_CODE_LANGUAGES)[number];
 
 type BlogCodeHighlight = (code: string, language: string) => string;
+type BlogParagraphSpacing = "default" | "list-item" | "list-item-last";
 
 function normalizeRootRelative(value: string): string {
     return value.replace(/^\/+/, "");
@@ -765,13 +767,31 @@ function renderBlogTags(tags: string[] | undefined): string {
     `);
 }
 
+function isListLikeBlogParagraph(text: string): boolean {
+    return BLOG_LIST_LIKE_PARAGRAPH_PATTERN.test(text);
+}
+
+function blogParagraphMarginClass(spacing: BlogParagraphSpacing): string {
+    if (spacing === "list-item") {
+        return "mb-3";
+    }
+
+    if (spacing === "list-item-last") {
+        return "mb-6";
+    }
+
+    return "mb-7";
+}
+
 function renderBlogBlock(
     tools: RenderTools,
     block: BlogBlock,
     highlightCode: BlogCodeHighlight,
+    paragraphSpacing: BlogParagraphSpacing = "default",
 ): string {
     if (block.type === "paragraph") {
-        return `<p class="font-roboto-mono text-lg leading-relaxed mb-9">${renderParagraphWithInlineLinks(block.text)}</p>`;
+        const marginClass = blogParagraphMarginClass(paragraphSpacing);
+        return `<p class="font-roboto-mono text-lg leading-relaxed ${marginClass}">${renderParagraphWithInlineLinks(block.text)}</p>`;
     }
 
     if (block.type === "heading") {
@@ -836,7 +856,24 @@ function renderBlogBlocks(
     highlightCode: BlogCodeHighlight,
 ): string {
     return blocks
-        .map((block) => renderBlogBlock(tools, block, highlightCode))
+        .map((block, index) => {
+            if (block.type !== "paragraph") {
+                return renderBlogBlock(tools, block, highlightCode);
+            }
+
+            if (!isListLikeBlogParagraph(block.text)) {
+                return renderBlogBlock(tools, block, highlightCode);
+            }
+
+            const nextBlock = blocks[index + 1];
+            const isNextListLikeParagraph =
+                nextBlock?.type === "paragraph" && isListLikeBlogParagraph(nextBlock.text);
+            const paragraphSpacing: BlogParagraphSpacing = isNextListLikeParagraph
+                ? "list-item"
+                : "list-item-last";
+
+            return renderBlogBlock(tools, block, highlightCode, paragraphSpacing);
+        })
         .join("\n                ");
 }
 
