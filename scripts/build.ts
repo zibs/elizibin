@@ -1,12 +1,14 @@
 import { mkdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createHighlighter } from "shiki";
-import { projects, type Project } from "../content/projects";
-import { blogPosts, type BlogBlock, type BlogPost } from "../content/blog";
+import {
+    blogPosts,
+    type BlogBlock,
+    type BlogPost,
+} from "../content/site-content";
 
 const ROOT_DIR = process.cwd();
 const HOME_PAGE = "index.html";
-const BLOG_INDEX_PAGE = "blog/index.html";
 const DEFAULT_SITE_URL = "https://elizibin.com";
 const SITE_URL = normalizeSiteUrl(process.env.SITE_URL ?? DEFAULT_SITE_URL);
 
@@ -20,6 +22,17 @@ const BLOG_LIST_LIKE_PARAGRAPH_PATTERN = /^\s*(?:[-*]\s+|\d+\.\s+)/;
 const BLOG_CODE_THEME_LIGHT = "catppuccin-latte";
 const BLOG_CODE_THEME_DARK = "catppuccin-mocha";
 const BLOG_CODE_LANGUAGES = ["ts", "tsx", "js", "jsx", "json", "bash"] as const;
+const IMAGE_THEME_VARIANT_PATTERN = /-(dark|light)$/;
+const TWEET_EMBED_HOSTS = new Set([
+    "twitter.com",
+    "www.twitter.com",
+    "mobile.twitter.com",
+    "x.com",
+    "www.x.com",
+    "mobile.x.com",
+]);
+const TWEET_STATUS_PATH_PATTERN =
+    /^\/(?:i\/web\/)?(?:[A-Za-z0-9_]+\/)?status\/\d+(?:\/.*)?$/;
 const BLOG_CODE_LANGUAGE_ALIASES: Record<string, (typeof BLOG_CODE_LANGUAGES)[number]> = {
     ts: "ts",
     typescript: "ts",
@@ -45,15 +58,6 @@ type SocialMeta = {
     imageAlt?: string;
 };
 
-type ProjectImageSources = {
-    light: string | null;
-    dark: string | null;
-};
-
-type ProjectSecondaryImage = {
-    src: string | null;
-};
-
 type RenderPageOptions = {
     tools: RenderTools;
     title: string;
@@ -67,6 +71,19 @@ type BlogCodeLanguage = (typeof BLOG_CODE_LANGUAGES)[number];
 
 type BlogCodeHighlight = (code: string, language: string) => string;
 type BlogParagraphSpacing = "default" | "list-item" | "list-item-last";
+type BlogImageBlock = Extract<BlogBlock, { type: "image" }>;
+type ImageThemeVariant = "light" | "dark" | null;
+type FirstBlogImageBlock = {
+    index: number;
+    block: BlogImageBlock;
+};
+type BlogHeroThemeImagePair = {
+    lightPath: string;
+    darkPath: string;
+    alt: string;
+    caption?: string;
+    pairedBlockIndex: number;
+};
 
 function normalizeRootRelative(value: string): string {
     return value.replace(/^\/+/, "");
@@ -141,10 +158,6 @@ function createRenderTools(outputPath: string): RenderTools {
     };
 }
 
-function projectOutputPath(slug: string): string {
-    return `oss/${encodeURIComponent(slug)}/index.html`;
-}
-
 function blogPostOutputPath(slug: string): string {
     return `blog/${encodeURIComponent(slug)}/index.html`;
 }
@@ -201,12 +214,11 @@ function formatPublishedAt(publishedAt: string): string {
         return publishedAt;
     }
 
-    return new Intl.DateTimeFormat("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        timeZone: "UTC",
-    }).format(parsedDate);
+    const day = String(parsedDate.getUTCDate()).padStart(2, "0");
+    const month = String(parsedDate.getUTCMonth() + 1).padStart(2, "0");
+    const year = String(parsedDate.getUTCFullYear());
+
+    return `${day}/${month}/${year}`;
 }
 
 function normalizeBlogCodeLanguage(language: string): BlogCodeLanguage | null {
@@ -216,6 +228,37 @@ function normalizeBlogCodeLanguage(language: string): BlogCodeLanguage | null {
 
 function formatSupportedBlogCodeLanguages(): string {
     return [...BLOG_CODE_LANGUAGES].join(", ");
+}
+
+function normalizeTweetEmbedUrl(value: string): string | null {
+    const trimmedValue = value.trim();
+    if (trimmedValue === "") {
+        return null;
+    }
+
+    let parsedUrl: URL;
+    try {
+        parsedUrl = new URL(trimmedValue);
+    } catch {
+        return null;
+    }
+
+    if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") {
+        return null;
+    }
+
+    if (!TWEET_EMBED_HOSTS.has(parsedUrl.hostname.toLowerCase())) {
+        return null;
+    }
+
+    if (!TWEET_STATUS_PATH_PATTERN.test(parsedUrl.pathname)) {
+        return null;
+    }
+
+    parsedUrl.protocol = "https:";
+    parsedUrl.search = "";
+    parsedUrl.hash = "";
+    return parsedUrl.toString();
 }
 
 async function createBlogCodeHighlighter(): Promise<BlogCodeHighlight> {
@@ -456,29 +499,6 @@ function renderLayout({
     `);
 }
 
-function renderProjectsList(tools: RenderTools, projectEntries: Project[]): string {
-    if (projectEntries.length === 0) {
-        return html(`
-            <ul class="font-roboto-mono text-lg leading-relaxed list-disc pl-7">
-                <li>No projects listed yet.</li>
-            </ul>
-        `);
-    }
-
-    const listItems = projectEntries
-        .map((project) => {
-            const projectHref = tools.linkTo(projectOutputPath(project.slug));
-            return `<li><a href="${projectHref}" class="${PRIMARY_LINK_CLASSES}">${escapeHtml(project.title)}</a>: ${escapeHtml(project.oneSentence)}</li>`;
-        })
-        .join("\n                ");
-
-    return html(`
-        <ul class="font-roboto-mono text-lg leading-relaxed list-disc pl-7 space-y-4">
-                ${listItems}
-        </ul>
-    `);
-}
-
 function sortBlogPostsByDateDesc(blogEntries: BlogPost[]): BlogPost[] {
     return [...blogEntries].sort((left, right) => {
         const leftDate = parsePublishedAt(left.publishedAt);
@@ -492,25 +512,33 @@ function sortBlogPostsByDateDesc(blogEntries: BlogPost[]): BlogPost[] {
     });
 }
 
-function renderRecentBlogPostsList(tools: RenderTools, blogEntries: BlogPost[]): string {
-    if (blogEntries.length === 0) {
+function renderGithubIconLink(githubUrl: string, label: string): string {
+    return `<a href="${escapeHtml(githubUrl)}" target="_blank" rel="noreferrer" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" class="inline-flex items-center leading-none text-black/75 hover:text-black dark:text-white/80 dark:hover:text-white"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8a8.01 8.01 0 0 0 5.47 7.59c.4.08.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 4.86a7.7 7.7 0 0 1 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg></a>`;
+}
+
+function renderHomeBlogList(tools: RenderTools, blogEntries: BlogPost[]): string {
+    const allItems = blogEntries.map((post) => {
+        const postHref = tools.linkTo(blogPostOutputPath(post.slug));
+        const githubUrl = post.githubUrl;
+        const githubIconMarkup = githubUrl
+            ? renderGithubIconLink(githubUrl, "Open GitHub repository")
+            : "";
+        const metaRowMarkup = `<div class="mt-1 flex items-center gap-x-2"><span class="font-roboto-mono text-xs opacity-70">(${escapeHtml(formatPublishedAt(post.publishedAt))})</span>${githubIconMarkup}</div>`;
+
+        return `<li><div><a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">${escapeHtml(post.title)}</a></div>${metaRowMarkup}<p class="font-roboto-mono text-base leading-relaxed mt-1">${renderParagraphWithInlineLinks(post.summary)}</p></li>`;
+    });
+
+    if (allItems.length === 0) {
         return html(`
             <p class="font-roboto-mono text-lg leading-relaxed">
-                No posts yet.
+                Nothing published yet.
             </p>
         `);
     }
 
-    const listItems = blogEntries
-        .map((post) => {
-            const postHref = tools.linkTo(blogPostOutputPath(post.slug));
-            return `<li><a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">${escapeHtml(post.title)}</a> <span class="opacity-70">(${escapeHtml(formatPublishedAt(post.publishedAt))})</span></li>`;
-        })
-        .join("\n                ");
-
     return html(`
-        <ul class="font-roboto-mono text-lg leading-relaxed list-disc pl-7 space-y-3">
-                ${listItems}
+        <ul class="font-roboto-mono text-lg leading-relaxed list-disc pl-7 space-y-5">
+                ${allItems.join("\n                ")}
         </ul>
     `);
 }
@@ -548,22 +576,10 @@ function renderParagraphWithInlineLinks(paragraph: string): string {
     return rendered;
 }
 
-function renderProjectParagraphs(paragraphs: string[]): string {
-    return paragraphs
-        .map(
-            (paragraph) =>
-                `<p class="font-roboto-mono text-lg leading-relaxed mb-9">${renderParagraphWithInlineLinks(paragraph)}</p>`,
-        )
-        .join("\n                ");
-}
-
 function renderHomePage(
     tools: RenderTools,
-    projectEntries: Project[],
     blogEntries: BlogPost[],
 ): string {
-    const recentBlogEntries = blogEntries.slice(0, 3);
-
     return renderLayout({
         tools,
         title: "Eli Zibin",
@@ -587,15 +603,9 @@ function renderHomePage(
             </article>
             <section class="max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-lg leading-relaxed mb-6">
-                    Here are some of the open source projects I'm working on or I've built recently.
+                    writing:
                 </p>
-                ${renderProjectsList(tools, projectEntries)}
-            </section>
-            <section class="max-w-3xl mx-auto mt-14">
-                <p class="font-roboto-mono text-lg leading-relaxed mb-6">
-                    I also publish writing in the <a href="${tools.linkTo(BLOG_INDEX_PAGE)}" class="${PRIMARY_LINK_CLASSES}">blog</a>.
-                </p>
-                ${renderRecentBlogPostsList(tools, recentBlogEntries)}
+                ${renderHomeBlogList(tools, blogEntries)}
             </section>
         `),
     });
@@ -616,128 +626,12 @@ function resolveImageSource(
     return tools.assetTo(imagePath);
 }
 
-function resolveProjectImageSources(
-    tools: RenderTools,
-    project: Project,
-): ProjectImageSources {
-    const lightPath = project.socialImageLight ?? project.socialImage;
-    const darkPath = project.socialImageDark;
-
-    return {
-        light: resolveImageSource(tools, lightPath),
-        dark: resolveImageSource(tools, darkPath),
-    };
-}
-
-function resolveProjectSecondaryImage(
-    tools: RenderTools,
-    project: Project,
-): ProjectSecondaryImage {
-    return {
-        src: resolveImageSource(tools, project.secondaryImage),
-    };
-}
-
-function resolveProjectShareImagePath(project: Project): string | null {
-    return (
-        project.socialImageLight ??
-        project.socialImage ??
-        project.socialImageDark ??
-        project.secondaryImage ??
-        null
-    );
-}
-
-function renderProjectPage(tools: RenderTools, project: Project): string {
-    const imageSources = resolveProjectImageSources(tools, project);
-    const secondaryImage = resolveProjectSecondaryImage(tools, project);
-    const fallbackImageSrc = imageSources.light ?? imageSources.dark;
-    const imageMarkup = fallbackImageSrc
-        ? imageSources.dark
-            ? html(`
-                <figure class="mb-9 max-w-2xl mx-auto">
-                    <picture>
-                        <source media="(prefers-color-scheme: dark)" srcset="${escapeHtml(imageSources.dark)}" />
-                        <img
-                            src="${escapeHtml(fallbackImageSrc)}"
-                            alt="Social preview for ${escapeHtml(project.title)}"
-                            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-                        />
-                    </picture>
-                </figure>
-            `)
-            : html(`
-                <figure class="mb-9 max-w-2xl mx-auto">
-                    <img
-                        src="${escapeHtml(fallbackImageSrc)}"
-                        alt="Social preview for ${escapeHtml(project.title)}"
-                        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-                    />
-                </figure>
-            `)
-        : "";
-
-    const secondaryImageMarkup = secondaryImage.src
-        ? html(`
-            <figure class="mb-9 max-w-2xl mx-auto">
-                <img
-                    src="${escapeHtml(secondaryImage.src)}"
-                    alt="Additional preview for ${escapeHtml(project.title)}"
-                    class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-                />
-            </figure>
-        `)
-        : "";
-
-    return renderLayout({
-        tools,
-        title: `${project.title} | Eli Zibin`,
-        description: project.oneSentence,
-        headingLinksHome: true,
-        socialMeta: {
-            type: "article",
-            imagePath: resolveProjectShareImagePath(project),
-            imageAlt: `Social preview for ${project.title}`,
-        },
-        content: html(`
-            <article class="max-w-3xl mx-auto">
-                <p class="mb-9">
-                    <a
-                        href="${tools.linkTo(HOME_PAGE)}"
-                        class="inline-flex items-center text-2xl leading-none ${PRIMARY_LINK_CLASSES}"
-                        aria-label="Back home"
-                        title="Back home"
-                    >
-                        &#8592;
-                    </a>
-                </p>
-                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-6">
-                    ${escapeHtml(project.title)}
-                </h2>
-                ${imageMarkup}
-                ${secondaryImageMarkup}
-                <p class="font-roboto-mono text-lg leading-relaxed mb-6">
-                    ${escapeHtml(project.oneSentence)}
-                </p>
-                ${renderProjectParagraphs(project.paragraphs)}
-                <p class="font-roboto-mono text-lg leading-relaxed">
-                    <a
-                        href="${escapeHtml(project.githubUrl)}"
-                        target="_blank"
-                        rel="noreferrer"
-                        class="${PRIMARY_LINK_CLASSES}"
-                    >
-                        View on GitHub
-                    </a>
-                </p>
-            </article>
-        `),
-    });
-}
-
-function resolveBlogShareImagePath(post: BlogPost): string | null {
+function resolveBlogShareImage(post: BlogPost): { path: string; alt: string } | null {
     if (post.heroImage) {
-        return post.heroImage;
+        return {
+            path: post.heroImage,
+            alt: `Hero image for ${post.title}`,
+        };
     }
 
     const firstImageBlock = post.blocks.find(
@@ -745,7 +639,111 @@ function resolveBlogShareImagePath(post: BlogPost): string | null {
             block.type === "image",
     );
 
-    return firstImageBlock?.src ?? null;
+    if (!firstImageBlock) {
+        return null;
+    }
+
+    return {
+        path: firstImageBlock.src,
+        alt: firstImageBlock.alt,
+    };
+}
+
+function normalizeImagePathIdentity(imagePath: string): string {
+    const trimmedPath = imagePath.trim();
+    if (trimmedPath === "") {
+        return "";
+    }
+
+    let normalizedPath = trimmedPath;
+    if (/^https?:\/\//.test(trimmedPath)) {
+        try {
+            normalizedPath = new URL(trimmedPath).pathname;
+        } catch {
+            normalizedPath = trimmedPath;
+        }
+    }
+
+    const withoutQueryOrHash = normalizedPath.split(/[?#]/, 1)[0];
+    const rootRelativePath = normalizeRootRelative(withoutQueryOrHash).toLowerCase();
+    return rootRelativePath.replace(/\.[^./]+$/, "");
+}
+
+function imagePathThemeVariant(imagePath: string): ImageThemeVariant {
+    const normalizedPathIdentity = normalizeImagePathIdentity(imagePath);
+    if (normalizedPathIdentity.endsWith("-dark")) {
+        return "dark";
+    }
+
+    if (normalizedPathIdentity.endsWith("-light")) {
+        return "light";
+    }
+
+    return null;
+}
+
+function normalizeThemeImagePathIdentity(imagePath: string): string {
+    const normalizedPathIdentity = normalizeImagePathIdentity(imagePath);
+    return normalizedPathIdentity.replace(IMAGE_THEME_VARIANT_PATTERN, "");
+}
+
+function findFirstImageBlock(blocks: BlogBlock[]): FirstBlogImageBlock | null {
+    for (const [index, block] of blocks.entries()) {
+        if (block.type === "image") {
+            return { index, block };
+        }
+    }
+
+    return null;
+}
+
+function resolveBlogHeroThemeImagePair(post: BlogPost): BlogHeroThemeImagePair | null {
+    if (!post.heroImage) {
+        return null;
+    }
+
+    const firstImageBlock = findFirstImageBlock(post.blocks);
+    if (!firstImageBlock) {
+        return null;
+    }
+
+    const heroThemeVariant = imagePathThemeVariant(post.heroImage) ?? "light";
+    const blockThemeVariant = imagePathThemeVariant(firstImageBlock.block.src) ?? "light";
+    if (heroThemeVariant === blockThemeVariant) {
+        return null;
+    }
+
+    if (
+        normalizeThemeImagePathIdentity(post.heroImage) !==
+        normalizeThemeImagePathIdentity(firstImageBlock.block.src)
+    ) {
+        return null;
+    }
+
+    return {
+        lightPath: heroThemeVariant === "light" ? post.heroImage : firstImageBlock.block.src,
+        darkPath: heroThemeVariant === "dark" ? post.heroImage : firstImageBlock.block.src,
+        alt: firstImageBlock.block.alt,
+        caption: firstImageBlock.block.caption,
+        pairedBlockIndex: firstImageBlock.index,
+    };
+}
+
+function shouldRenderBlogHeroImage(post: BlogPost): boolean {
+    if (!post.heroImage) {
+        return false;
+    }
+
+    const firstImageBlock = findFirstImageBlock(post.blocks);
+
+    if (!firstImageBlock) {
+        return true;
+    }
+
+    return (
+        normalizeImagePathIdentity(post.heroImage) !==
+        normalizeImagePathIdentity(firstImageBlock.block.src)
+    );
 }
 
 function renderBlogTags(tags: string[] | undefined): string {
@@ -828,10 +826,41 @@ function renderBlogBlock(
         `);
     }
 
+    if (block.type === "tweet") {
+        const tweetUrl = normalizeTweetEmbedUrl(block.url);
+        if (!tweetUrl) {
+            return "";
+        }
+
+        return html(`
+            <figure class="mb-9 max-w-3xl mx-auto">
+                <div class="flex justify-center">
+                    <blockquote class="twitter-tweet" data-dnt="true">
+                        <a href="${escapeHtml(tweetUrl)}">${escapeHtml(tweetUrl)}</a>
+                    </blockquote>
+                </div>
+                ${
+                    block.caption
+                        ? `<figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${escapeHtml(block.caption)}</figcaption>`
+                        : ""
+                }
+            </figure>
+        `);
+    }
+
     const imageSrc = resolveImageSource(tools, block.src);
     if (!imageSrc) {
         return "";
     }
+
+    const maxHeightPx =
+        typeof block.maxHeightPx === "number" && Number.isFinite(block.maxHeightPx)
+            ? Math.max(1, Math.round(block.maxHeightPx))
+            : undefined;
+    const imageSizeClasses = maxHeightPx ? "w-auto max-w-full h-auto object-contain" : "w-full h-auto";
+    const imageAlignmentClasses = block.centered ? "block mx-auto" : "";
+    const imageClassName =
+        `${imageSizeClasses} ${imageAlignmentClasses} rounded-xl border border-black/10 dark:border-white/15`.trim();
 
     return html(`
         <figure class="mb-9 max-w-3xl mx-auto">
@@ -839,7 +868,8 @@ function renderBlogBlock(
                 src="${escapeHtml(imageSrc)}"
                 alt="${escapeHtml(block.alt)}"
                 loading="lazy"
-                class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+                class="${imageClassName}"
+                ${maxHeightPx ? `style="max-height: ${maxHeightPx}px;"` : ""}
             />
             ${
                 block.caption
@@ -877,85 +907,41 @@ function renderBlogBlocks(
         .join("\n                ");
 }
 
-function renderBlogIndexPage(tools: RenderTools, blogEntries: BlogPost[]): string {
-    const listMarkup =
-        blogEntries.length === 0
-            ? html(`
-                <p class="font-roboto-mono text-lg leading-relaxed">
-                    No posts published yet.
-                </p>
-            `)
-            : html(`
-                <div class="space-y-10">
-                ${blogEntries
-                    .map((post) => {
-                        const postHref = tools.linkTo(blogPostOutputPath(post.slug));
-                        const tags = post.tags && post.tags.length > 0 ? post.tags.join(", ") : "";
-
-                        return html(`
-                            <article class="border-b border-black/10 dark:border-white/10 pb-8">
-                                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight mb-3">
-                                    <a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">
-                                        ${escapeHtml(post.title)}
-                                    </a>
-                                </h2>
-                                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-3">
-                                    ${escapeHtml(formatPublishedAt(post.publishedAt))}
-                                </p>
-                                <p class="font-roboto-mono text-lg leading-relaxed mb-3">
-                                    ${escapeHtml(post.summary)}
-                                </p>
-                                ${
-                                    tags
-                                        ? `<p class="font-roboto-mono text-sm leading-relaxed opacity-80">Tags: ${escapeHtml(tags)}</p>`
-                                        : ""
-                                }
-                            </article>
-                        `);
-                    })
-                    .join("\n")}
-                </div>
-            `);
-
-    return renderLayout({
-        tools,
-        title: "Blog | Eli Zibin",
-        description: "Writing on software, open source, and process.",
-        headingLinksHome: true,
-        socialMeta: {
-            type: "website",
-        },
-        content: html(`
-            <section class="max-w-3xl mx-auto">
-                <p class="mb-9">
-                    <a
-                        href="${tools.linkTo(HOME_PAGE)}"
-                        class="inline-flex items-center text-2xl leading-none ${PRIMARY_LINK_CLASSES}"
-                        aria-label="Back home"
-                        title="Back home"
-                    >
-                        &#8592;
-                    </a>
-                </p>
-                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-6">
-                    Blog
-                </h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-10">
-                    Notes, build logs, and longer-form writing.
-                </p>
-                ${listMarkup}
-            </section>
-        `),
-    });
-}
-
 function renderBlogPostPage(
     tools: RenderTools,
     post: BlogPost,
     highlightCode: BlogCodeHighlight,
 ): string {
+    const shareImage = resolveBlogShareImage(post);
+    const heroThemeImagePair = resolveBlogHeroThemeImagePair(post);
     const heroImageSrc = resolveImageSource(tools, post.heroImage);
-    const heroImageMarkup = heroImageSrc
+    const hasTweetEmbed = post.blocks.some((block) => block.type === "tweet");
+    const shouldRenderHeroImage = shouldRenderBlogHeroImage(post);
+    const heroThemeLightImageSrc = resolveImageSource(tools, heroThemeImagePair?.lightPath);
+    const heroThemeDarkImageSrc = resolveImageSource(tools, heroThemeImagePair?.darkPath);
+    const heroImageMarkup =
+        heroThemeImagePair && heroThemeLightImageSrc && heroThemeDarkImageSrc && shouldRenderHeroImage
+            ? html(`
+                <figure class="mb-9 max-w-3xl mx-auto">
+                    <picture>
+                        <source
+                            srcset="${escapeHtml(heroThemeDarkImageSrc)}"
+                            media="(prefers-color-scheme: dark)"
+                        />
+                        <img
+                            src="${escapeHtml(heroThemeLightImageSrc)}"
+                            alt="${escapeHtml(heroThemeImagePair.alt)}"
+                            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+                        />
+                    </picture>
+                    ${
+                        heroThemeImagePair.caption
+                            ? `<figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${escapeHtml(heroThemeImagePair.caption)}</figcaption>`
+                            : ""
+                    }
+                </figure>
+            `)
+            : heroImageSrc && shouldRenderHeroImage
         ? html(`
             <figure class="mb-9 max-w-3xl mx-auto">
                 <img
@@ -966,6 +952,12 @@ function renderBlogPostPage(
             </figure>
         `)
         : "";
+    const blogBlocksToRender = heroThemeImagePair
+        ? post.blocks.filter((_block, index) => index !== heroThemeImagePair.pairedBlockIndex)
+        : post.blocks;
+    const tweetWidgetScriptMarkup = hasTweetEmbed
+        ? `<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`
+        : "";
 
     return renderLayout({
         tools,
@@ -974,17 +966,17 @@ function renderBlogPostPage(
         headingLinksHome: true,
         socialMeta: {
             type: "article",
-            imagePath: resolveBlogShareImagePath(post),
-            imageAlt: `Hero image for ${post.title}`,
+            imagePath: shareImage?.path ?? null,
+            imageAlt: shareImage?.alt,
         },
         content: html(`
             <article class="max-w-3xl mx-auto">
                 <p class="mb-9">
                     <a
-                        href="${tools.linkTo(BLOG_INDEX_PAGE)}"
+                        href="${tools.linkTo(HOME_PAGE)}"
                         class="inline-flex items-center text-2xl leading-none ${PRIMARY_LINK_CLASSES}"
-                        aria-label="Back to blog"
-                        title="Back to blog"
+                        aria-label="Back home"
+                        title="Back home"
                     >
                         &#8592;
                     </a>
@@ -1000,8 +992,9 @@ function renderBlogPostPage(
                     ${escapeHtml(post.summary)}
                 </p>
                 ${heroImageMarkup}
-                ${renderBlogBlocks(tools, post.blocks, highlightCode)}
+                ${renderBlogBlocks(tools, blogBlocksToRender, highlightCode)}
             </article>
+            ${tweetWidgetScriptMarkup}
         `),
     });
 }
@@ -1095,75 +1088,6 @@ async function assertLocalImageExists(
     }
 }
 
-async function validateProjects(projectEntries: Project[]): Promise<void> {
-    const seenSlugs = new Set<string>();
-
-    for (const project of projectEntries) {
-        assertNonEmpty(project.slug, "slug", "Project", project.slug || "<unknown>");
-        assertNonEmpty(project.title, "title", "Project", project.slug);
-        assertNonEmpty(project.oneSentence, "oneSentence", "Project", project.slug);
-        assertNonEmpty(project.githubUrl, "githubUrl", "Project", project.slug);
-
-        if (project.paragraphs.length === 0) {
-            throw new Error(`Project "${project.slug}" must include at least one paragraph.`);
-        }
-
-        for (const [index, paragraph] of project.paragraphs.entries()) {
-            const fieldName = `paragraphs[${index}]`;
-            assertNonEmpty(paragraph, fieldName, "Project", project.slug);
-
-            for (const match of paragraph.matchAll(MARKDOWN_LINK_PATTERN)) {
-                const href = match[2];
-                validateParagraphLink(href, "Project", project.slug, fieldName);
-            }
-        }
-
-        if (!SLUG_PATTERN.test(project.slug)) {
-            throw new Error(
-                `Invalid slug "${project.slug}". Use lowercase letters, numbers, and hyphens only.`,
-            );
-        }
-
-        if (seenSlugs.has(project.slug)) {
-            throw new Error(`Duplicate slug "${project.slug}".`);
-        }
-
-        seenSlugs.add(project.slug);
-
-        try {
-            const parsedUrl = new URL(project.githubUrl);
-            if (parsedUrl.protocol !== "https:") {
-                throw new Error();
-            }
-        } catch {
-            throw new Error(
-                `Invalid githubUrl for "${project.slug}": ${project.githubUrl}`,
-            );
-        }
-
-        const imageFields: Array<{ fieldName: string; value?: string }> = [
-            { fieldName: "socialImage", value: project.socialImage },
-            { fieldName: "socialImageLight", value: project.socialImageLight },
-            { fieldName: "socialImageDark", value: project.socialImageDark },
-            { fieldName: "secondaryImage", value: project.secondaryImage },
-        ];
-
-        for (const { fieldName, value } of imageFields) {
-            if (!value) {
-                continue;
-            }
-
-            validateLocalImagePath(value, "Project", project.slug, fieldName);
-
-            if (/^https?:\/\//.test(value)) {
-                continue;
-            }
-
-            await assertLocalImageExists(value, "Project", project.slug, fieldName);
-        }
-    }
-}
-
 async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
     const seenSlugs = new Set<string>();
 
@@ -1213,6 +1137,13 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
             throw new Error(`Blog post "${post.slug}" must include at least one block.`);
         }
 
+        const hasImageBlock = post.blocks.some((block) => block.type === "image");
+        if (!post.heroImage && !hasImageBlock) {
+            throw new Error(
+                `Blog post "${post.slug}" must include "heroImage" or at least one image block so share metadata has an image.`,
+            );
+        }
+
         for (const [blockIndex, block] of post.blocks.entries()) {
             const blockPath = `blocks[${blockIndex}]`;
 
@@ -1254,6 +1185,27 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
                 if (!normalizeBlogCodeLanguage(block.language)) {
                     throw new Error(
                         `Blog post "${post.slug}" has unsupported code language in "${blockPath}.language": ${block.language}. Supported languages: ${formatSupportedBlogCodeLanguages()}.`,
+                    );
+                }
+
+                if (block.caption !== undefined) {
+                    assertNonEmpty(
+                        block.caption,
+                        `${blockPath}.caption`,
+                        "Blog post",
+                        post.slug,
+                    );
+                }
+
+                continue;
+            }
+
+            if (block.type === "tweet") {
+                assertNonEmpty(block.url, `${blockPath}.url`, "Blog post", post.slug);
+
+                if (!normalizeTweetEmbedUrl(block.url)) {
+                    throw new Error(
+                        `Blog post "${post.slug}" has an invalid tweet URL in "${blockPath}.url": ${block.url}`,
                     );
                 }
 
@@ -1355,7 +1307,6 @@ async function validateGeneratedReferences(
 }
 
 async function buildSite(): Promise<void> {
-    await validateProjects(projects);
     await validateBlogPosts(blogPosts);
 
     const sortedBlogPosts = sortBlogPostsByDateDesc(blogPosts);
@@ -1367,22 +1318,9 @@ async function buildSite(): Promise<void> {
     const generatedPages = new Map<string, string>();
 
     const homeTools = createRenderTools(HOME_PAGE);
-    const homeHtml = renderHomePage(homeTools, projects, sortedBlogPosts);
+    const homeHtml = renderHomePage(homeTools, sortedBlogPosts);
     generatedPages.set(HOME_PAGE, homeHtml);
     await writePage(HOME_PAGE, homeHtml);
-
-    const blogIndexTools = createRenderTools(BLOG_INDEX_PAGE);
-    const blogIndexHtml = renderBlogIndexPage(blogIndexTools, sortedBlogPosts);
-    generatedPages.set(BLOG_INDEX_PAGE, blogIndexHtml);
-    await writePage(BLOG_INDEX_PAGE, blogIndexHtml);
-
-    for (const project of projects) {
-        const outputPath = projectOutputPath(project.slug);
-        const pageTools = createRenderTools(outputPath);
-        const pageHtml = renderProjectPage(pageTools, project);
-        generatedPages.set(outputPath, pageHtml);
-        await writePage(outputPath, pageHtml);
-    }
 
     for (const post of sortedBlogPosts) {
         const outputPath = blogPostOutputPath(post.slug);
@@ -1396,6 +1334,4 @@ async function buildSite(): Promise<void> {
 }
 
 await buildSite();
-console.log(
-    `Built ${projects.length} project page(s) and ${blogPosts.length} blog page(s).`,
-);
+console.log(`Built ${blogPosts.length} blog page(s).`);

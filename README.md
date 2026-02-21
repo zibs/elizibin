@@ -8,28 +8,22 @@ Blog implementation planning and post authoring conventions are documented in:
 
 - `docs/blog-feature-plan-and-authoring.md`
 
-## Open Source Project Pages + Blog
+## Blog Site
 
 This site now uses a Bun + TypeScript build step to generate static pages.
 
 ### Content source
 
-Add/update projects in:
+Blog post files:
 
-- `content/projects.ts`
-- `content/blog.ts` (for blog posts)
+- `content/blog-posts/*.ts` (one file per post)
+- `content/blog-posts/index.ts` (post exports + `blogPosts` ordering)
+- `content/site-content.ts` (build entrypoint that re-exports blog content/types)
 
-Each project has:
+When adding a new post:
 
-- `slug`
-- `title`
-- `oneSentence`
-- `paragraphs` (array of paragraph strings)
-- `githubUrl`
-- `socialImageLight` (optional)
-- `socialImageDark` (optional)
-- `socialImage` (optional fallback if you only have one image)
-- `secondaryImage` (optional, displayed below the main image)
+1. Add a new post file in `content/blog-posts/`.
+2. Export it from `content/blog-posts/index.ts` and include it in `blogPosts` ordering.
 
 You can embed links in paragraph text using markdown-style links:
 
@@ -41,6 +35,7 @@ Blog posts support block-based composition:
 - `heading`
 - `image`
 - `code` (Shiki-highlighted, light/dark theme aware)
+- `tweet` (Twitter/X status embed via URL)
 
 ### Build
 
@@ -58,9 +53,7 @@ SITE_URL="https://elizibin.com" bun run build
 
 This generates:
 
-- `index.html` (home page, including projects and recent blog posts)
-- `oss/<slug>/index.html` (project detail pages)
-- `blog/index.html` (blog index)
+- `index.html` (home page with blog post list)
 - `blog/<slug>/index.html` (blog post pages)
 - `bun.lock` (Bun dependency lockfile)
 
@@ -84,6 +77,13 @@ Default style preset: `handdrawn-soft`
 - Text: hand-drawn font family (Virgil-style)
 - Arrows/lines: medium sloppiness with arrowhead defaults
 
+Text rendering reliability note:
+
+- Prefer explicit `text` elements for diagram node captions.
+- Do not rely only on shape `label` values for critical text.
+- If generated PNG/SVG assets show unlabeled boxes, move those labels into standalone
+  `text` elements in the checkpoint JSON and rerun `bun run excalidraw:asset`.
+
 Skip PNG generation:
 
 ```bash
@@ -102,7 +102,7 @@ You can also pipe JSON from stdin:
 cat /tmp/diagram.json | bun run excalidraw:asset -- --slug my-post --name system-flow
 ```
 
-Then use the emitted snippet in `content/blog.ts`.
+Then use the emitted snippet in the matching post file in `content/blog-posts/`.
 
 ### Typecheck
 
@@ -116,16 +116,14 @@ npm run typecheck
 
 The build validates:
 
-- project slug format and duplicates
 - blog slug format, dates, and content blocks
 - blog code block language support
-- local social image file existence
+- tweet block URL format (`twitter.com` / `x.com` status links)
+- blog share metadata image presence (`heroImage` or at least one `image` block)
 - local blog image file existence
 - generated internal `href` and `src` references
 
 Internal links are emitted as explicit `index.html` paths so local `file://` browsing works consistently.
-
-Project detail pages emit Open Graph and Twitter meta tags using the project's share image fields.
 
 ### Blog code highlighting
 
@@ -141,8 +139,8 @@ This project is still a plain static site. There is no SSR/runtime requirement.
 
 ### Recommended flow
 
-1. Edit `content/projects.ts` or `content/blog.ts`, and add/update images in `img/projects/` or `img/blog/`.
-2. Do not manually edit generated files in `oss/**` or `blog/**` (they are overwritten by build).
+1. Edit a post in `content/blog-posts/` (and/or `content/blog-posts/index.ts`), plus images in `img/blog/` (or reused assets).
+2. Do not manually edit generated files in `blog/**` (they are overwritten by build).
 3. Run `bun run build`.
 4. Run `npm run typecheck`.
 5. Commit and push.
@@ -155,7 +153,7 @@ This project is still a plain static site. There is no SSR/runtime requirement.
 - Publish directory: `.`
 - Optional env var: `SITE_URL=https://your-domain.com` (only needed if Netlify runs the build command)
 
-If you keep generated files committed (`index.html` + `oss/**` + `blog/**`), Netlify can deploy directly without running Bun in CI.
+If you keep generated files committed (`index.html` + `blog/**`), Netlify can deploy directly without running Bun in CI.
 
 ## Dependency Management
 

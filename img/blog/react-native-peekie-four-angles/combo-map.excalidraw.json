@@ -1,0 +1,390 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title1",
+      "x": 175,
+      "y": 18,
+      "text": "One Peekie Post, Four Angles",
+      "fontSize": 30,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "sub1",
+      "x": 160,
+      "y": 58,
+      "text": "How-to + build log + strategy + implementation detail",
+      "fontSize": 18,
+      "strokeColor": "#757575",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "zone1",
+      "x": 30,
+      "y": 90,
+      "width": 740,
+      "height": 470,
+      "backgroundColor": "#dbe4ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 1,
+      "opacity": 30,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "ellipse",
+      "id": "core",
+      "x": 290,
+      "y": 235,
+      "width": 220,
+      "height": 120,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Main story arc\nShip -> Learn -> Decide -> Refine",
+        "fontSize": 18
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "laneHow",
+      "x": 70,
+      "y": 125,
+      "width": 190,
+      "height": 90,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 2,
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "How-to lane\nInstall + first peek",
+        "fontSize": 17
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "laneBuild",
+      "x": 540,
+      "y": 125,
+      "width": 190,
+      "height": 90,
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Build-log lane\nWhat changed and why",
+        "fontSize": 17
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "laneDecide",
+      "x": 70,
+      "y": 410,
+      "width": 190,
+      "height": 90,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Decision lane\nWhy native module",
+        "fontSize": 17
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "laneImpl",
+      "x": 540,
+      "y": 410,
+      "width": 190,
+      "height": 90,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "strokeWidth": 2,
+      "roundness": {
+        "type": 3
+      },
+      "label": {
+        "text": "Implementation lane\nSlots + lifecycle",
+        "fontSize": 17
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "aHow",
+      "x": 300,
+      "y": 280,
+      "width": -40,
+      "height": -90,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -40,
+          -90
+        ]
+      ],
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "practical",
+        "fontSize": 14
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "aBuild",
+      "x": 500,
+      "y": 280,
+      "width": 40,
+      "height": -90,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          -90
+        ]
+      ],
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "narrative",
+        "fontSize": 14
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "aDecide",
+      "x": 300,
+      "y": 310,
+      "width": -40,
+      "height": 100,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -40,
+          100
+        ]
+      ],
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "trade-offs",
+        "fontSize": 14
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "aImpl",
+      "x": 500,
+      "y": 310,
+      "width": 40,
+      "height": 100,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          100
+        ]
+      ],
+      "strokeColor": "#22c55e",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "label": {
+        "text": "code",
+        "fontSize": 14
+      },
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "ellipse",
+      "id": "head",
+      "x": 355,
+      "y": 430,
+      "width": 90,
+      "height": 64,
+      "backgroundColor": "#eebefa",
+      "fillStyle": "hachure",
+      "strokeColor": "#ec4899",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "ellipse",
+      "id": "eyeL",
+      "x": 382,
+      "y": 454,
+      "width": 8,
+      "height": 8,
+      "backgroundColor": "#1e1e1e",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "ellipse",
+      "id": "eyeR",
+      "x": 410,
+      "y": 454,
+      "width": 8,
+      "height": 8,
+      "backgroundColor": "#1e1e1e",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "smile",
+      "x": 384,
+      "y": 472,
+      "width": 36,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          26,
+          6
+        ],
+        [
+          36,
+          0
+        ]
+      ],
+      "strokeColor": "#ef4444",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "startArrowhead": null,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "diamond",
+      "id": "spark1",
+      "x": 340,
+      "y": 438,
+      "width": 16,
+      "height": 16,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "diamond",
+      "id": "spark2",
+      "x": 448,
+      "y": 438,
+      "width": 16,
+      "height": 16,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "noteCute",
+      "x": 295,
+      "y": 505,
+      "text": "Cute mascot = keep the post approachable",
+      "fontSize": 16,
+      "strokeColor": "#757575",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

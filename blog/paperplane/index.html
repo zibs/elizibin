@@ -1,0 +1,242 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>From Manual TestFlight Chaos to One Command | Blog | Eli Zibin</title>
+    <meta
+        name="description"
+        content="Turning a tedious iOS release routine into a minimal, deterministic CLI flow for TestFlight, without using Fastlane, EAS, or Xcode."
+    />
+    <link rel="canonical" href="https://elizibin.com/blog/paperplane/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="From Manual TestFlight Chaos to One Command | Blog | Eli Zibin" />
+    <meta property="og:description" content="Turning a tedious iOS release routine into a minimal, deterministic CLI flow for TestFlight, without using Fastlane, EAS, or Xcode." />
+    <meta property="og:url" content="https://elizibin.com/blog/paperplane/" />
+    <meta property="og:image" content="https://elizibin.com/img/projects/paperplane-social.png" />
+    <meta property="og:image:alt" content="Hero image for From Manual TestFlight Chaos to One Command" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="From Manual TestFlight Chaos to One Command | Blog | Eli Zibin" />
+    <meta name="twitter:description" content="Turning a tedious iOS release routine into a minimal, deterministic CLI flow for TestFlight, without using Fastlane, EAS, or Xcode." />
+    <meta name="twitter:image" content="https://elizibin.com/img/projects/paperplane-social.png" />
+    <meta name="twitter:image:alt" content="Hero image for From Manual TestFlight Chaos to One Command" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    From Manual TestFlight Chaos to One Command
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    18/02/2026
+                </p>
+                <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">react-native</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">ios</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">testflight</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">cli</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">release</span>
+</p>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    Turning a tedious iOS release routine into a minimal, deterministic CLI flow for TestFlight, without using Fastlane, EAS, or Xcode.
+                </p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <picture>
+        <source
+            srcset="../../img/projects/paperplane-social-dark.png"
+            media="(prefers-color-scheme: dark)"
+        />
+        <img
+            src="../../img/projects/paperplane-social.png"
+            alt="Paperplane project social image representing a small iOS TestFlight release CLI."
+            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        />
+    </picture>
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Paperplane focuses on one thing: a repeatable local iOS release flow.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Shipping to TestFlight sounds simple, and it is, having done it for years with React Native, but in practice it is a chain of small steps. I wanted one command that makes the path explicit: bump build number, archive/export, then upload, all automatically, without using Fastlane, EAS, or Xcode.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What this solves in plain language</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">While building another app, I got tired of opening Xcode, archiving, and uploading to TestFlight manually. With paperplane, the checklist of what to do is encoded in the CLI, so the command does the routine work the same way every time.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why I built this minimally</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This started as an experiment: could I get a useful release tool with the smallest possible surface area? I was not trying to build a release platform. I just wanted a local tool I could trust and understand end-to-end.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Fastlane and EAS are strong tools, but for this project I wanted fewer moving parts, no big framework layer, and a straightforward local flow.</p>
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    BASH
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">npx</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> react-native-paperplane</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --dry-run</span></span>
+<span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">npx</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> react-native-paperplane</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The minimal path: inspect first, then run the real release.</figcaption>
+            </figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What the command actually does</h2>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/paperplane-one-command-testflight/release-flow.png"
+        alt="Diagram of Paperplane release flow: resolve workspace and build number, update config and Info.plist, archive and export IPA, then upload to TestFlight, with dry-run and clean-git guardrails."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 560px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Paperplane keeps the release path explicit: resolve, update, build/export, upload, with preflight guardrails.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Finds your iOS workspace and release scheme.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. Reads the current build number from app config (text-first parsing).</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">3. Updates the app config build number and Info.plist CFBundleVersion.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">4. Creates an archive and exports an IPA to a deterministic output path.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">5. Uploads to TestFlight through iTMSTransporter (unless --skip-upload is set).</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Preflight checks as a contract</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The most important part is not the happy path, it is the guardrails. If the workspace is missing, build number parsing fails, or the repo is dirty (without --allow-dirty), the command fails early with a clear error.</p>
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    BASH
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">paperplane</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --dry-run</span></span>
+<span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">paperplane</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --build-number</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 42</span></span>
+<span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">paperplane</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --skip-upload</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Useful release variants.</figcaption>
+            </figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What v1 intentionally does not do</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This version is intentionally narrow: no Android flow, no App Store Connect API key auth, and no CI-focused reporting layer. Keeping scope tight made the first version easier to reason about and safer to run. You do have to install Transporter and create a app-specific password for it, but that is a one-time setup.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The core win is simple, fast, and boring releases. One command, predictable output, and fewer opportunities for human error. Thanks for reading!</p>
+            </article>
+
+                </main>
+            </body>
+        </html>

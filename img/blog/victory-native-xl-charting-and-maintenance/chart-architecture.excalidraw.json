@@ -1,0 +1,699 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 220,
+      "y": 20,
+      "text": "Victory Native XL: Chart Architecture at a Glance",
+      "fontSize": 30,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "x": 250,
+      "y": 68,
+      "text": "Data shaping, rendering primitives, and interaction state in one view",
+      "fontSize": 18,
+      "strokeColor": "#555555",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "zone1",
+      "x": 40,
+      "y": 130,
+      "width": 300,
+      "height": 620,
+      "backgroundColor": "#dbe4ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 1,
+      "opacity": 35,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "text",
+      "id": "zone1t",
+      "x": 105,
+      "y": 150,
+      "text": "Input Layer",
+      "fontSize": 20,
+      "strokeColor": "#2563eb",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "zone2",
+      "x": 380,
+      "y": 130,
+      "width": 340,
+      "height": 620,
+      "backgroundColor": "#e5dbff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "strokeWidth": 1,
+      "opacity": 35,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "text",
+      "id": "zone2t",
+      "x": 445,
+      "y": 150,
+      "text": "Transform Layer",
+      "fontSize": 20,
+      "strokeColor": "#6d28d9",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "zone3",
+      "x": 760,
+      "y": 130,
+      "width": 340,
+      "height": 620,
+      "backgroundColor": "#d3f9d8",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "strokeWidth": 1,
+      "opacity": 35,
+      "roundness": {
+        "type": 3
+      },
+      "strokeStyle": "solid",
+      "roughness": 1
+    },
+    {
+      "type": "text",
+      "id": "zone3t",
+      "x": 825,
+      "y": 150,
+      "text": "Render Layer",
+      "fontSize": 20,
+      "strokeColor": "#15803d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "input",
+      "x": 80,
+      "y": 230,
+      "width": 220,
+      "height": 96,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "inputt1",
+      "x": 130,
+      "y": 258,
+      "text": "Raw App Data",
+      "fontSize": 20,
+      "strokeColor": "#1e3a8a",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "inputt2",
+      "x": 116,
+      "y": 286,
+      "text": "(x/y domains, series)",
+      "fontSize": 16,
+      "strokeColor": "#1e3a8a",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "props",
+      "x": 80,
+      "y": 390,
+      "width": 220,
+      "height": 110,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "propst1",
+      "x": 114,
+      "y": 420,
+      "text": "Chart Props",
+      "fontSize": 20,
+      "strokeColor": "#1e3a8a",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "propst2",
+      "x": 104,
+      "y": 448,
+      "text": "Cartesian / Polar",
+      "fontSize": 16,
+      "strokeColor": "#1e3a8a",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "propst3",
+      "x": 120,
+      "y": 470,
+      "text": "axis + options",
+      "fontSize": 16,
+      "strokeColor": "#1e3a8a",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "transform",
+      "x": 430,
+      "y": 250,
+      "width": 240,
+      "height": 110,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "transformt1",
+      "x": 468,
+      "y": 282,
+      "text": "transformInputData",
+      "fontSize": 18,
+      "strokeColor": "#4c1d95",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "transformt2",
+      "x": 506,
+      "y": 308,
+      "text": "+ makeScale",
+      "fontSize": 18,
+      "strokeColor": "#4c1d95",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "chartstate",
+      "x": 430,
+      "y": 430,
+      "width": 240,
+      "height": 120,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "chartstatet1",
+      "x": 474,
+      "y": 460,
+      "text": "Chart State",
+      "fontSize": 20,
+      "strokeColor": "#4c1d95",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "chartstatet2",
+      "x": 472,
+      "y": 488,
+      "text": "points + scales",
+      "fontSize": 16,
+      "strokeColor": "#4c1d95",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "chartstatet3",
+      "x": 486,
+      "y": 510,
+      "text": "bounds + ticks",
+      "fontSize": 16,
+      "strokeColor": "#4c1d95",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "primitives",
+      "x": 810,
+      "y": 240,
+      "width": 240,
+      "height": 130,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "primitivest1",
+      "x": 850,
+      "y": 274,
+      "text": "Primitives",
+      "fontSize": 20,
+      "strokeColor": "#14532d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "primitivest2",
+      "x": 836,
+      "y": 302,
+      "text": "Line / Bar / Area / Pie",
+      "fontSize": 16,
+      "strokeColor": "#14532d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "primitivest3",
+      "x": 850,
+      "y": 324,
+      "text": "AnimatedPath",
+      "fontSize": 16,
+      "strokeColor": "#14532d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "canvas",
+      "x": 810,
+      "y": 440,
+      "width": 240,
+      "height": 120,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "canvast1",
+      "x": 882,
+      "y": 470,
+      "text": "Skia Canvas",
+      "fontSize": 20,
+      "strokeColor": "#14532d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "canvast2",
+      "x": 846,
+      "y": 498,
+      "text": "frame-by-frame draw",
+      "fontSize": 16,
+      "strokeColor": "#14532d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "canvast3",
+      "x": 873,
+      "y": 520,
+      "text": "on device",
+      "fontSize": 16,
+      "strokeColor": "#14532d",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "gesture",
+      "x": 430,
+      "y": 600,
+      "width": 240,
+      "height": 100,
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "gesturet1",
+      "x": 486,
+      "y": 632,
+      "text": "Gestures",
+      "fontSize": 20,
+      "strokeColor": "#7c2d12",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "gesturet2",
+      "x": 470,
+      "y": 660,
+      "text": "pan / pinch / press",
+      "fontSize": 16,
+      "strokeColor": "#7c2d12",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "reanimated",
+      "x": 810,
+      "y": 610,
+      "width": 240,
+      "height": 120,
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "roundness": {
+        "type": 3
+      },
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "reanimatedt1",
+      "x": 852,
+      "y": 642,
+      "text": "Reanimated",
+      "fontSize": 20,
+      "strokeColor": "#7c2d12",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "reanimatedt2",
+      "x": 854,
+      "y": 670,
+      "text": "shared values",
+      "fontSize": 16,
+      "strokeColor": "#7c2d12",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "reanimatedt3",
+      "x": 859,
+      "y": 692,
+      "text": "transform matrix",
+      "fontSize": 16,
+      "strokeColor": "#7c2d12",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 300,
+      "y": 278,
+      "width": 130,
+      "height": 20,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          130,
+          20
+        ]
+      ],
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 300,
+      "y": 446,
+      "width": 130,
+      "height": -120,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          130,
+          -120
+        ]
+      ],
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 550,
+      "y": 360,
+      "width": 0,
+      "height": 70,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          70
+        ]
+      ],
+      "strokeColor": "#8b5cf6",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a4",
+      "x": 670,
+      "y": 490,
+      "width": 140,
+      "height": -160,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          140,
+          -160
+        ]
+      ],
+      "strokeColor": "#8b5cf6",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a5",
+      "x": 930,
+      "y": 370,
+      "width": 0,
+      "height": 70,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          70
+        ]
+      ],
+      "strokeColor": "#22c55e",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a6",
+      "x": 670,
+      "y": 650,
+      "width": 140,
+      "height": 20,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          140,
+          20
+        ]
+      ],
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a7",
+      "x": 930,
+      "y": 610,
+      "width": 0,
+      "height": -50,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -50
+        ]
+      ],
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a8",
+      "x": 810,
+      "y": 650,
+      "width": -140,
+      "height": -110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -140,
+          -110
+        ]
+      ],
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "endArrowhead": "arrow",
+      "strokeStyle": "dashed",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a8t",
+      "x": 690,
+      "y": 586,
+      "text": "interaction updates",
+      "fontSize": 14,
+      "strokeColor": "#7c2d12",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

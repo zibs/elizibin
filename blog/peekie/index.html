@@ -1,0 +1,309 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Shipping iOS Peek and Pop in React Native | Blog | Eli Zibin</title>
+    <meta
+        name="description"
+        content="A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps."
+    />
+    <link rel="canonical" href="https://elizibin.com/blog/peekie/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Shipping iOS Peek and Pop in React Native | Blog | Eli Zibin" />
+    <meta property="og:description" content="A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps." />
+    <meta property="og:url" content="https://elizibin.com/blog/peekie/" />
+    <meta property="og:image" content="https://elizibin.com/img/projects/peekie-social.png" />
+    <meta property="og:image:alt" content="Hero image for Shipping iOS Peek and Pop in React Native" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Shipping iOS Peek and Pop in React Native | Blog | Eli Zibin" />
+    <meta name="twitter:description" content="A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps." />
+    <meta name="twitter:image" content="https://elizibin.com/img/projects/peekie-social.png" />
+    <meta name="twitter:image:alt" content="Hero image for Shipping iOS Peek and Pop in React Native" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    Shipping iOS Peek and Pop in React Native
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    17/02/2026
+                </p>
+                <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">react-native</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">expo</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">ios</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">native-modules</span>
+</p>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps.
+                </p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/projects/peekie-social.png"
+        alt="Hero image for Shipping iOS Peek and Pop in React Native"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Peek and Pop is one of those interactions that feels simple until you try to integrate it cleanly in a React Native app. <a href="https://www.npmjs.com/package/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">react-native-peekie</a> is a small iOS-focused Expo module designed to make that integration predictable in production code.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What problem this module solves</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">iOS exposes preview and commit behavior through UIContextMenuInteraction. On React Native projects, that usually means custom native work, one-off wrappers, or coupling the feature to a specific router. The goal here was a reusable module with a compositional API that stays router-agnostic.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The source code for this module is on <a href="https://github.com/zibs/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">GitHub</a>. The examples below assume a standard React Navigation setup, but the pattern works with any routing approach, or even no routing at all.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Integration in a real screen</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The core model is straightforward: define a trigger surface, define a preview surface, and handle commit. Commit is where you perform the real navigation.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+        BASH
+    </p>
+    <div class="blog-code-block">
+        <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">npm</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> install</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> react-native-peekie</span></span></code></pre>
+    </div>
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Install the package.</figcaption>
+</figure>
+
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    TSX
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">import</span><span style="--shiki-light:#D20F39;--shiki-dark:#F38BA8"> *</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> as</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> React </span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">from</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "react"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">import</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> Text</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> View </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> from</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "react-native"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">import</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> useNavigation </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> from</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "@react-navigation/native"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">import</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> PeekPreview </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> from</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "react-native-peekie"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">export</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> function</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> Row</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">({</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic"> id</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic"> title</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> }</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span><span style="--shiki-light:#4C4F69;--shiki-light-font-style:italic;--shiki-dark:#CDD6F4;--shiki-dark-font-style:italic"> id</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> string</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span><span style="--shiki-light:#4C4F69;--shiki-light-font-style:italic;--shiki-dark:#CDD6F4;--shiki-dark-font-style:italic"> title</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> string</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> })</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">  const</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> navigation</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> useNavigation</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">()</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">  return</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> (</span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">    &#x3C;</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">PeekPreview</span></span>
+<span class="line"><span style="--shiki-light:#DF8E1D;--shiki-dark:#F9E2AF">      previewKey</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">id</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span>
+<span class="line"><span style="--shiki-light:#DF8E1D;--shiki-dark:#F9E2AF">      onCommit</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{()</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> =></span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> navigation</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">navigate</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">"Detail"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> id </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span>
+<span class="line"><span style="--shiki-light:#DF8E1D;--shiki-dark:#F9E2AF">      preferredContentSize</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{{</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> width</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 320</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> height</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 240</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> }}</span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">    ></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">      &#x3C;</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">PeekPreview.Trigger</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">        &#x3C;</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">Text</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">title</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">&#x3C;/</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">Text</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">      &#x3C;/</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">PeekPreview.Trigger</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">      &#x3C;</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">PeekPreview.Preview</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">        &#x3C;</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">View</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">          &#x3C;</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">Text</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">title</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">&#x3C;/</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">Text</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">        &#x3C;/</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">View</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">      &#x3C;/</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">PeekPreview.Preview</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">    &#x3C;/</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">PeekPreview</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  )</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Minimal usage with React Navigation.</figcaption>
+            </figure>
+
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/react-native-peekie-four-angles/peekie-demo.gif"
+        alt="Demo recording of react-native-peekie showing long-press preview, in-preview scrolling, and commit to a detail screen."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 520px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Live behavior from the example app: press and hold to preview, then commit to navigate.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This module is intentionally iOS-only and requires a development build (custom native code). It is not supported in Expo Go.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Current expectations are iOS 15.1 or newer and modern Expo/React Native versions. If your app targets older runtimes, plan for a fallback interaction.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">API shape and why it matters</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The compositional slot API (PeekPreview.Trigger and PeekPreview.Preview) is the key design decision. It keeps trigger markup and preview markup colocated while avoiding wrapper-heavy component trees.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Another deliberate choice is avoiding a global registry. Each row owns its own preview relationship locally, which scales better in large lists and nested navigation structures.</p>
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    TS
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> {</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> triggerChildren</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> triggerSlot</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> previewSlot </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> pickSlots</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(children)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> resolvedTriggerChildren </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> triggerSlot </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">?</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> triggerSlot</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">props</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">children </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> triggerChildren</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">return</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> (</span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">  &#x3C;</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">NativePeekPreviewTrigger </span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">...</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">viewProps</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">    {</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">resolvedTriggerChildren</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">    {</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">previewSlot</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> ? (</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">      &#x3C;</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">NativePeekPreviewContent</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic"> preferredContentSize</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">resolvedPreferredContentSize</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">        {</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">previewSlot</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">.</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">props</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">.</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">children</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">      &#x3C;/</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">NativePeekPreviewContent</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">></span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">    ) : </span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">null</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span></span>
+<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">  &#x3C;/</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">NativePeekPreviewTrigger</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span></span>
+<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Slot resolution keeps the public API small and explicit.</figcaption>
+            </figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Native lifecycle details</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">On iOS, UIContextMenuInteraction drives three moments that matter to app code: preview is about to be shown, commit happened, and preview finished dismissing. Those map directly to onWillShow, onCommit, and onDismiss so behavior stays easy to reason about from JavaScript.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/react-native-peekie-four-angles/module-architecture.png"
+        alt="Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to JavaScript callbacks and navigation commit."
+        loading="lazy"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Module flow: JS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.</figcaption>
+</figure>
+
+                            <figure class="mb-9 max-w-3xl mx-auto">
+                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+                    TS
+                </p>
+                <div class="blog-code-block">
+                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> handleWillShow</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> (</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">_event</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#DF8E1D;--shiki-light-font-style:italic;--shiki-dark:#F9E2AF;--shiki-dark-font-style:italic"> PeekPreviewEvent</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">)</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =></span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> onWillShow</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">?.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">()</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> handleCommit</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> (</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">_event</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#DF8E1D;--shiki-light-font-style:italic;--shiki-dark:#F9E2AF;--shiki-dark-font-style:italic"> PeekPreviewEvent</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">)</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =></span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> onCommit</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">()</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
+<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> handleDismiss</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2"> (</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">_event</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#DF8E1D;--shiki-light-font-style:italic;--shiki-dark:#F9E2AF;--shiki-dark-font-style:italic"> PeekPreviewEvent</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">)</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =></span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> onDismiss</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">?.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">()</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span></code></pre>
+                </div>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Lifecycle callbacks mapped to app-level handlers.</figcaption>
+            </figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Sizing and scroll behavior</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Explicit preferredContentSize plus scrollable preview content gives a predictable experience across different row widths.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">When this native pattern is the right call</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Native integration is worth the cost when the interaction is system-owned, touch-sensitive, and user expectations are tied to platform behavior. Peek and Pop is exactly that case.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Production checklist</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Before shipping, verify:</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Behavior when preview content is missing.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. Scrolling with long preview bodies.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">3. Commit navigation parameter integrity.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">4. Repeated open and dismiss cycles.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">5. Row reuse behavior in long lists.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The integration surface can stay small without hiding the platform realities. A compositional API plus clear lifecycle boundaries gives you native interaction quality and predictable app behavior at the same time. This was really fun to build and ship! Thanks for reading!</p>
+            </article>
+
+                </main>
+            </body>
+        </html>

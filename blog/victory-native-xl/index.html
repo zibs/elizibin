@@ -1,0 +1,226 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Building Charts in Victory Native XL | Blog | Eli Zibin</title>
+    <meta
+        name="description"
+        content="A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL."
+    />
+    <link rel="canonical" href="https://elizibin.com/blog/victory-native-xl/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Building Charts in Victory Native XL | Blog | Eli Zibin" />
+    <meta property="og:description" content="A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL." />
+    <meta property="og:url" content="https://elizibin.com/blog/victory-native-xl/" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png" />
+    <meta property="og:image:alt" content="Hero image for Building Charts in Victory Native XL" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Building Charts in Victory Native XL | Blog | Eli Zibin" />
+    <meta name="twitter:description" content="A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL." />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png" />
+    <meta name="twitter:image:alt" content="Hero image for Building Charts in Victory Native XL" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    Building Charts in Victory Native XL
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    20/02/2026
+                </p>
+                <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">react-native</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">charts</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">open-source</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">maintenance</span>
+</p>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL.
+                </p>
+                
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I have worked on <a href="https://github.com/FormidableLabs/victory-native-xl" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">victory-native-xl</a> for a while now, but have recently paused my involvement. It is a fun open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm), and it has been a great place to spend time improving practical details.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Chart architecture at a glance</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This is the simplified model I keep in my head while working in the codebase: data and props enter the chart container, transform and scale logic normalize it into chart state, rendering primitives draw to Skia, and gesture/reanimated state feeds interaction updates back into the loop.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png"
+        alt="Diagram of Victory Native XL chart architecture showing input data and chart props flowing through transformInputData and makeScale into chart state, then into rendering primitives and Skia canvas, with gesture and reanimated interaction feedback."
+        loading="lazy"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">A practical architecture snapshot: input and transform layers feeding Skia rendering, with interaction state in the loop.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Two chart examples from the example app</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">These are two concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart and a donut-style pie chart configuration (among others).</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/victory-native-xl-charting-and-maintenance/area.png"
+        alt="Mobile screenshot showing a Victory Native XL area chart with dashed X and Y axes and month labels on the horizontal axis."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 620px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Area chart example: smooth area shape plus dashed axes for a lighter visual treatment.</figcaption>
+</figure>
+
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/victory-native-xl-charting-and-maintenance/pie.gif"
+        alt="Animated mobile recording of a donut chart in Victory Native XL where values are shuffled and slice proportions animate."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 620px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Donut chart example: pie configuration using an inner radius to create the donut shape.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What I actually worked on</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">A big part of my work was owning different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real product workloads and trying to maintain compatibility with the existing API.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">That means thinking beyond visuals. A chart that looks good in a screenshot but breaks in one layout edge case is not done. The finishing work is usually in interaction behavior, data-shape tolerance, and clear defaults.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Maintenance is part of the job</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I also spent a lot of time on maintenance: triaging issues, reproducing bugs, reviewing and responding to pull requests, and following through on edge-case reports. This is less visible than feature work, but it is a big part of keeping the library pleasant to use.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">In practice, that maintenance loop shortens time-to-clarity when something breaks, reduces duplicate confusion across issues, and turns one-off bug reports into durable fixes.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">A few lessons from maintaining OSS</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Clear problem statements help more than clever fixes. The best issue threads define expected behavior first, provide examples to reproduce the issue, and then discuss implementation.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. Review quality compounds. Consistent PR feedback usually leads to better follow-on contributions from the community.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">3. Backward compatibility is a feature. Preserving stable behavior across releases often matters as much as shipping new chart capabilities.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why I enjoy this work</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I like building practical things people use in OSS. Working on <a href="https://github.com/FormidableLabs/victory-native-xl" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">victory-native-xl</a> has been a nice mix of shipping chart improvements and doing the quieter maintenance work that keeps the project moving.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">If you want to check out the package directly, it is on <a href="https://www.npmjs.com/package/victory-native-xl" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">npm</a>.</p>
+            </article>
+
+                </main>
+            </body>
+        </html>

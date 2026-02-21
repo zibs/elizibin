@@ -1,0 +1,210 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Codesh: Local Codex Usage in Your Menu Bar | Blog | Eli Zibin</title>
+    <meta
+        name="description"
+        content="How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance."
+    />
+    <link rel="canonical" href="https://elizibin.com/blog/codesh/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Codesh: Local Codex Usage in Your Menu Bar | Blog | Eli Zibin" />
+    <meta property="og:description" content="How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance." />
+    <meta property="og:url" content="https://elizibin.com/blog/codesh/" />
+    <meta property="og:image" content="https://elizibin.com/img/projects/codesh-social.png" />
+    <meta property="og:image:alt" content="Hero image for Codesh: Local Codex Usage in Your Menu Bar" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Codesh: Local Codex Usage in Your Menu Bar | Blog | Eli Zibin" />
+    <meta name="twitter:description" content="How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance." />
+    <meta name="twitter:image" content="https://elizibin.com/img/projects/codesh-social.png" />
+    <meta name="twitter:image:alt" content="Hero image for Codesh: Local Codex Usage in Your Menu Bar" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    Codesh: Local Codex Usage in Your Menu Bar
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    21/02/2026
+                </p>
+                <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">macos</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">codex</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">swift</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">tooling</span>
+</p>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.
+                </p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <picture>
+        <source
+            srcset="../../img/projects/codesh-social-dark.png"
+            media="(prefers-color-scheme: dark)"
+        />
+        <img
+            src="../../img/projects/codesh-social.png"
+            alt="Codesh project visual showing a compact local macOS utility for Codex usage visibility."
+            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        />
+    </picture>
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Codesh keeps session and weekly usage visible as ambient feedback in the menu bar.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I wanted a tiny utility that shows Codex usage without opening the CLI or digging through logs. Codesh is that app: local-only, fast startup, and focused on one job in the macOS menu bar.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Codesh also lets you customize status bar colors directly in the app: session (left) and weekly (right), each with separate light and dark mode colors, plus a quick reset-to-defaults action.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/codesh/colors.png"
+        alt="Codesh settings panel showing customizable status bar colors for session and weekly usage in light and dark mode."
+        loading="lazy"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Color controls in Codesh: session and weekly indicators each support separate light/dark color settings.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why I built it</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7"><a href="https://github.com/steipete/CodexBar" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">CodexBar</a> already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Design constraints</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Read local logs only.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. Stay fast enough to feel instant from the menu bar.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-6">3. Keep the interface minimal so the signal is obvious.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What I like about this shape</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This kind of focused utility avoids feature sprawl. It does one thing well, stays understandable, and is easy to trust because the data path is fully local.</p>
+            </article>
+
+                </main>
+            </body>
+        </html>

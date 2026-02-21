@@ -6,18 +6,18 @@
     <title>We Built a Minimal Agent REPL | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="A short build log on turning a tiny terminal REPL into a real tool-calling agent loop."
+        content="Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent."
     />
-    <link rel="canonical" href="https://elizibin.com/blog/agent-repl-build-log/" />
+    <link rel="canonical" href="https://elizibin.com/blog/agent-repl/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="We Built a Minimal Agent REPL | Blog | Eli Zibin" />
-    <meta property="og:description" content="A short build log on turning a tiny terminal REPL into a real tool-calling agent loop." />
-    <meta property="og:url" content="https://elizibin.com/blog/agent-repl-build-log/" />
+    <meta property="og:description" content="Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent." />
+    <meta property="og:url" content="https://elizibin.com/blog/agent-repl/" />
     <meta property="og:image" content="https://elizibin.com/img/blog/agent-repl-build-log/system-image.png" />
     <meta property="og:image:alt" content="Hero image for We Built a Minimal Agent REPL" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="We Built a Minimal Agent REPL | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="A short build log on turning a tiny terminal REPL into a real tool-calling agent loop." />
+    <meta name="twitter:description" content="Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent." />
     <meta name="twitter:image" content="https://elizibin.com/img/blog/agent-repl-build-log/system-image.png" />
     <meta name="twitter:image:alt" content="Hero image for We Built a Minimal Agent REPL" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -143,10 +143,10 @@
                     <article class="max-w-3xl mx-auto">
                 <p class="mb-9">
                     <a
-                        href="../index.html"
+                        href="../../index.html"
                         class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
-                        aria-label="Back to blog"
-                        title="Back to blog"
+                        aria-label="Back home"
+                        title="Back home"
                     >
                         &#8592;
                     </a>
@@ -155,7 +155,7 @@
                     We Built a Minimal Agent REPL
                 </h2>
                 <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
-                    February 16, 2026
+                    16/02/2026
                 </p>
                 <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
                 <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">agents</span>
@@ -164,24 +164,27 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    A short build log on turning a tiny terminal REPL into a real tool-calling agent loop.
+                    Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent.
                 </p>
+                
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This is a small and simple learning exercise: make it a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/agent-repl-build-log/system-image.png"
-        alt="Hero image for We Built a Minimal Agent REPL"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-    />
+    <div class="flex justify-center">
+        <blockquote class="twitter-tweet" data-dnt="true">
+            <a href="https://twitter.com/threepointone/status/2020043852317417970">https://twitter.com/threepointone/status/2020043852317417970</a>
+        </blockquote>
+    </div>
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">A compact way to describe why agent runtime building mostly comes down to loops and structure.</figcaption>
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This project started as a simple idea: build the smallest possible agent runtime that still feels real in daily use. No framework magic, just a clear loop: user input, model response, tool calls, repeat.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">System image</h2>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <img
         src="../../img/blog/agent-repl-build-log/system-image.svg"
         alt="System view of the minimal agent REPL architecture with provider and local tools."
         loading="lazy"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
     />
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">One-screen view: terminal REPL, provider API, and local tools tied together by a tool-call loop.</figcaption>
 </figure>
@@ -193,7 +196,8 @@
         src="../../img/blog/agent-repl-build-log/live-repl.gif"
         alt="Terminal recording of the agent REPL streaming output, running a tool call, and returning a final answer."
         loading="lazy"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
     />
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Live terminal pass: prompt -&gt; streamed response -&gt; tool call -&gt; final answer.</figcaption>
 </figure>
@@ -204,12 +208,13 @@
         src="../../img/blog/agent-repl-build-log/loop-diagram.svg"
         alt="Agent loop diagram showing responses requests, function calls, tool execution, and resume."
         loading="lazy"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
     />
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Two loops: the outer REPL loop and the inner tool-calling loop.</figcaption>
 </figure>
 
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What we built (quick timeline)</h2>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What we built:</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Streaming assistant output in the terminal so we can see progress in real time.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. A thinking indicator before first token so slow turns still feel responsive.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">3. Session save/load so conversations can be resumed.</p>
@@ -222,8 +227,8 @@
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">- search_workspace skips .git and node_modules.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-6">- Both tools cap bytes/results and skip binary content.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Provider flexibility</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.</p>
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The tiny loop that matters</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.  </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The tiny tool-calling loop that matters</h2>
                             <figure class="mb-9 max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
                     TS
@@ -266,12 +271,16 @@
         src="../../img/blog/agent-repl-build-log/metrics.png"
         alt="Terminal screenshot showing tool call lines and meta metrics output for a completed REPL turn."
         loading="lazy"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
+        
     />
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">One frame showing tool&gt; activity and meta&gt; status, request count, and token metrics.</figcaption>
 </figure>
 
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This was fun and educational: small, understandable, and practical enough to understand. Next step is looking at other more advanced agent runtime features and sdks, but the core loop is working and feels good to build on. Thanks for reading!</p>
             </article>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
                 </main>
             </body>
