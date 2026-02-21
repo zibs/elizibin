@@ -499,19 +499,6 @@ function renderLayout({
     `);
 }
 
-function sortBlogPostsByDateDesc(blogEntries: BlogPost[]): BlogPost[] {
-    return [...blogEntries].sort((left, right) => {
-        const leftDate = parsePublishedAt(left.publishedAt);
-        const rightDate = parsePublishedAt(right.publishedAt);
-
-        if (!leftDate || !rightDate) {
-            return right.slug.localeCompare(left.slug);
-        }
-
-        return rightDate.getTime() - leftDate.getTime();
-    });
-}
-
 function renderGithubIconLink(githubUrl: string, label: string): string {
     return `<a href="${escapeHtml(githubUrl)}" target="_blank" rel="noreferrer" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" class="inline-flex items-center leading-none text-black/75 hover:text-black dark:text-white/80 dark:hover:text-white"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8a8.01 8.01 0 0 0 5.47 7.59c.4.08.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 4.86a7.7 7.7 0 0 1 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg></a>`;
 }
@@ -1309,7 +1296,7 @@ async function validateGeneratedReferences(
 async function buildSite(): Promise<void> {
     await validateBlogPosts(blogPosts);
 
-    const sortedBlogPosts = sortBlogPostsByDateDesc(blogPosts);
+    const orderedBlogPosts = blogPosts;
     const highlightBlogCode = await createBlogCodeHighlighter();
 
     await rm(path.join(ROOT_DIR, "oss"), { recursive: true, force: true });
@@ -1318,11 +1305,11 @@ async function buildSite(): Promise<void> {
     const generatedPages = new Map<string, string>();
 
     const homeTools = createRenderTools(HOME_PAGE);
-    const homeHtml = renderHomePage(homeTools, sortedBlogPosts);
+    const homeHtml = renderHomePage(homeTools, orderedBlogPosts);
     generatedPages.set(HOME_PAGE, homeHtml);
     await writePage(HOME_PAGE, homeHtml);
 
-    for (const post of sortedBlogPosts) {
+    for (const post of orderedBlogPosts) {
         const outputPath = blogPostOutputPath(post.slug);
         const pageTools = createRenderTools(outputPath);
         const pageHtml = renderBlogPostPage(pageTools, post, highlightBlogCode);

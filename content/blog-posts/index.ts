@@ -15,9 +15,9 @@ export {
 };
 
 export const blogPosts: BlogPost[] = [
+    reactNativePeekieFourAnglesPost,
+    paperplaneOneCommandTestflightPost,
+    agentReplBuildLogPost,
     codeshLocalCodexUsageMenubarPost,
     victoryNativeXlChartingAndMaintenancePost,
-    paperplaneOneCommandTestflightPost,
-    reactNativePeekieFourAnglesPost,
-    agentReplBuildLogPost,
 ];

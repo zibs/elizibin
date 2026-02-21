@@ -168,11 +168,18 @@
                     A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/projects/peekie-social.png"
-        alt="Hero image for Shipping iOS Peek and Pop in React Native"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-    />
+    <picture>
+        <source
+            srcset="../../img/projects/peekie-social-dark.png"
+            media="(prefers-color-scheme: dark)"
+        />
+        <img
+            src="../../img/projects/peekie-social.png"
+            alt="Social preview image for react-native-peekie in dark mode."
+            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        />
+    </picture>
+    
 </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Peek and Pop is one of those interactions that feels simple until you try to integrate it cleanly in a React Native app. <a href="https://www.npmjs.com/package/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">react-native-peekie</a> is a small iOS-focused Expo module designed to make that integration predictable in production code.</p>

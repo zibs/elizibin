@@ -15,6 +15,11 @@ export const reactNativePeekieFourAnglesPost: BlogPost = {
             text: "Peek and Pop is one of those interactions that feels simple until you try to integrate it cleanly in a React Native app. [react-native-peekie](https://www.npmjs.com/package/react-native-peekie) is a small iOS-focused Expo module designed to make that integration predictable in production code.",
         },
         {
+            type: "image",
+            src: "/img/projects/peekie-social-dark.png",
+            alt: "Social preview image for react-native-peekie in dark mode.",
+        },
+        {
             type: "heading",
             level: 2,
             text: "What problem this module solves",
