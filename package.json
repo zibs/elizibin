@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "bun run scripts/build.ts",
+        "dev": "bun run scripts/dev.ts",
         "typecheck": "tsc --noEmit",
         "excalidraw:asset": "bun run scripts/excalidraw-blog-asset.ts"
     },

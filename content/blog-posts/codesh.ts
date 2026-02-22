@@ -4,7 +4,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
     slug: "codesh",
     title: "Codesh: Local Codex Usage in Your Menu Bar",
     summary:
-        "How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.",
+        "A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.",
     publishedAt: "2026-02-21",
     githubUrl: "https://github.com/zibs/codesh",
     heroImage: "/img/projects/codesh-social.png",
@@ -12,7 +12,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I wanted a tiny utility that shows Codex usage without opening the CLI or digging through logs. Codesh is that app: local-only, fast startup, and focused on one job in the macOS menu bar.",
+            text: "I wanted a tiny utility that shows Codex usage without opening the CLI or digging through logs. Codesh is that app: local-only, simple, and focused on one job in the macOS menu bar.",
         },
         {
             type: "image",
@@ -39,7 +39,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "[CodexBar](https://github.com/steipete/CodexBar) already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end.",
+            text: "Yes, [CodexBar](https://github.com/steipete/CodexBar) already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end. This implementation was actually heavily based off of [CodexMonitor](https://github.com/Dimillian/CodexMonitor) which is an amazing app (although I've recently been using the offical Codex app which lacks thsi feature!).",
         },
         {
             type: "heading",
@@ -66,6 +66,15 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
         {
             type: "paragraph",
             text: "This kind of focused utility avoids feature sprawl. It does one thing well, stays understandable, and is easy to trust because the data path is fully local.",
+        },
+        {
+            type: "heading",
+            level: 2,
+            text: "Conclusion",
+        },
+        {
+            type: "paragraph",
+            text: "It was interesting to learn a bit about the signing and distribution process for macOS apps. It's currently signed and available on Github Releases. I'm happy with the result and will continue to use it myself. I think we are in a new age of mini self-built utilities like this. Thanks for reading!",
         },
     ],
 };

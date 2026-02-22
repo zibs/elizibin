@@ -37,7 +37,7 @@ export const paperplaneOneCommandTestflightPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "This started as an experiment: could I get a useful release tool with the smallest possible surface area? I was not trying to build a release platform. I just wanted a local tool I could trust and understand end-to-end.",
+            text: "This started as an experiment: could I get a useful release tool with the smallest possible surface area? I was not trying to build a release platform. I just wanted a local tool I could trust and understand end-to-end, without relying on any other tools or frameworks.",
         },
         {
             type: "paragraph",
@@ -46,7 +46,7 @@ export const paperplaneOneCommandTestflightPost: BlogPost = {
         {
             type: "code",
             language: "bash",
-            caption: "The minimal path: inspect first, then run the real release.",
+            caption: "The minimal path: inspect first (if you want), then run the real release.",
             code: `npx react-native-paperplane --dry-run
 npx react-native-paperplane`,
         },
@@ -117,7 +117,7 @@ paperplane --skip-upload`,
         },
         {
             type: "paragraph",
-            text: "The core win is simple, fast, and boring releases. One command, predictable output, and fewer opportunities for human error. Thanks for reading!",
+            text: "The core win is simple, fast, and boring releases. One command, predictable output, and fewer opportunities for human error. It might not be for everyone or their particular project, but it's a micro-utility that's saving me time! Thanks for reading!",
         },
     ],
 };

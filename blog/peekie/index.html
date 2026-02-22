@@ -6,18 +6,18 @@
     <title>Shipping iOS Peek and Pop in React Native | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps."
+        content="Introducing react-native-peekie: a Peek and Pop React Native library for iOS."
     />
     <link rel="canonical" href="https://elizibin.com/blog/peekie/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Shipping iOS Peek and Pop in React Native | Blog | Eli Zibin" />
-    <meta property="og:description" content="A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps." />
+    <meta property="og:description" content="Introducing react-native-peekie: a Peek and Pop React Native library for iOS." />
     <meta property="og:url" content="https://elizibin.com/blog/peekie/" />
     <meta property="og:image" content="https://elizibin.com/img/projects/peekie-social.png" />
     <meta property="og:image:alt" content="Hero image for Shipping iOS Peek and Pop in React Native" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Shipping iOS Peek and Pop in React Native | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps." />
+    <meta name="twitter:description" content="Introducing react-native-peekie: a Peek and Pop React Native library for iOS." />
     <meta name="twitter:image" content="https://elizibin.com/img/projects/peekie-social.png" />
     <meta name="twitter:image:alt" content="Hero image for Shipping iOS Peek and Pop in React Native" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -165,7 +165,7 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps.
+                    Introducing react-native-peekie: a Peek and Pop React Native library for iOS.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <picture>
@@ -182,7 +182,7 @@
     
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Peek and Pop is one of those interactions that feels simple until you try to integrate it cleanly in a React Native app. <a href="https://www.npmjs.com/package/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">react-native-peekie</a> is a small iOS-focused Expo module designed to make that integration predictable in production code.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Peek and Pop is one of those interactions that I didn&#39;t realize wasn&#39;t built into React Native/React Navigation until I tried it. But now it is possible to have it: <a href="https://www.npmjs.com/package/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">react-native-peekie</a> is a small iOS-focused Expo module designed to make that integration predictable in production code.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What problem this module solves</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">iOS exposes preview and commit behavior through UIContextMenuInteraction. On React Native projects, that usually means custom native work, one-off wrappers, or coupling the feature to a specific router. The goal here was a reusable module with a compositional API that stays router-agnostic.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The source code for this module is on <a href="https://github.com/zibs/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">GitHub</a>. The examples below assume a standard React Navigation setup, but the pattern works with any routing approach, or even no routing at all.</p>

@@ -4,14 +4,14 @@ export const agentReplBuildLogPost: BlogPost = {
     slug: "agent-repl",
     title: "We Built a Minimal Agent REPL",
     summary:
-        "Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent.",
+        "Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent.",
     publishedAt: "2026-02-16",
     heroImage: "/img/blog/agent-repl-build-log/system-image.png",
     tags: ["agents", "repl", "typescript"],
     blocks: [
         {
             type: "paragraph",
-            text: "This is a small and simple learning exercise: make it a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:",
+            text: "This is a small and simple learning exercise: make a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:",
         },
         {
             type: "tweet",
@@ -70,7 +70,7 @@ export const agentReplBuildLogPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "2. A thinking indicator before first token so slow turns still feel responsive.",
+            text: "2. A thinking indicator before first token so slow turns still feel responsive (super basic).",
         },
         {
             type: "paragraph",
@@ -116,7 +116,7 @@ export const agentReplBuildLogPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.  ",
+            text: "The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.",
         },
         {
             type: "heading",

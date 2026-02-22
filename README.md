@@ -51,6 +51,28 @@ Optional (for absolute social/canonical URLs):
 SITE_URL="https://elizibin.com" bun run build
 ```
 
+### Dev (Auto Rebuild + Live Reload)
+
+Run:
+
+```bash
+npm run dev
+```
+
+This starts a local static server (default `http://localhost:5173`) and watches:
+
+- `content/**`
+- `img/**`
+- `scripts/build.ts`
+
+When those files change, it rebuilds the site and reloads any open browser tabs automatically.
+
+Optional custom port:
+
+```bash
+PORT=3000 npm run dev
+```
+
 This generates:
 
 - `index.html` (home page with blog post list)

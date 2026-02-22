@@ -187,7 +187,7 @@
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What this solves in plain language</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">While building another app, I got tired of opening Xcode, archiving, and uploading to TestFlight manually. With paperplane, the checklist of what to do is encoded in the CLI, so the command does the routine work the same way every time.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why I built this minimally</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This started as an experiment: could I get a useful release tool with the smallest possible surface area? I was not trying to build a release platform. I just wanted a local tool I could trust and understand end-to-end.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This started as an experiment: could I get a useful release tool with the smallest possible surface area? I was not trying to build a release platform. I just wanted a local tool I could trust and understand end-to-end, without relying on any other tools or frameworks.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Fastlane and EAS are strong tools, but for this project I wanted fewer moving parts, no big framework layer, and a straightforward local flow.</p>
                             <figure class="mb-9 max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
@@ -197,7 +197,7 @@
                     <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">npx</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> react-native-paperplane</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --dry-run</span></span>
 <span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">npx</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> react-native-paperplane</span></span></code></pre>
                 </div>
-                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The minimal path: inspect first, then run the real release.</figcaption>
+                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The minimal path: inspect first (if you want), then run the real release.</figcaption>
             </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What the command actually does</h2>
@@ -234,7 +234,7 @@
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What v1 intentionally does not do</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">This version is intentionally narrow: no Android flow, no App Store Connect API key auth, and no CI-focused reporting layer. Keeping scope tight made the first version easier to reason about and safer to run. You do have to install Transporter and create a app-specific password for it, but that is a one-time setup.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The core win is simple, fast, and boring releases. One command, predictable output, and fewer opportunities for human error. Thanks for reading!</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The core win is simple, fast, and boring releases. One command, predictable output, and fewer opportunities for human error. It might not be for everyone or their particular project, but it&#39;s a micro-utility that&#39;s saving me time! Thanks for reading!</p>
             </article>
 
                 </main>

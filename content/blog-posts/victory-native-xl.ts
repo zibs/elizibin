@@ -4,7 +4,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     slug: "victory-native-xl",
     title: "Building Charts in Victory Native XL",
     summary:
-        "A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL.",
+        "Helping out with chart feature work and OSS maintenance in Victory Native XL.",
     publishedAt: "2026-02-20",
     githubUrl: "https://github.com/FormidableLabs/victory-native-xl",
     heroImage:
@@ -13,7 +13,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I have worked on [victory-native-xl](https://github.com/FormidableLabs/victory-native-xl) for a while now, but have recently paused my involvement. It is a fun open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm), and it has been a great place to spend time improving practical details.",
+            text: "I've worked on [victory-native-xl](https://github.com/FormidableLabs/victory-native-xl) for a while now, but have recently more-or-less paused my involvement just due to time constraints. It is a great open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm).",
         },
         {
             type: "heading",
@@ -38,7 +38,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "These are two concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart and a donut-style pie chart configuration (among others).",
+            text: "These are two of a couple of concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart (with nice gradients!) and a donut-style pie chart configuration (the gif is a bit artifacty) (among others).",
         },
         {
             type: "image",
@@ -65,7 +65,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "A big part of my work was owning different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real product workloads and trying to maintain compatibility with the existing API.",
+            text: "A big part of my work was supporting different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real product workloads and trying to maintain compatibility with the existing API.",
         },
         {
             type: "paragraph",

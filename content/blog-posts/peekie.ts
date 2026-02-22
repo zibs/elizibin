@@ -4,7 +4,7 @@ export const reactNativePeekieFourAnglesPost: BlogPost = {
     slug: "peekie",
     title: "Shipping iOS Peek and Pop in React Native",
     summary:
-        "A quick walkthrough of building and integrating react-native-peekie, including API design choices, native lifecycle details, and trade-offs for real apps.",
+        "Introducing react-native-peekie: a Peek and Pop React Native library for iOS.",
     publishedAt: "2026-02-17",
     githubUrl: "https://github.com/zibs/react-native-peekie",
     heroImage: "/img/projects/peekie-social.png",
@@ -12,7 +12,7 @@ export const reactNativePeekieFourAnglesPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "Peek and Pop is one of those interactions that feels simple until you try to integrate it cleanly in a React Native app. [react-native-peekie](https://www.npmjs.com/package/react-native-peekie) is a small iOS-focused Expo module designed to make that integration predictable in production code.",
+            text: "Peek and Pop is one of those interactions that I didn't realize wasn't built into React Native/React Navigation until I tried it. But now it is possible to have it: [react-native-peekie](https://www.npmjs.com/package/react-native-peekie) is a small iOS-focused Expo module designed to make that integration predictable in production code.",
         },
         {
             type: "image",

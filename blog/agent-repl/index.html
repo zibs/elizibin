@@ -6,18 +6,18 @@
     <title>We Built a Minimal Agent REPL | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent."
+        content="Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent."
     />
     <link rel="canonical" href="https://elizibin.com/blog/agent-repl/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="We Built a Minimal Agent REPL | Blog | Eli Zibin" />
-    <meta property="og:description" content="Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent." />
+    <meta property="og:description" content="Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent." />
     <meta property="og:url" content="https://elizibin.com/blog/agent-repl/" />
     <meta property="og:image" content="https://elizibin.com/img/blog/agent-repl-build-log/system-image.png" />
     <meta property="og:image:alt" content="Hero image for We Built a Minimal Agent REPL" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="We Built a Minimal Agent REPL | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent." />
+    <meta name="twitter:description" content="Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent." />
     <meta name="twitter:image" content="https://elizibin.com/img/blog/agent-repl-build-log/system-image.png" />
     <meta name="twitter:image:alt" content="Hero image for We Built a Minimal Agent REPL" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -164,10 +164,10 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    Agents Are While Loops: using a tiny terminal REPL to build a practical tool-calling agent.
+                    Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent.
                 </p>
                 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This is a small and simple learning exercise: make it a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This is a small and simple learning exercise: make a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <div class="flex justify-center">
         <blockquote class="twitter-tweet" data-dnt="true">
@@ -216,7 +216,7 @@
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What we built:</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Streaming assistant output in the terminal so we can see progress in real time.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. A thinking indicator before first token so slow turns still feel responsive.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. A thinking indicator before first token so slow turns still feel responsive (super basic).</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">3. Session save/load so conversations can be resumed.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">4. Safe workspace inspection tools for reading and searching local files.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">5. Per-turn metrics plus Ctrl+C cancellation.</p>
@@ -227,7 +227,7 @@
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">- search_workspace skips .git and node_modules.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-6">- Both tools cap bytes/results and skip binary content.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Provider flexibility</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.  </p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The same loop runs on OpenAI or OpenRouter. We can switch providers and models at runtime with /provider and /model, which made testing and comparison much easier.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The tiny tool-calling loop that matters</h2>
                             <figure class="mb-9 max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">

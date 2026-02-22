@@ -6,18 +6,18 @@
     <title>Building Charts in Victory Native XL | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL."
+        content="Helping out with chart feature work and OSS maintenance in Victory Native XL."
     />
     <link rel="canonical" href="https://elizibin.com/blog/victory-native-xl/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Building Charts in Victory Native XL | Blog | Eli Zibin" />
-    <meta property="og:description" content="A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL." />
+    <meta property="og:description" content="Helping out with chart feature work and OSS maintenance in Victory Native XL." />
     <meta property="og:url" content="https://elizibin.com/blog/victory-native-xl/" />
     <meta property="og:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png" />
     <meta property="og:image:alt" content="Hero image for Building Charts in Victory Native XL" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Building Charts in Victory Native XL | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL." />
+    <meta name="twitter:description" content="Helping out with chart feature work and OSS maintenance in Victory Native XL." />
     <meta name="twitter:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png" />
     <meta name="twitter:image:alt" content="Hero image for Building Charts in Victory Native XL" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -165,10 +165,10 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    A retrospective look at chart feature work and day-to-day OSS maintenance in Victory Native XL.
+                    Helping out with chart feature work and OSS maintenance in Victory Native XL.
                 </p>
                 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I have worked on <a href="https://github.com/FormidableLabs/victory-native-xl" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">victory-native-xl</a> for a while now, but have recently paused my involvement. It is a fun open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm), and it has been a great place to spend time improving practical details.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I&#39;ve worked on <a href="https://github.com/FormidableLabs/victory-native-xl" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">victory-native-xl</a> for a while now, but have recently more-or-less paused my involvement just due to time constraints. It is a great open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm).</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Chart architecture at a glance</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">This is the simplified model I keep in my head while working in the codebase: data and props enter the chart container, transform and scale logic normalize it into chart state, rendering primitives draw to Skia, and gesture/reanimated state feeds interaction updates back into the loop.</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
@@ -183,7 +183,7 @@
 </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Two chart examples from the example app</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">These are two concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart and a donut-style pie chart configuration (among others).</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">These are two of a couple of concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart (with nice gradients!) and a donut-style pie chart configuration (the gif is a bit artifacty) (among others).</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <img
         src="../../img/blog/victory-native-xl-charting-and-maintenance/area.png"
@@ -207,7 +207,7 @@
 </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What I actually worked on</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">A big part of my work was owning different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real product workloads and trying to maintain compatibility with the existing API.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">A big part of my work was supporting different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real product workloads and trying to maintain compatibility with the existing API.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">That means thinking beyond visuals. A chart that looks good in a screenshot but breaks in one layout edge case is not done. The finishing work is usually in interaction behavior, data-shape tolerance, and clear defaults.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Maintenance is part of the job</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">I also spent a lot of time on maintenance: triaging issues, reproducing bugs, reviewing and responding to pull requests, and following through on edge-case reports. This is less visible than feature work, but it is a big part of keeping the library pleasant to use.</p>

@@ -6,18 +6,18 @@
     <title>Codesh: Local Codex Usage in Your Menu Bar | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance."
+        content="A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance."
     />
     <link rel="canonical" href="https://elizibin.com/blog/codesh/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Codesh: Local Codex Usage in Your Menu Bar | Blog | Eli Zibin" />
-    <meta property="og:description" content="How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance." />
+    <meta property="og:description" content="A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance." />
     <meta property="og:url" content="https://elizibin.com/blog/codesh/" />
     <meta property="og:image" content="https://elizibin.com/img/projects/codesh-social.png" />
     <meta property="og:image:alt" content="Hero image for Codesh: Local Codex Usage in Your Menu Bar" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Codesh: Local Codex Usage in Your Menu Bar | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance." />
+    <meta name="twitter:description" content="A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance." />
     <meta name="twitter:image" content="https://elizibin.com/img/projects/codesh-social.png" />
     <meta name="twitter:image:alt" content="Hero image for Codesh: Local Codex Usage in Your Menu Bar" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -165,7 +165,7 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    How I built a tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.
+                    A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <picture>
@@ -182,7 +182,7 @@
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Codesh keeps session and weekly usage visible as ambient feedback in the menu bar.</figcaption>
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I wanted a tiny utility that shows Codex usage without opening the CLI or digging through logs. Codesh is that app: local-only, fast startup, and focused on one job in the macOS menu bar.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I wanted a tiny utility that shows Codex usage without opening the CLI or digging through logs. Codesh is that app: local-only, simple, and focused on one job in the macOS menu bar.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Codesh also lets you customize status bar colors directly in the app: session (left) and weekly (right), each with separate light and dark mode colors, plus a quick reset-to-defaults action.</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <img
@@ -196,13 +196,15 @@
 </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why I built it</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7"><a href="https://github.com/steipete/CodexBar" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">CodexBar</a> already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Yes, <a href="https://github.com/steipete/CodexBar" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">CodexBar</a> already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end. This implementation was actually heavily based off of <a href="https://github.com/Dimillian/CodexMonitor" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">CodexMonitor</a> which is an amazing app (although I&#39;ve recently been using the offical Codex app which lacks thsi feature!).</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Design constraints</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Read local logs only.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. Stay fast enough to feel instant from the menu bar.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-6">3. Keep the interface minimal so the signal is obvious.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What I like about this shape</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">This kind of focused utility avoids feature sprawl. It does one thing well, stays understandable, and is easy to trust because the data path is fully local.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It was interesting to learn a bit about the signing and distribution process for macOS apps. It&#39;s currently signed and available on Github Releases. I&#39;m happy with the result and will continue to use it myself. I think we are in a new age of mini self-built utilities like this. Thanks for reading!</p>
             </article>
 
                 </main>
