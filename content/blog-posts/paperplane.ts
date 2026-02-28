@@ -13,7 +13,7 @@ export const paperplaneOneCommandTestflightPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "Shipping to TestFlight sounds simple, and it is, having done it for years with React Native, but in practice it is a chain of small steps. I wanted one command that makes the path explicit: bump build number, archive/export, then upload, all automatically, without using Fastlane, EAS, or Xcode.",
+            text: "Shipping to TestFlight sounds simple, and it is, having done it for years with React Native, but in practice it is a chain of small steps that's kinda annoying. I wanted one command that makes the path explicit: bump build number, archive/export, then upload, all automatically, without using Fastlane, EAS, or Xcode.",
         },
         {
             type: "image",

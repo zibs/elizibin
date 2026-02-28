@@ -40,7 +40,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Yes, [CodexBar](https://github.com/steipete/CodexBar) already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end. This implementation was actually heavily based off of [CodexMonitor](https://github.com/Dimillian/CodexMonitor) which is an amazing app (although I've recently been using the offical Codex app which lacks thsi feature!).",
+            text: "Yes, [CodexBar](https://github.com/steipete/CodexBar) already exists and is a much more thorough option. I wanted to build something myself that stayed intentionally simple: local-only, lightweight, and easy to understand end-to-end. This implementation was actually heavily based off of [CodexMonitor](https://github.com/Dimillian/CodexMonitor) which is an amazing app (although I've recently been using the offical Codex app which lacks this feature!).",
         },
         {
             type: "heading",
