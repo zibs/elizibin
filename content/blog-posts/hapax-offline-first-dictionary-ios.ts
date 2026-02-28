@@ -6,7 +6,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     summary:
         "A casual walkthrough of Hapax: local-first data, optional sign-in, practical sync, and lightweight AI helpers.",
     publishedAt: "2026-02-24",
-    published: false,
+    published: true,
     heroImage:
         "/img/blog/hapax-offline-first-dictionary-ios/system-map.png",
     tags: ["ios", "react-native", "offline-first", "sqlite", "supabase"],
@@ -20,10 +20,20 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
             text: "The app is designed to save first and organize later. This post is a straightforward tour of how it works.",
         },
         {
-            type: "image",
-            src: "https://placehold.co/1600x900/png?text=App+Overview+Screenshot+%28replace%29",
-            alt: "Hapax app overview screenshot on iOS.",
-            caption: "High-level app view.",
+            type: "video",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/clicking-words.mp4",
+            alt: "Screen recording of opening words and moving through entry detail views in Hapax.",
+            caption: "Quick look at browsing entries in the real app.",
+            centered: true,
+            maxHeightPx: 640,
+        },
+        {
+            type: "video",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/darkmode.mp4",
+            alt: "Screen recording of the Hapax app in dark mode.",
+            caption: "Same flow in dark mode.",
+            centered: true,
+            maxHeightPx: 640,
         },
         {
             type: "heading",
@@ -39,9 +49,9 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
             text: "So the core idea is simple: add the word now, clean it up later.",
         },
         {
-            type: "image",
-            src: "https://placehold.co/1200x900/png?text=Quick+Capture+GIF+Placeholder",
-            alt: "GIF showing a word being added quickly in Hapax.",
+            type: "video",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/adding-words.mp4",
+            alt: "Screen recording showing a word being added quickly in Hapax.",
             caption: "Capture in a few seconds.",
             centered: true,
             maxHeightPx: 560,
@@ -214,6 +224,22 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
             text: "Rows are marked pending and synced later, so UI actions stay fast without waiting on network calls.",
         },
         {
+            type: "video",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/words-favorites.mp4",
+            alt: "Screen recording of the words list and favorites interactions in Hapax.",
+            caption: "Words list and favorites behavior in the app.",
+            centered: true,
+            maxHeightPx: 620,
+        },
+        {
+            type: "video",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/tags.mp4",
+            alt: "Screen recording of tags being viewed and applied in Hapax.",
+            caption: "Tag flows in practice.",
+            centered: true,
+            maxHeightPx: 620,
+        },
+        {
             type: "image",
             src: "/img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow.png",
             alt: "Flow diagram for entry lifecycle from create to edit, tagging, favorite, and soft delete.",
@@ -269,6 +295,14 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         {
             type: "paragraph",
             text: "Web uses file download, native uses the share sheet. No server export pipeline is required.",
+        },
+        {
+            type: "video",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/settings.mp4",
+            alt: "Screen recording of the settings screen and export options in Hapax.",
+            caption: "Settings and export entry points.",
+            centered: true,
+            maxHeightPx: 620,
         },
         {
             type: "image",

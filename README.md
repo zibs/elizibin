@@ -35,6 +35,7 @@ Blog posts support block-based composition:
 - `paragraph`
 - `heading`
 - `image`
+- `video` (MP4 via `<video>`, supports autoplay/loop/muted/controls)
 - `code` (Shiki-highlighted, light/dark theme aware)
 - `tweet` (Twitter/X status embed via URL)
 
@@ -155,7 +156,7 @@ The build validates:
 - blog code block language support
 - tweet block URL format (`twitter.com` / `x.com` status links)
 - blog share metadata image presence (`heroImage` or at least one `image` block)
-- local blog image file existence
+- local blog media file existence (`image`, `video`, and optional `video.poster`)
 - generated internal `href` and `src` references
 
 Validation runs against the set of posts being built:

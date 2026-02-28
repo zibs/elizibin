@@ -867,6 +867,55 @@ function renderBlogBlock(
         `);
     }
 
+    if (block.type === "video") {
+        const videoSrc = resolveImageSource(tools, block.src);
+        if (!videoSrc) {
+            return "";
+        }
+
+        const posterSrc = resolveImageSource(tools, block.poster);
+        const maxHeightPx =
+            typeof block.maxHeightPx === "number" && Number.isFinite(block.maxHeightPx)
+                ? Math.max(1, Math.round(block.maxHeightPx))
+                : undefined;
+        const videoSizeClasses = maxHeightPx
+            ? "w-auto max-w-full h-auto object-contain"
+            : "w-full h-auto";
+        const videoAlignmentClasses = block.centered ? "block mx-auto" : "";
+        const videoClassName =
+            `${videoSizeClasses} ${videoAlignmentClasses} rounded-xl border border-black/10 dark:border-white/15`.trim();
+        const autoplay = block.autoplay ?? true;
+        const loop = block.loop ?? true;
+        const muted = block.muted ?? true;
+        const controls = block.controls ?? false;
+        const playsInline = block.playsInline ?? true;
+
+        return html(`
+            <figure class="mb-9 max-w-3xl mx-auto">
+                <video
+                    src="${escapeHtml(videoSrc)}"
+                    aria-label="${escapeHtml(block.alt)}"
+                    preload="metadata"
+                    class="${videoClassName}"
+                    ${maxHeightPx ? `style="max-height: ${maxHeightPx}px;"` : ""}
+                    ${autoplay ? "autoplay" : ""}
+                    ${loop ? "loop" : ""}
+                    ${muted ? "muted" : ""}
+                    ${controls ? "controls" : ""}
+                    ${playsInline ? "playsinline" : ""}
+                    ${posterSrc ? `poster="${escapeHtml(posterSrc)}"` : ""}
+                >
+                    Sorry, your browser does not support the video tag.
+                </video>
+                ${
+                    block.caption
+                        ? `<figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${escapeHtml(block.caption)}</figcaption>`
+                        : ""
+                }
+            </figure>
+        `);
+    }
+
     const imageSrc = resolveImageSource(tools, block.src);
     if (!imageSrc) {
         return "";
@@ -1240,6 +1289,64 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
                         `${blockPath}.caption`,
                         "Blog post",
                         post.slug,
+                    );
+                }
+
+                continue;
+            }
+
+            if (block.type === "video") {
+                assertNonEmpty(block.src, `${blockPath}.src`, "Blog post", post.slug);
+                assertNonEmpty(block.alt, `${blockPath}.alt`, "Blog post", post.slug);
+
+                if (block.caption !== undefined) {
+                    assertNonEmpty(
+                        block.caption,
+                        `${blockPath}.caption`,
+                        "Blog post",
+                        post.slug,
+                    );
+                }
+
+                if (block.poster !== undefined) {
+                    assertNonEmpty(
+                        block.poster,
+                        `${blockPath}.poster`,
+                        "Blog post",
+                        post.slug,
+                    );
+                    validateLocalImagePath(
+                        block.poster,
+                        "Blog post",
+                        post.slug,
+                        `${blockPath}.poster`,
+                    );
+                    if (!/^https?:\/\//.test(block.poster)) {
+                        await assertLocalImageExists(
+                            block.poster,
+                            "Blog post",
+                            post.slug,
+                            `${blockPath}.poster`,
+                        );
+                    }
+                }
+
+                const autoplay = block.autoplay ?? true;
+                const muted = block.muted ?? true;
+                if (autoplay && !muted) {
+                    throw new Error(
+                        `Blog post "${post.slug}" has invalid video settings in "${blockPath}": autoplay videos must also be muted.`,
+                    );
+                }
+
+                validateLocalImagePath(block.src, "Blog post", post.slug, `${blockPath}.src`);
+
+                if (!/^https?:\/\//.test(block.src)) {
+                    await assertLocalImageExists(
+                        block.src,
+                        "Blog post",
+                        post.slug,
+                        `${blockPath}.src`,
                     );
                 }
 

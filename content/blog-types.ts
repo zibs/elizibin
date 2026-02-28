@@ -18,6 +18,21 @@ export type BlogImageBlock = {
     maxHeightPx?: number;
 };
 
+export type BlogVideoBlock = {
+    type: "video";
+    src: string;
+    alt: string;
+    caption?: string;
+    centered?: boolean;
+    maxHeightPx?: number;
+    poster?: string;
+    autoplay?: boolean;
+    loop?: boolean;
+    muted?: boolean;
+    controls?: boolean;
+    playsInline?: boolean;
+};
+
 export type BlogCodeBlock = {
     type: "code";
     language: string;
@@ -35,6 +50,7 @@ export type BlogBlock =
     | BlogParagraphBlock
     | BlogHeadingBlock
     | BlogImageBlock
+    | BlogVideoBlock
     | BlogCodeBlock
     | BlogTweetBlock;
 

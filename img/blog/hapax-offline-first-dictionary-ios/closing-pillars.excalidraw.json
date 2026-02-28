@@ -6,10 +6,10 @@
     {
       "type": "text",
       "id": "t0",
-      "x": 180,
-      "y": 30,
-      "text": "Hapax in 3 Priorities",
-      "fontSize": 28,
+      "x": 274,
+      "y": 24,
+      "text": "Hapax: 3 Practical Priorities",
+      "fontSize": 30,
       "strokeColor": "#1f1f1f",
       "fontFamily": 1,
       "opacity": 100
@@ -17,10 +17,10 @@
     {
       "type": "rectangle",
       "id": "p1",
-      "x": 70,
-      "y": 190,
-      "width": 190,
-      "height": 120,
+      "x": 40,
+      "y": 110,
+      "width": 280,
+      "height": 180,
       "roundness": {
         "type": 3
       },
@@ -34,11 +34,11 @@
     },
     {
       "type": "text",
-      "id": "p1__text",
-      "x": 85,
-      "y": 226,
-      "text": "Local first\nreads and writes",
-      "fontSize": 20,
+      "id": "p1t",
+      "x": 102,
+      "y": 172,
+      "text": "Local-first\nreads and writes",
+      "fontSize": 24,
       "strokeColor": "#1f1f1f",
       "fontFamily": 1,
       "opacity": 100
@@ -46,10 +46,10 @@
     {
       "type": "rectangle",
       "id": "p2",
-      "x": 305,
-      "y": 190,
-      "width": 190,
-      "height": 120,
+      "x": 350,
+      "y": 110,
+      "width": 280,
+      "height": 180,
       "roundness": {
         "type": 3
       },
@@ -63,11 +63,11 @@
     },
     {
       "type": "text",
-      "id": "p2__text",
-      "x": 355,
-      "y": 226,
+      "id": "p2t",
+      "x": 424,
+      "y": 172,
       "text": "Sync when\neligible",
-      "fontSize": 20,
+      "fontSize": 24,
       "strokeColor": "#1f1f1f",
       "fontFamily": 1,
       "opacity": 100
@@ -75,10 +75,10 @@
     {
       "type": "rectangle",
       "id": "p3",
-      "x": 540,
-      "y": 190,
-      "width": 190,
-      "height": 120,
+      "x": 660,
+      "y": 110,
+      "width": 280,
+      "height": 180,
       "roundness": {
         "type": 3
       },
@@ -92,11 +92,11 @@
     },
     {
       "type": "text",
-      "id": "p3__text",
-      "x": 535,
-      "y": 226,
-      "text": "User control\nexport + optional AI",
-      "fontSize": 20,
+      "id": "p3t",
+      "x": 705,
+      "y": 160,
+      "text": "User control:\nexport +\noptional AI",
+      "fontSize": 24,
       "strokeColor": "#1f1f1f",
       "fontFamily": 1,
       "opacity": 100
@@ -104,9 +104,9 @@
     {
       "type": "arrow",
       "id": "a1",
-      "x": 260,
-      "y": 250,
-      "width": 45,
+      "x": 320,
+      "y": 200,
+      "width": 30,
       "height": 0,
       "points": [
         [
@@ -114,7 +114,7 @@
           0
         ],
         [
-          45,
+          30,
           0
         ]
       ],
@@ -128,9 +128,9 @@
     {
       "type": "arrow",
       "id": "a2",
-      "x": 495,
-      "y": 250,
-      "width": 45,
+      "x": 630,
+      "y": 200,
+      "width": 30,
       "height": 0,
       "points": [
         [
@@ -138,7 +138,7 @@
           0
         ],
         [
-          45,
+          30,
           0
         ]
       ],
@@ -150,12 +150,30 @@
       "opacity": 100
     },
     {
-      "type": "text",
+      "type": "rectangle",
       "id": "n1",
-      "x": 150,
-      "y": 390,
-      "text": "Simple app, clear boundaries, predictable behavior.",
-      "fontSize": 22,
+      "x": 170,
+      "y": 330,
+      "width": 640,
+      "height": 86,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#fff3bf",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "n1t",
+      "x": 222,
+      "y": 361,
+      "text": "Small scope, clear boundaries, predictable behavior.",
+      "fontSize": 20,
       "strokeColor": "#1f1f1f",
       "fontFamily": 1,
       "opacity": 100
