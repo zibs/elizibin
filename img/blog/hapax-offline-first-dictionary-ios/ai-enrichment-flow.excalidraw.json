@@ -1,0 +1,286 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "t0",
+      "x": 360,
+      "y": 24,
+      "text": "AI Enrichment Flow",
+      "fontSize": 30,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "s1",
+      "x": 70,
+      "y": 200,
+      "width": 220,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#a5d8ff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "s1__text",
+      "x": 90,
+      "y": 233,
+      "text": "Create local entry",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "s2",
+      "x": 330,
+      "y": 200,
+      "width": 220,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#d0bfff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "s2__text",
+      "x": 380,
+      "y": 233,
+      "text": "runSync push",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "s3",
+      "x": 590,
+      "y": 200,
+      "width": 260,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#ffd8a8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "s3__text",
+      "x": 648.75,
+      "y": 222.2,
+      "text": "ai-enrich-entry\nEdge Function",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "s4",
+      "x": 900,
+      "y": 200,
+      "width": 220,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#b2f2bb",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "s4__text",
+      "x": 930,
+      "y": 233,
+      "text": "Supabase updated",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "s5",
+      "x": 590,
+      "y": 380,
+      "width": 260,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#a5d8ff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "s5__text",
+      "x": 655,
+      "y": 401,
+      "text": "runSync pull\nrefresh local",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 290,
+      "y": 245,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 550,
+      "y": 245,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 850,
+      "y": 245,
+      "width": 50,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          50,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a4",
+      "x": 1010,
+      "y": 290,
+      "width": -290,
+      "height": 90,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -290,
+          90
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a4__text",
+      "x": 816,
+      "y": 317,
+      "text": "updated fields",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "n1",
+      "x": 70,
+      "y": 520,
+      "text": "Avoid optimistic local patching; use sync pull as the source path.",
+      "fontSize": 22,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

@@ -43,6 +43,7 @@ export type BlogPost = {
     title: string;
     summary: string;
     publishedAt: string;
+    published: boolean;
     githubUrl?: string;
     heroImage?: string;
     tags?: string[];

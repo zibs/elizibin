@@ -1,0 +1,222 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "t0",
+      "x": 430,
+      "y": 24,
+      "text": "Local DB Model",
+      "fontSize": 30,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "r1",
+      "x": 70,
+      "y": 120,
+      "width": 250,
+      "height": 220,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "r1__text",
+      "x": 133.25,
+      "y": 161.60000000000002,
+      "text": "entries\n- word\n- definition\n- notes\n- sync_status\n- sync_action",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "r2",
+      "x": 360,
+      "y": 120,
+      "width": 220,
+      "height": 180,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "r2__text",
+      "x": 408.25,
+      "y": 164.4,
+      "text": "tags\n- name\n- updated_at\n- sync_status",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "r3",
+      "x": 620,
+      "y": 120,
+      "width": 280,
+      "height": 230,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "r3__text",
+      "x": 698.25,
+      "y": 166.60000000000002,
+      "text": "entry_tags\n- entry_id\n- tag_id\n- deleted_at\n- updated_at\n- sync_status",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "r4",
+      "x": 940,
+      "y": 120,
+      "width": 230,
+      "height": 170,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#fff3bf",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "r4__text",
+      "x": 979,
+      "y": 159.4,
+      "text": "sync_state\n- last_pulled_at\n- last_pushed_at\n- last_error",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 320,
+      "y": 210,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 580,
+      "y": 210,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 900,
+      "y": 205,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 90,
+      "y": 390,
+      "text": "SQLite is the source of truth for reads and writes.",
+      "fontSize": 22,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

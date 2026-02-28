@@ -6,6 +6,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
     summary:
         "A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.",
     publishedAt: "2026-02-21",
+    published: true,
     githubUrl: "https://github.com/zibs/codesh",
     heroImage: "/img/projects/codesh-social.png",
     tags: ["macos", "codex", "swift", "tooling"],

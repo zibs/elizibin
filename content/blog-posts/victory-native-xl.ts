@@ -6,6 +6,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     summary:
         "Helping out with chart feature work and OSS maintenance in Victory Native XL.",
     publishedAt: "2026-02-20",
+    published: true,
     githubUrl: "https://github.com/FormidableLabs/victory-native-xl",
     heroImage:
         "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png",
@@ -100,6 +101,10 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         {
             type: "paragraph",
             text: "3. Backward compatibility is a feature. Preserving stable behavior across releases often matters as much as shipping new chart capabilities.",
+        },
+        {
+            type: "paragraph",
+            text: "4. It's not going to be perfect. There's always open issues, bugs, uncertainty about some PRs, not enough time etc. I think accepting that partially in this context helps at least to keep shipping.",
         },
         {
             type: "heading",

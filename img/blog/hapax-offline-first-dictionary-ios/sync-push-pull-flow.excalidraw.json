@@ -1,0 +1,339 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "t0",
+      "x": 380,
+      "y": 24,
+      "text": "Sync Run: Push Then Pull",
+      "fontSize": 30,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "l1",
+      "x": 70,
+      "y": 170,
+      "width": 250,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "l1__text",
+      "x": 80,
+      "y": 201,
+      "text": "Local pending rows\n(sync_status != synced)",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "s1",
+      "x": 400,
+      "y": 170,
+      "width": 250,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#d0bfff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "s1__text",
+      "x": 450,
+      "y": 201,
+      "text": "Push step\n(upsert/delete)",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "r1",
+      "x": 730,
+      "y": 170,
+      "width": 250,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#b2f2bb",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "r1__text",
+      "x": 780,
+      "y": 213,
+      "text": "Supabase tables",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "p1",
+      "x": 400,
+      "y": 350,
+      "width": 250,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#a5d8ff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "p1__text",
+      "x": 430,
+      "y": 381,
+      "text": "Pull step\n(incremental pages)",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "l2",
+      "x": 70,
+      "y": 350,
+      "width": 250,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "l2__text",
+      "x": 110,
+      "y": 381,
+      "text": "Apply newer rows\nupdate sync_state",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "b1",
+      "x": 730,
+      "y": 350,
+      "width": 250,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#fff3bf",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "b1__text",
+      "x": 740,
+      "y": 381,
+      "text": "Retry backoff\n5s -> 15s -> 30s -> 60s",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 320,
+      "y": 225,
+      "width": 80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 650,
+      "y": 225,
+      "width": 80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 730,
+      "y": 250,
+      "width": -80,
+      "height": 100,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -80,
+          100
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a3__text",
+      "x": 676,
+      "y": 282,
+      "text": "pull",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a4",
+      "x": 400,
+      "y": 400,
+      "width": -80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a5",
+      "x": 650,
+      "y": 400,
+      "width": 80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a5__text",
+      "x": 662,
+      "y": 382,
+      "text": "on error",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

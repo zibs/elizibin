@@ -23,7 +23,8 @@ Blog post files:
 When adding a new post:
 
 1. Add a new post file in `content/blog-posts/`.
-2. Export it from `content/blog-posts/index.ts` and include it in `blogPosts` ordering.
+2. Set `published: false` while drafting, then flip to `published: true` when ready to ship.
+3. Export it from `content/blog-posts/index.ts` and include it in `blogPosts` ordering.
 
 You can embed links in paragraph text using markdown-style links:
 
@@ -45,10 +46,21 @@ Run:
 bun run build
 ```
 
+Default build behavior:
+
+- Only posts with `published: true` are validated and generated.
+- Unpublished posts are skipped, so draft work does not block deploy builds.
+
 Optional (for absolute social/canonical URLs):
 
 ```bash
 SITE_URL="https://elizibin.com" bun run build
+```
+
+Optional (include drafts in a local build):
+
+```bash
+BLOG_INCLUDE_UNPUBLISHED=true bun run build
 ```
 
 ### Dev (Auto Rebuild + Live Reload)
@@ -66,6 +78,7 @@ This starts a local static server (default `http://localhost:5173`) and watches:
 - `scripts/build.ts`
 
 When those files change, it rebuilds the site and reloads any open browser tabs automatically.
+Dev mode sets `BLOG_INCLUDE_UNPUBLISHED=true`, so unpublished drafts are visible locally.
 
 Optional custom port:
 
@@ -144,6 +157,11 @@ The build validates:
 - blog share metadata image presence (`heroImage` or at least one `image` block)
 - local blog image file existence
 - generated internal `href` and `src` references
+
+Validation runs against the set of posts being built:
+
+- default `bun run build`: published posts only
+- `BLOG_INCLUDE_UNPUBLISHED=true`: published + unpublished posts
 
 Internal links are emitted as explicit `index.html` paths so local `file://` browsing works consistently.
 

@@ -238,7 +238,10 @@ function runBuild(reason: string): void {
 
     buildProcess = spawn("bun", ["run", "build"], {
         cwd: ROOT_DIR,
-        env: process.env,
+        env: {
+            ...process.env,
+            BLOG_INCLUDE_UNPUBLISHED: "true",
+        },
         stdio: "inherit",
     });
 

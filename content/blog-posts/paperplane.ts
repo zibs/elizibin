@@ -6,6 +6,7 @@ export const paperplaneOneCommandTestflightPost: BlogPost = {
     summary:
         "Turning a tedious iOS release routine into a minimal, deterministic CLI flow for TestFlight, without using Fastlane, EAS, or Xcode.",
     publishedAt: "2026-02-18",
+    published: true,
     githubUrl: "https://github.com/zibs/react-native-paperplane",
     heroImage: "/img/projects/paperplane-social.png",
     tags: ["react-native", "ios", "testflight", "cli", "release"],

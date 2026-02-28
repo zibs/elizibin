@@ -1,0 +1,252 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "t0",
+      "x": 200,
+      "y": 24,
+      "text": "Access Mode State Machine",
+      "fontSize": 28,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "ellipse",
+      "id": "e0",
+      "x": 70,
+      "y": 220,
+      "width": 150,
+      "height": 90,
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#ffd8a8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "e0__text",
+      "x": 123,
+      "y": 251.8,
+      "text": "none",
+      "fontSize": 22,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "ellipse",
+      "id": "e1",
+      "x": 330,
+      "y": 120,
+      "width": 170,
+      "height": 100,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#a5d8ff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "e1__text",
+      "x": 387.5,
+      "y": 156.8,
+      "text": "local",
+      "fontSize": 22,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "ellipse",
+      "id": "e2",
+      "x": 330,
+      "y": 330,
+      "width": 200,
+      "height": 110,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#b2f2bb",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "e2__text",
+      "x": 386,
+      "y": 371.8,
+      "text": "supabase",
+      "fontSize": 22,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 220,
+      "y": 260,
+      "width": 110,
+      "height": -70,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          110,
+          -70
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a1__text",
+      "x": 219,
+      "y": 207,
+      "text": "Continue offline",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 220,
+      "y": 270,
+      "width": 110,
+      "height": 110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          110,
+          110
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a2__text",
+      "x": 250.5,
+      "y": 307,
+      "text": "Sign in",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 420,
+      "y": 220,
+      "width": 0,
+      "height": 110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          110
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a3__text",
+      "x": 367.5,
+      "y": 257,
+      "text": "Session appears",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a4",
+      "x": 440,
+      "y": 330,
+      "width": 0,
+      "height": -110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -110
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "a4__text",
+      "x": 412,
+      "y": 257,
+      "text": "Sign out",
+      "fontSize": 14,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "n1",
+      "x": 70,
+      "y": 500,
+      "text": "useCanSync = true only in supabase mode",
+      "fontSize": 18,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

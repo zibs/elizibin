@@ -1,0 +1,264 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "t0",
+      "x": 380,
+      "y": 24,
+      "text": "Query Cache Hygiene",
+      "fontSize": 30,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "u1",
+      "x": 80,
+      "y": 180,
+      "width": 220,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#a5d8ff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "u1__text",
+      "x": 105,
+      "y": 213,
+      "text": "Screens and Hooks",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q1",
+      "x": 360,
+      "y": 180,
+      "width": 240,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#d0bfff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q1__text",
+      "x": 410,
+      "y": 213,
+      "text": "TanStack Query",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "m1",
+      "x": 680,
+      "y": 120,
+      "width": 240,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#fff3bf",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "m1__text",
+      "x": 730,
+      "y": 153,
+      "text": "MMKV Persister",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "r1",
+      "x": 680,
+      "y": 250,
+      "width": 240,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "r1__text",
+      "x": 740,
+      "y": 283,
+      "text": "SQLite Repos",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "h1",
+      "x": 360,
+      "y": 380,
+      "width": 300,
+      "height": 110,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#ffd8a8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "h1__text",
+      "x": 420,
+      "y": 402.6,
+      "text": "Auth hygiene\nclear and invalidate\non access change",
+      "fontSize": 18,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 300,
+      "y": 225,
+      "width": 60,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          60,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 600,
+      "y": 200,
+      "width": 80,
+      "height": -35,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          -35
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 600,
+      "y": 225,
+      "width": 80,
+      "height": 70,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          70
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a4",
+      "x": 500,
+      "y": 270,
+      "width": 0,
+      "height": 110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          110
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

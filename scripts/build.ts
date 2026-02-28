@@ -11,6 +11,9 @@ const ROOT_DIR = process.cwd();
 const HOME_PAGE = "index.html";
 const DEFAULT_SITE_URL = "https://elizibin.com";
 const SITE_URL = normalizeSiteUrl(process.env.SITE_URL ?? DEFAULT_SITE_URL);
+const INCLUDE_UNPUBLISHED_POSTS = parseEnvBoolean(
+    process.env.BLOG_INCLUDE_UNPUBLISHED,
+);
 
 const PRIMARY_LINK_CLASSES =
     "text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]";
@@ -91,6 +94,35 @@ function normalizeRootRelative(value: string): string {
 
 function normalizeSiteUrl(value: string): string {
     return value.trim().replace(/\/+$/, "");
+}
+
+function parseEnvBoolean(value: string | undefined, defaultValue = false): boolean {
+    if (!value) {
+        return defaultValue;
+    }
+
+    const normalizedValue = value.trim().toLowerCase();
+    if (
+        normalizedValue === "1" ||
+        normalizedValue === "true" ||
+        normalizedValue === "yes" ||
+        normalizedValue === "on"
+    ) {
+        return true;
+    }
+
+    if (
+        normalizedValue === "0" ||
+        normalizedValue === "false" ||
+        normalizedValue === "no" ||
+        normalizedValue === "off"
+    ) {
+        return false;
+    }
+
+    throw new Error(
+        `Invalid BLOG_INCLUDE_UNPUBLISHED value "${value}". Use a boolean value like "true" or "false".`,
+    );
 }
 
 function escapeHtml(value: string): string {
@@ -1079,6 +1111,12 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
     const seenSlugs = new Set<string>();
 
     for (const post of postEntries) {
+        if (typeof post.published !== "boolean") {
+            throw new Error(
+                `Blog post "${post.slug || "<unknown>"}" has invalid "published" value. Use true or false.`,
+            );
+        }
+
         assertNonEmpty(post.slug, "slug", "Blog post", post.slug || "<unknown>");
         assertNonEmpty(post.title, "title", "Blog post", post.slug);
         assertNonEmpty(post.summary, "summary", "Blog post", post.slug);
@@ -1294,9 +1332,11 @@ async function validateGeneratedReferences(
 }
 
 async function buildSite(): Promise<void> {
-    await validateBlogPosts(blogPosts);
+    const orderedBlogPosts = INCLUDE_UNPUBLISHED_POSTS
+        ? blogPosts
+        : blogPosts.filter((post) => post.published);
+    await validateBlogPosts(orderedBlogPosts);
 
-    const orderedBlogPosts = blogPosts;
     const highlightBlogCode = await createBlogCodeHighlighter();
 
     await rm(path.join(ROOT_DIR, "oss"), { recursive: true, force: true });
@@ -1321,4 +1361,12 @@ async function buildSite(): Promise<void> {
 }
 
 await buildSite();
-console.log(`Built ${blogPosts.length} blog page(s).`);
+const builtBlogPostCount = INCLUDE_UNPUBLISHED_POSTS
+    ? blogPosts.length
+    : blogPosts.filter((post) => post.published).length;
+const skippedUnpublishedCount = blogPosts.length - builtBlogPostCount;
+const skippedSummary =
+    skippedUnpublishedCount > 0
+        ? ` Skipped ${skippedUnpublishedCount} unpublished post(s).`
+        : "";
+console.log(`Built ${builtBlogPostCount} blog page(s).${skippedSummary}`);

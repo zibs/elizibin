@@ -1,0 +1,445 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "t0",
+      "x": 430,
+      "y": 26,
+      "text": "Hapax System Map",
+      "fontSize": 30,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "ui",
+      "x": 80,
+      "y": 150,
+      "width": 220,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#a5d8ff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "ui__text",
+      "x": 115,
+      "y": 183,
+      "text": "React Native UI",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "db",
+      "x": 420,
+      "y": 140,
+      "width": 260,
+      "height": 100,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "hachure",
+      "strokeColor": "#c3fae8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "db__text",
+      "x": 469.25,
+      "y": 167.2,
+      "text": "Local SQLite\n(source of truth)",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "sync",
+      "x": 420,
+      "y": 320,
+      "width": 260,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#d0bfff",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "sync__text",
+      "x": 495,
+      "y": 353,
+      "text": "Sync Engine",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "supa",
+      "x": 840,
+      "y": 140,
+      "width": 260,
+      "height": 100,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#b2f2bb",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "supa__text",
+      "x": 885,
+      "y": 178,
+      "text": "Supabase Postgres",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "edge",
+      "x": 840,
+      "y": 320,
+      "width": 260,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#ffd8a8",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "edge__text",
+      "x": 900,
+      "y": 353,
+      "text": "Edge Functions",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "cache",
+      "x": 80,
+      "y": 330,
+      "width": 220,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#fff3bf",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "cache__text",
+      "x": 137.75,
+      "y": 352.2,
+      "text": "Query Cache\n+ MMKV",
+      "fontSize": 19,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "export",
+      "x": 420,
+      "y": 500,
+      "width": 260,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "hachure",
+      "strokeColor": "#ffc9c9",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "export__text",
+      "x": 480,
+      "y": 533,
+      "text": "Export Service",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "files",
+      "x": 840,
+      "y": 500,
+      "width": 260,
+      "height": 90,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#b2f2bb",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "files__text",
+      "x": 890,
+      "y": 533,
+      "text": "JSON / CSV files",
+      "fontSize": 20,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a1",
+      "x": 300,
+      "y": 195,
+      "width": 120,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          120,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a2",
+      "x": 550,
+      "y": 240,
+      "width": 0,
+      "height": 80,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          80
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a3",
+      "x": 680,
+      "y": 190,
+      "width": 160,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          160,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a4",
+      "x": 680,
+      "y": 360,
+      "width": 160,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          160,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a5",
+      "x": 300,
+      "y": 375,
+      "width": 120,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          120,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a6",
+      "x": 550,
+      "y": 410,
+      "width": 0,
+      "height": 90,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          90
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "a7",
+      "x": 680,
+      "y": 545,
+      "width": 160,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          160,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "strokeColor": "#1c7ed6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "tn1",
+      "x": 710,
+      "y": 210,
+      "text": "pull/push",
+      "fontSize": 16,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "tn2",
+      "x": 715,
+      "y": 380,
+      "text": "AI calls",
+      "fontSize": 16,
+      "strokeColor": "#1f1f1f",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

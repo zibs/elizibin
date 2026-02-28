@@ -64,6 +64,7 @@ export type BlogPost = {
     title: string;
     summary: string; // used in blog index cards + meta description
     publishedAt: string; // YYYY-MM-DD
+    published: boolean; // false keeps the post out of default build output
     heroImage?: string; // optional social/share image
     tags?: string[];
     blocks: BlogBlock[]; // unlimited length
@@ -108,6 +109,12 @@ export type BlogPost = {
 - Tweet block URLs are valid `twitter.com` / `x.com` status links.
 - Each post includes a share image source (`heroImage` or at least one `image` block).
 - Generated internal `href` / `src` / `srcset` references resolve.
+
+Filtering behavior:
+
+- Default `bun run build` includes only posts with `published: true`.
+- `BLOG_INCLUDE_UNPUBLISHED=true bun run build` includes both published and unpublished posts.
+- `npm run dev` sets `BLOG_INCLUDE_UNPUBLISHED=true` automatically for local drafting.
 
 ### Excalidraw Diagram Asset Flow
 
@@ -249,7 +256,7 @@ Current accepted aliases:
 When generating a new blog post from another repo/agent:
 
 1. Create or reuse image assets in `img/blog/<slug>/`.
-2. Add one `BlogPost` export in `content/blog-posts/<slug>.ts`, then include it in `content/blog-posts/index.ts` `blogPosts` ordering.
+2. Add one `BlogPost` export in `content/blog-posts/<slug>.ts` with `published: false` while drafting, then include it in `content/blog-posts/index.ts` `blogPosts` ordering.
 3. Use supported block types (`paragraph`, `heading`, `image`, `code`, `tweet`).
 4. Keep paragraphs plain text with optional inline markdown links.
 5. Ensure every image has meaningful `alt`.
@@ -266,6 +273,7 @@ When generating a new blog post from another repo/agent:
     title: "Post Title",
     summary: "One-sentence summary for cards and metadata.",
     publishedAt: "2026-02-16",
+    published: false,
     heroImage: "/img/blog/descriptive-kebab-slug/hero.png",
     tags: ["engineering"],
     blocks: [

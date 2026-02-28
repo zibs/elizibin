@@ -6,6 +6,7 @@ export const reactNativePeekieFourAnglesPost: BlogPost = {
     summary:
         "Introducing react-native-peekie: a Peek and Pop React Native library for iOS.",
     publishedAt: "2026-02-17",
+    published: true,
     githubUrl: "https://github.com/zibs/react-native-peekie",
     heroImage: "/img/projects/peekie-social.png",
     tags: ["react-native", "expo", "ios", "native-modules"],
