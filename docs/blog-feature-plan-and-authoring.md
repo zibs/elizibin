@@ -59,7 +59,7 @@ export type BlogBlock =
           autoplay?: boolean; // default true
           loop?: boolean; // default true
           muted?: boolean; // default true
-          controls?: boolean; // default false
+          controls?: boolean; // default true
           playsInline?: boolean; // default true
       }
     | {
@@ -106,7 +106,7 @@ export type BlogPost = {
 - `image` -> `<figure><img/><figcaption/></figure>` when caption exists.
 - `video` -> `<figure><video/></figure>` with optional caption.
   - Defaults: `autoplay`, `loop`, `muted`, `playsinline` enabled.
-  - `controls` is optional (off by default).
+  - `controls` is optional (on by default).
   - If `autoplay` is true, `muted` must also be true.
 - `code` -> static highlighted HTML using Shiki.
 - `tweet` -> `<blockquote class="twitter-tweet">` plus one widgets script per page (when present).

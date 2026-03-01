@@ -887,7 +887,7 @@ function renderBlogBlock(
         const autoplay = block.autoplay ?? true;
         const loop = block.loop ?? true;
         const muted = block.muted ?? true;
-        const controls = block.controls ?? false;
+        const controls = block.controls ?? true;
         const playsInline = block.playsInline ?? true;
 
         return html(`
