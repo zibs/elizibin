@@ -4,20 +4,23 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     slug: "hapax-offline-first-dictionary-ios",
     title: "Building Hapax: An Offline-First Dictionary App (iOS for now)",
     summary:
-        "A casual walkthrough of Hapax: local-first data, optional sign-in, practical sync, and lightweight AI helpers.",
+        "A casual walkthrough of Hapax: an offline-first personal dictionary app.",
     publishedAt: "2026-02-24",
     published: true,
-    heroImage:
-        "/img/blog/hapax-offline-first-dictionary-ios/system-map.png",
+    heroImage: "/img/blog/hapax-offline-first-dictionary-ios/system-map.png",
     tags: ["ios", "react-native", "offline-first", "sqlite", "supabase"],
     blocks: [
         {
             type: "paragraph",
-            text: "Hapax is a small dictionary app I built for one simple problem: I hear words I want to remember, then forget them before I write them down.",
+            text: "Hapax is a small dictionary app I built for myself. I try to write down/look up every word I come across that I don't know. I've kept a word list for years as a basic csv, but I've always wanted to experiment with it in an app format.",
         },
         {
             type: "paragraph",
-            text: "The app is designed to save first and organize later. This post is a straightforward tour of how it works.",
+            text: " It's built as local-first data with an optional sign-in, practical sync features, and lightweight AI helpers to fill in details and enrich entries.",
+        },
+        {
+            type: "paragraph",
+            text: "The app is designed to save first and organize later via entry or AI enrichment. This post is a straightforward tour of how it works.",
         },
         {
             type: "video",
@@ -46,7 +49,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "So the core idea is simple: add the word now, clean it up later.",
+            text: "So the core idea is simple: add the word now, enrich it later.",
         },
         {
             type: "video",
@@ -63,7 +66,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Hapax is iOS-first today. Android and Expo web are planned, but not full parity yet.",
+            text: "Hapax is iOS-first today. Android and Expo web are possible, but not a real priority yet.",
         },
         {
             type: "paragraph",
@@ -252,7 +255,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Enrichment is optional. It can fill fields like definition, etymology, notes, and tags.",
+            text: "Enrichment is optional. It can fill fields like definition, etymology, notes, and tags. I've been really happy with how this is working so far!",
         },
         {
             type: "paragraph",
@@ -290,7 +293,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Exports are local and simple: JSON or CSV from local data.",
+            text: "Exports are local and simple: JSON or CSV from local data. This way I can always go back to my original data and workflow if needed.",
         },
         {
             type: "paragraph",
@@ -316,14 +319,18 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
             text: "Closing thoughts",
         },
         {
-            type: "paragraph",
-            text: "Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top.",
-        },
-        {
             type: "image",
             src: "/img/blog/hapax-offline-first-dictionary-ios/closing-pillars.png",
             alt: "Simple summary diagram of local-first data, sync, and user-controlled features.",
             caption: "Small app, clear priorities.",
+        },
+        {
+            type: "paragraph",
+            text: "Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top. It's available on TestFlight, but not on the App Store yet.",
+        },
+        {
+            type: "paragraph",
+            text: "Thanks for reading!",
         },
     ],
 };
