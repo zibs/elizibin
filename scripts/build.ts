@@ -622,7 +622,7 @@ function renderHomePage(
             </article>
             <section class="max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-lg leading-relaxed mb-6">
-                    writing:
+                    Writing/OSS/Experiments:
                 </p>
                 ${renderHomeBlogList(tools, blogEntries)}
             </section>
