@@ -17,9 +17,9 @@
     {
       "type": "rectangle",
       "id": "s1",
-      "x": 70,
+      "x": 50,
       "y": 180,
-      "width": 240,
+      "width": 230,
       "height": 100,
       "roundness": {
         "type": 3
@@ -34,8 +34,8 @@
     },
     {
       "type": "text",
-      "id": "s1__text",
-      "x": 120,
+      "id": "s1t",
+      "x": 94,
       "y": 206,
       "text": "Local rows\nuser_id = null",
       "fontSize": 20,
@@ -46,7 +46,7 @@
     {
       "type": "rectangle",
       "id": "s2",
-      "x": 380,
+      "x": 340,
       "y": 180,
       "width": 260,
       "height": 100,
@@ -63,8 +63,8 @@
     },
     {
       "type": "text",
-      "id": "s2__text",
-      "x": 425,
+      "id": "s2t",
+      "x": 385,
       "y": 206,
       "text": "Sign in\n(session appears)",
       "fontSize": 20,
@@ -75,9 +75,9 @@
     {
       "type": "rectangle",
       "id": "s3",
-      "x": 710,
-      "y": 180,
-      "width": 260,
+      "x": 660,
+      "y": 170,
+      "width": 310,
       "height": 120,
       "roundness": {
         "type": 3
@@ -92,9 +92,9 @@
     },
     {
       "type": "text",
-      "id": "s3__text",
-      "x": 745.5,
-      "y": 207.6,
+      "id": "s3t",
+      "x": 703,
+      "y": 207,
       "text": "Migration service\nreassigns ownership\nmerges tag collisions",
       "fontSize": 18,
       "strokeColor": "#1f1f1f",
@@ -104,9 +104,9 @@
     {
       "type": "rectangle",
       "id": "s4",
-      "x": 1020,
+      "x": 1030,
       "y": 180,
-      "width": 150,
+      "width": 210,
       "height": 100,
       "roundness": {
         "type": 3
@@ -121,8 +121,8 @@
     },
     {
       "type": "text",
-      "id": "s4__text",
-      "x": 1055,
+      "id": "s4t",
+      "x": 1075,
       "y": 206,
       "text": "pending\nfor sync",
       "fontSize": 20,
@@ -133,9 +133,9 @@
     {
       "type": "arrow",
       "id": "a1",
-      "x": 310,
+      "x": 280,
       "y": 230,
-      "width": 70,
+      "width": 60,
       "height": 0,
       "points": [
         [
@@ -143,7 +143,7 @@
           0
         ],
         [
-          70,
+          60,
           0
         ]
       ],
@@ -157,9 +157,9 @@
     {
       "type": "arrow",
       "id": "a2",
-      "x": 640,
+      "x": 600,
       "y": 230,
-      "width": 70,
+      "width": 60,
       "height": 0,
       "points": [
         [
@@ -167,7 +167,7 @@
           0
         ],
         [
-          70,
+          60,
           0
         ]
       ],
@@ -183,7 +183,7 @@
       "id": "a3",
       "x": 970,
       "y": 230,
-      "width": 50,
+      "width": 60,
       "height": 0,
       "points": [
         [
@@ -191,7 +191,7 @@
           0
         ],
         [
-          50,
+          60,
           0
         ]
       ],
@@ -205,10 +205,10 @@
     {
       "type": "rectangle",
       "id": "n1",
-      "x": 380,
-      "y": 360,
-      "width": 600,
-      "height": 160,
+      "x": 330,
+      "y": 350,
+      "width": 700,
+      "height": 170,
       "roundness": {
         "type": 3
       },
@@ -222,9 +222,9 @@
     },
     {
       "type": "text",
-      "id": "n1__text",
-      "x": 470,
-      "y": 392,
+      "id": "n1t",
+      "x": 417,
+      "y": 386,
       "text": "Safety details\n- Idempotent: safe to retry\n- Revives deleted tags when needed\n- useCanSync waits for migration to finish",
       "fontSize": 20,
       "strokeColor": "#1f1f1f",
