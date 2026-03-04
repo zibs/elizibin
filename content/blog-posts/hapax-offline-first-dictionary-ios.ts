@@ -326,7 +326,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top. It's available on TestFlight, but not on the App Store yet.",
+            text: "Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top. It's available on TestFlight, but probably won't make it to the App Store as it's sort of just for me.",
         },
         {
             type: "paragraph",
