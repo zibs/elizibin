@@ -1,0 +1,300 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>An Emoji Translator | Blog | Eli Zibin</title>
+    <meta
+        name="description"
+        content="A system that converts text into emoji-only lines."
+    />
+    <link rel="canonical" href="https://elizibin.com/blog/emoji-system-successes/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="An Emoji Translator | Blog | Eli Zibin" />
+    <meta property="og:description" content="A system that converts text into emoji-only lines." />
+    <meta property="og:url" content="https://elizibin.com/blog/emoji-system-successes/" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/emoji-system-successes/dickinson-woven.png" />
+    <meta property="og:image:alt" content="Hero image for An Emoji Translator" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="An Emoji Translator | Blog | Eli Zibin" />
+    <meta name="twitter:description" content="A system that converts text into emoji-only lines." />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/emoji-system-successes/dickinson-woven.png" />
+    <meta name="twitter:image:alt" content="Hero image for An Emoji Translator" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Abril+Fatface|Great+Vibes|Roboto+Mono"
+        rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?v=3.4.1"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "media",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        abril: ['"Abril Fatface"', "cursive"],
+                        "great-vibes": ['"Great Vibes"', "cursive"],
+                        "roboto-mono": ['"Roboto Mono"', "monospace"],
+                    },
+                    colors: {
+                        primary: {
+                            light: "rgba(0, 111, 255, 0.9)",
+                            dark: "rgba(0, 255, 136, 0.9)",
+                        },
+                        secondary: {
+                            light: "rgba(255, 0, 255, 0.9)",
+                            dark: "rgba(255, 230, 0, 0.9)",
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-underline {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0, 111, 255, 0.9),
+                rgba(255, 0, 255, 0.9)
+            );
+        }
+
+        .blog-inline-code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.92em;
+            padding: 0.1rem 0.38rem;
+            border-radius: 0.35rem;
+            background: rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.14);
+        }
+
+        .blog-code-block .shiki,
+        .blog-code-block .shiki span {
+            background-color: var(--shiki-light-bg);
+            color: var(--shiki-light);
+        }
+
+        .blog-code-block .shiki {
+            overflow-x: auto;
+            padding: 1rem 1.125rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-code-block .shiki code {
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .gradient-text {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .gradient-underline {
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 255, 136, 0.9),
+                    rgba(255, 230, 0, 0.9)
+                );
+            }
+
+            .blog-inline-code {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(255, 255, 255, 0.28);
+            }
+
+            .blog-code-block .shiki,
+            .blog-code-block .shiki span {
+                background-color: var(--shiki-dark-bg);
+                color: var(--shiki-dark);
+            }
+
+            .blog-code-block .shiki {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+        }
+    </style>
+</head>
+
+            <body class="bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]">
+                <main class="container mx-auto px-4 py-8">
+        <header class="max-w-3xl mx-auto mb-16">
+    <h1
+        class="font-great-vibes text-6xl md:text-7xl relative inline-block tracking-wider"
+    >
+        <a href="../../index.html" class="hover:opacity-90">
+            Eli Zibin
+            <span class="gradient-underline absolute bottom-0 left-0"></span>
+        </a>
+    </h1>
+</header>
+
+                    <article class="max-w-3xl mx-auto">
+                <p class="mb-9">
+                    <a
+                        href="../../index.html"
+                        class="inline-flex items-center text-2xl leading-none text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]"
+                        aria-label="Back home"
+                        title="Back home"
+                    >
+                        &#8592;
+                    </a>
+                </p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
+                    An Emoji Translator
+                </h2>
+                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
+                    04/03/2026
+                </p>
+                <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">emoji</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">llm</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">cli</span>
+                <span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">poetics</span>
+</p>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-9">
+                    A system that converts text into emoji-only lines.
+                </p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/dickinson-woven.png"
+        alt="Hero image for An Emoji Translator"
+        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+    />
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I keep returning to Emoji Dick, which remains, for me, one of the stranger and more revealing works of conceptual writing. It stages translation as reduction, collaboration, expense, joke, and artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what kind of labor is being hidden, what counts as a version, and what exactly is being translated when language is forced into pictographs?</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of object that can appear. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line?</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">What began as a small CLI experiment gradually became an apparatus for testing that question at scale: resumable runs, chunk-level retries, explicit artifact contracts, and a dashboard that makes the duration and fragility of the process visible rather than magical.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What success meant here</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Success here had very little to do with elegance. Before asking whether any output was good, I needed to know whether the system could keep faith with the line: survive interruption, show its progress during long calls, and produce stable final artifacts (<code class="blog-inline-code">emoji.txt</code> and <code class="blog-inline-code">woven.txt</code>) that could actually be inspected afterward.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/dickinson-emoji.png"
+        alt="Narrow screenshot showing Emily Dickinson lines converted into one emoji-only line per source line on a dark background."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 640px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Raw line-locked Dickinson output from `emoji.txt`: every source line still has a visible counterpart before weaving.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The woven version is more legible, but the raw <code class="blog-inline-code">emoji.txt</code> file matters more to me as evidence. If a line vanishes, if two lines quietly fuse, if place is lost, then whatever literary strangeness follows is resting on a false premise. The first requirement is not beauty but accountable correspondence.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The apparatus</h2>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/system-overview.png"
+        alt="Diagram of the Emoji package architecture showing CLI and dashboard entry points, the pipeline runtime core, and run artifacts including progress and outputs."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 680px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">CLI and dashboard both enter the same runtime: worker pool, serialized state writer, provider adapter, artifact set.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The most important technical decision is not glamorous. State writes are serialized even while chunk conversion is parallelized. That keeps <code class="blog-inline-code">state.json</code>, <code class="blog-inline-code">run.manifest.json</code>, and <code class="blog-inline-code">progress.jsonl</code> in agreement, which means a run can be resumed without turning into an archaeological problem.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">How resumption is made possible</h2>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/chunk-lifecycle.png"
+        alt="Flow diagram showing Emoji chunk processing states from pending queue to claimed chunk, conversion, success or failure outcomes, and resume behavior that resets failed chunks to pending."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 680px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Each chunk is accounted for explicitly: retries stay local, failed work can return to pending, completed work is left where it is.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">A chunk moves through a narrow sequence: claimed, attempted, written, marked. Retries remain local to that chunk. Failed work can be sent back to pending. Completed work is not touched again. This is less an achievement of intelligence than a discipline of bookkeeping, but without that discipline the literary question never really gets a fair hearing.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The contract the CLI has to keep</h2>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
+        BASH
+    </p>
+    <div class="blog-code-block">
+        <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">bun</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> run</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --cwd</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> packages/emoji</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> src/cli.ts</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> run</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> --</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --inputFile</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> ./book.txt</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --parallelism</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 4</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --reasoning</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> high</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --maxOutputTokens</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 64000</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --requestTimeoutMs</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 900000</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --maxRetries</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 8</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --retryBaseDelayMs</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 1500</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">   --json</span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> true</span></span></code></pre>
+    </div>
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">A typical long run, with the runtime controls exposed instead of hidden.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The provider adapter asks for a strict <code class="blog-inline-code">json_schema</code> response with exactly one emoji line for each source line. That does not solve the problem of interpretation, but it does keep the experiment honest. Line-locking, overlap-aware stitching, and deterministic weaving are what prevent the output from dissolving into decorative drift.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/whitman.png"
+        alt="Screenshot of Walt Whitman lines with emoji-only companion lines, preserving one output line per source line across a longer passage."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 680px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Whitman from a longer run: not a triumph of symbolism, but a sustained holding of place.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Whitman is useful because the passage wants breadth, catalogue, continuation. If the system can remain lineate under that pressure, then one begins to see not literary success exactly, but a usable formal discipline.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Rilke introduces a different difficulty. The line does not simply continue; it broods, turns, and qualifies itself. The output below is still awkward, but the awkwardness is at least inspectable.</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/rilke-duino.png"
+        alt="Screenshot of a Rilke Duino sample with source lines interleaved with emoji-only responses and a few question-mark markers in the output."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 700px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Rilke from the Duino material: the system strains, and the strain becomes visible.</figcaption>
+</figure>
+
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Christian Bök&#39;s Eunoia makes the limit clearer still. Its constraint is not merely lexical or imagistic; it is internal, formal, almost infrastructural at the level of the vowel. Even with extra prompting, the system does not really understand that pressure. It mostly notices the surface fact of the letter <code class="blog-inline-code">i</code> and repeats the obvious emblem:</p>
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/eunoia-i.png"
+        alt="Emoji-only output for a Eunoia excerpt, with each line beginning with the blue information emoji on a white background."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 660px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Raw Eunoia attempt: the constraint is registered, but only as a blunt repeated token.</figcaption>
+</figure>
+
+                <figure class="mb-9 max-w-3xl mx-auto">
+    <img
+        src="../../img/blog/emoji-system-successes/eunoia-i-woven.png"
+        alt="Woven Eunoia sample showing source text interleaved with emoji renderings, still anchored by the repeated information emoji at the start of each emoji line."
+        loading="lazy"
+        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+        style="max-height: 760px;"
+    />
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Woven version of the same sample: easier to read, but still not actually carrying the excerpt&#39;s internal vowel logic.</figcaption>
+</figure>
+
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The next technical tasks are ordinary enough: better defaults, sharper comparisons, more careful prompting around formal constraints, a clearer sense of which kinds of writing this method can and cannot bear. But the more interesting question is not technical. If entire texts can be rendered this way, what sort of object results? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, comic? I do not know yet. That uncertainty is part of the appeal.</p>
+            </article>
+
+                </main>
+            </body>
+        </html>

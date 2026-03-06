@@ -1,0 +1,352 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text",
+      "id": "q2-title",
+      "x": 100,
+      "y": 26,
+      "text": "Echo Quality Loop (What Made This Run Work)",
+      "fontSize": 24,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q2-r1",
+      "x": 30,
+      "y": 120,
+      "width": 200,
+      "height": 80,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "hachure",
+      "strokeColor": "#4a9eed",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-t1",
+      "x": 58,
+      "y": 146,
+      "text": "1) Scan + inspect\nOCR seams",
+      "fontSize": 16,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q2-r2",
+      "x": 270,
+      "y": 120,
+      "width": 200,
+      "height": 80,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#8b5cf6",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-t2",
+      "x": 300,
+      "y": 146,
+      "text": "2) Translate\n(literary + context)",
+      "fontSize": 16,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "q2-a1",
+      "x": 230,
+      "y": 160,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q2-r3",
+      "x": 510,
+      "y": 120,
+      "width": 200,
+      "height": 80,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "hachure",
+      "strokeColor": "#ef4444",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-t3",
+      "x": 543,
+      "y": 146,
+      "text": "3) Faithfulness\ncheck (report)",
+      "fontSize": 16,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "q2-a2",
+      "x": 470,
+      "y": 160,
+      "width": 40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          40,
+          0
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q2-r4",
+      "x": 510,
+      "y": 300,
+      "width": 200,
+      "height": 80,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-t4",
+      "x": 560,
+      "y": 326,
+      "text": "4) Sweep\ncandidates",
+      "fontSize": 16,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "q2-a3",
+      "x": 610,
+      "y": 200,
+      "width": 0,
+      "height": 100,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          100
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q2-r5",
+      "x": 270,
+      "y": 300,
+      "width": 200,
+      "height": 80,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#22c55e",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-t5",
+      "x": 294,
+      "y": 326,
+      "text": "5) Curate + export\nbook text",
+      "fontSize": 16,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "q2-a4",
+      "x": 510,
+      "y": 340,
+      "width": -40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -40,
+          0
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "rectangle",
+      "id": "q2-r6",
+      "x": 30,
+      "y": 300,
+      "width": 200,
+      "height": 80,
+      "roundness": {
+        "type": 3
+      },
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#f59e0b",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-t6",
+      "x": 52,
+      "y": 326,
+      "text": "6) Update dossier +\nanchors, rerun",
+      "fontSize": 16,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "q2-a5",
+      "x": 270,
+      "y": 340,
+      "width": -40,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -40,
+          0
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "arrow",
+      "id": "q2-a6",
+      "x": 130,
+      "y": 300,
+      "width": 0,
+      "height": -100,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -100
+        ]
+      ],
+      "strokeColor": "#1e1e1e",
+      "endArrowhead": "arrow",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100
+    },
+    {
+      "type": "text",
+      "id": "q2-note",
+      "x": 130,
+      "y": 442,
+      "text": "Repeatable loop with artifacts at each stage.",
+      "fontSize": 20,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1,
+      "opacity": 100
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "exportWithDarkMode": false
+  },
+  "files": {}
+}

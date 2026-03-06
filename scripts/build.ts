@@ -21,6 +21,7 @@ const BODY_CLASSES =
     "bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
+const PARAGRAPH_INLINE_MARKUP_PATTERN = /`([^`\n]+)`|\[([^\]]+)\]\(([^)]+)\)/g;
 const BLOG_LIST_LIKE_PARAGRAPH_PATTERN = /^\s*(?:[-*]\s+|\d+\.\s+)/;
 const BLOG_CODE_THEME_LIGHT = "catppuccin-latte";
 const BLOG_CODE_THEME_DARK = "catppuccin-mocha";
@@ -422,6 +423,15 @@ function renderHead(
                     );
                 }
 
+                .blog-inline-code {
+                    font-family: "Roboto Mono", monospace;
+                    font-size: 0.92em;
+                    padding: 0.1rem 0.38rem;
+                    border-radius: 0.35rem;
+                    background: rgba(0, 0, 0, 0.06);
+                    border: 1px solid rgba(0, 0, 0, 0.14);
+                }
+
                 .blog-code-block .shiki,
                 .blog-code-block .shiki span {
                     background-color: var(--shiki-light-bg);
@@ -460,6 +470,11 @@ function renderHead(
                             rgba(0, 255, 136, 0.9),
                             rgba(255, 230, 0, 0.9)
                         );
+                    }
+
+                    .blog-inline-code {
+                        background: rgba(255, 255, 255, 0.12);
+                        border-color: rgba(255, 255, 255, 0.28);
                     }
 
                     .blog-code-block .shiki,
@@ -571,8 +586,12 @@ function markdownLinkToHtml(label: string, href: string): string {
     return `<a href="${escapeHtml(trimmedHref)}"${targetAttributes} class="${PRIMARY_LINK_CLASSES}">${escapeHtml(label)}</a>`;
 }
 
+function inlineCodeToHtml(value: string): string {
+    return `<code class="blog-inline-code">${escapeHtml(value)}</code>`;
+}
+
 function renderParagraphWithInlineLinks(paragraph: string): string {
-    const matches = Array.from(paragraph.matchAll(MARKDOWN_LINK_PATTERN));
+    const matches = Array.from(paragraph.matchAll(PARAGRAPH_INLINE_MARKUP_PATTERN));
     if (matches.length === 0) {
         return escapeHtml(paragraph);
     }
@@ -582,12 +601,21 @@ function renderParagraphWithInlineLinks(paragraph: string): string {
 
     for (const match of matches) {
         const fullMatch = match[0];
-        const label = match[1];
-        const href = match[2];
+        const inlineCode = match[1];
+        const label = match[2];
+        const href = match[3];
         const matchIndex = match.index ?? 0;
 
         rendered += escapeHtml(paragraph.slice(cursor, matchIndex));
-        rendered += markdownLinkToHtml(label, href);
+
+        if (typeof inlineCode === "string") {
+            rendered += inlineCodeToHtml(inlineCode);
+        } else if (typeof label === "string" && typeof href === "string") {
+            rendered += markdownLinkToHtml(label, href);
+        } else {
+            rendered += escapeHtml(fullMatch);
+        }
+
         cursor = matchIndex + fullMatch.length;
     }
 

@@ -2,6 +2,10 @@
 
 Status: Phase 4 (video embeds) implemented on 2026-02-28.
 
+Companion voice guide:
+
+- `docs/blog-style-guide.md`
+
 ## Goals
 
 - Keep the blog simple to author while supporting arbitrarily long, mixed-content posts.
@@ -170,10 +174,15 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asse
 
 Text rendering reliability note:
 
-- Prefer explicit `text` elements for diagram node captions.
-- Do not rely only on shape `label` values for critical text.
-- If generated PNG/SVG assets show unlabeled boxes, move those labels into standalone
-  `text` elements in the checkpoint JSON and rerun `bun run excalidraw:asset`.
+- `bun run excalidraw:asset` auto-promotes shape/arrow `label` text into standalone `text`
+  elements before export and strips `label` fields, so box labels survive PNG/SVG export.
+- Still prefer concise, explicit `text` elements for critical captions when authoring scenes.
+
+Clipping prevention note:
+
+- Keep important text at least ~40px from diagram edges.
+- Avoid long single-line captions; wrap into shorter lines (roughly <= 30-35 chars/line).
+- Always visually check generated PNG(s) before inserting into a post.
 
 You can then reference the generated `.png` (or `.svg`) via an `image` block in the matching post file under `content/blog-posts/`.
 
@@ -186,8 +195,8 @@ Use this when creating blog diagrams through Codex + Excalidraw MCP.
 3. Build the scene with `mcp__excalidraw__create_view` using Excalidraw elements JSON.
 4. Save the checkpoint with `mcp__excalidraw__save_checkpoint` (keep the checkpoint id).
 5. Read the full checkpoint JSON with `mcp__excalidraw__read_checkpoint`.
-   Important: ensure diagram node captions are explicit `text` elements in the scene JSON.
-   Do not rely only on shape `label` values for text you need in exported PNG/SVG assets.
+   Important: author with explicit `text` elements for critical captions and short wrapped lines.
+   The export helper now auto-promotes `label` text as a safety net.
 6. Pipe or save that JSON and run:
 
 ```bash
@@ -219,12 +228,23 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asse
 #### Troubleshooting: Missing Labels In Exported PNG/SVG
 
 - Symptom: boxes/arrows render, but node labels are missing in generated blog assets.
-- Cause: scene relies on shape `label` values that may not survive all export paths reliably.
-- Fix: convert those labels into standalone `text` elements, then rerun:
+- Cause: scene label handling mismatch in export paths.
+- Fix: rerun `bun run excalidraw:asset` (which now auto-promotes labels), then if needed
+  explicitly author `text` elements and regenerate:
 
 ```bash
 bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name>
 ```
+
+#### Troubleshooting: Clipped Text In Exported PNG/SVG
+
+- Symptom: title/caption text appears cut off near diagram edges.
+- Cause: text placed too close to scene bounds or overly long unwrapped lines.
+- Fix:
+  1. Move text inward (>= 40px edge padding).
+  2. Wrap long text into shorter lines.
+  3. Regenerate with `bun run excalidraw:asset`.
+  4. Visually verify PNG before committing.
 
 #### Reusable Example Pattern
 

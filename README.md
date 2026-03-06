@@ -6,6 +6,7 @@ A personal website.
 
 Blog implementation planning and post authoring conventions are documented in:
 
+- `docs/blog-style-guide.md`
 - `docs/blog-feature-plan-and-authoring.md`
 
 ## Blog Site
@@ -115,10 +116,16 @@ Default style preset: `handdrawn-soft`
 
 Text rendering reliability note:
 
-- Prefer explicit `text` elements for diagram node captions.
-- Do not rely only on shape `label` values for critical text.
-- If generated PNG/SVG assets show unlabeled boxes, move those labels into standalone
-  `text` elements in the checkpoint JSON and rerun `bun run excalidraw:asset`.
+- `bun run excalidraw:asset` now auto-promotes shape/arrow `label` text into standalone
+  `text` elements before export (and strips `label` fields in output assets), so labels survive
+  PNG/SVG export reliably.
+- Still prefer concise, explicit `text` elements in the authored checkpoint for critical captions.
+
+Clipping prevention note:
+
+- Keep all important text at least ~40px away from diagram edges.
+- Prefer short lines (roughly <= 30-35 characters per line) over very long single-line captions.
+- Always visually verify generated PNG(s) before finalizing the post.
 
 Skip PNG generation:
 

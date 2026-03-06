@@ -28,6 +28,7 @@ type CliOptions = {
     outDir: string;
     generatePng: boolean;
     stylePreset: StylePreset;
+    promoteLabels: boolean;
 };
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -70,6 +71,8 @@ Options:
   --name,  -n   Asset base filename (kebab-case), no extension.
   --out-dir, -o Output base directory (default: img/blog).
   --style-preset Style preset to apply before export (handdrawn-soft|none).
+  --promote-labels / --no-promote-labels
+               Convert shape/arrow label text into standalone text elements before export.
   --png         Generate PNG from Excalidraw-native SVG (default behavior).
   --no-png      Skip PNG generation and write SVG only.
   --no-style-preset Alias for --style-preset none.
@@ -112,6 +115,7 @@ function parseArgs(argv: string[]): CliOptions {
     let outDir = "img/blog";
     let generatePng = true;
     let stylePreset: StylePreset = "handdrawn-soft";
+    let promoteLabels = true;
 
     for (let index = 0; index < argv.length; index += 1) {
         const token = argv[index];
@@ -189,6 +193,16 @@ function parseArgs(argv: string[]): CliOptions {
             continue;
         }
 
+        if (token === "--no-promote-labels") {
+            promoteLabels = false;
+            continue;
+        }
+
+        if (token === "--promote-labels") {
+            promoteLabels = true;
+            continue;
+        }
+
         throw new Error(`Unknown argument: ${token}`);
     }
 
@@ -207,6 +221,7 @@ function parseArgs(argv: string[]): CliOptions {
         outDir,
         generatePng,
         stylePreset,
+        promoteLabels,
     };
 }
 
@@ -549,6 +564,200 @@ function applyStylePreset(
     );
 }
 
+type LabelDefinition = {
+    text: string;
+    fontSize: number;
+    color: string;
+};
+
+type LabelPromotionResult = {
+    drawables: Array<Record<string, unknown>>;
+    promotedCount: number;
+};
+
+function readLabelDefinition(
+    element: Record<string, unknown>,
+): LabelDefinition | null {
+    const rawLabel = element.label;
+    if (typeof rawLabel === "string") {
+        const text = rawLabel.trim();
+        if (text === "") {
+            return null;
+        }
+        return {
+            text,
+            fontSize: 20,
+            color: HANDDRAWN_SOFT.textColor,
+        };
+    }
+
+    if (!isRecord(rawLabel)) {
+        return null;
+    }
+
+    const text =
+        typeof rawLabel.text === "string" ? rawLabel.text.trim() : "";
+    if (text === "") {
+        return null;
+    }
+
+    return {
+        text,
+        fontSize: toPositiveNumber(rawLabel.fontSize, 20),
+        color: readColor(rawLabel.color, HANDDRAWN_SOFT.textColor),
+    };
+}
+
+function estimateTextDimensions(
+    text: string,
+    fontSize: number,
+): { width: number; height: number } {
+    const lines = text.split("\n");
+    const longestLine = lines.reduce(
+        (max, line) => Math.max(max, line.length),
+        0,
+    );
+    const width = Math.max(20, Math.ceil(longestLine * fontSize * 0.56));
+    const height = Math.max(
+        20,
+        Math.ceil(lines.length * fontSize * 1.25),
+    );
+    return { width, height };
+}
+
+function readPoints(
+    element: Record<string, unknown>,
+): Array<{ x: number; y: number }> {
+    if (!Array.isArray(element.points)) {
+        return [];
+    }
+
+    const points: Array<{ x: number; y: number }> = [];
+    for (const rawPoint of element.points) {
+        if (!Array.isArray(rawPoint) || rawPoint.length < 2) {
+            continue;
+        }
+        const pointX = toFiniteNumber(rawPoint[0], 0);
+        const pointY = toFiniteNumber(rawPoint[1], 0);
+        points.push({ x: pointX, y: pointY });
+    }
+
+    return points;
+}
+
+function buildLabelTextElement(
+    element: Record<string, unknown>,
+    label: LabelDefinition,
+    id: string,
+): Record<string, unknown> {
+    const baseX = toFiniteNumber(element.x, 0);
+    const baseY = toFiniteNumber(element.y, 0);
+    const width = toPositiveNumber(element.width, 0);
+    const height = toPositiveNumber(element.height, 0);
+    const textSize = estimateTextDimensions(label.text, label.fontSize);
+    const type = typeof element.type === "string" ? element.type : "";
+
+    if (SHAPE_TYPES.has(type) && width > 0 && height > 0) {
+        return {
+            type: "text",
+            id,
+            x: baseX + (width - textSize.width) / 2,
+            y: baseY + (height - textSize.height) / 2,
+            text: label.text,
+            fontSize: label.fontSize,
+            strokeColor: label.color,
+            fontFamily: 1,
+        };
+    }
+
+    if (type === "arrow" || type === "line") {
+        const points = readPoints(element);
+        const firstPoint = points[0] ?? { x: 0, y: 0 };
+        const lastPoint = points[points.length - 1] ?? { x: width, y: height };
+        const midX = baseX + (firstPoint.x + lastPoint.x) / 2;
+        const midY = baseY + (firstPoint.y + lastPoint.y) / 2;
+        return {
+            type: "text",
+            id,
+            x: midX - textSize.width / 2,
+            y: midY - textSize.height / 2,
+            text: label.text,
+            fontSize: label.fontSize,
+            strokeColor: label.color,
+            fontFamily: 1,
+        };
+    }
+
+    return {
+        type: "text",
+        id,
+        x: baseX,
+        y: baseY,
+        text: label.text,
+        fontSize: label.fontSize,
+        strokeColor: label.color,
+        fontFamily: 1,
+    };
+}
+
+function nextUniqueId(base: string, used: Set<string>): string {
+    if (!used.has(base)) {
+        used.add(base);
+        return base;
+    }
+
+    let suffix = 1;
+    while (used.has(`${base}-${suffix}`)) {
+        suffix += 1;
+    }
+
+    const id = `${base}-${suffix}`;
+    used.add(id);
+    return id;
+}
+
+function promoteLabelsToText(
+    drawables: Array<Record<string, unknown>>,
+): LabelPromotionResult {
+    const usedIds = new Set<string>();
+    for (const element of drawables) {
+        if (typeof element.id === "string" && element.id.trim() !== "") {
+            usedIds.add(element.id);
+        }
+    }
+
+    const promoted: Array<Record<string, unknown>> = [];
+    let promotedCount = 0;
+
+    for (let index = 0; index < drawables.length; index += 1) {
+        const element = drawables[index];
+        const label = readLabelDefinition(element);
+        if (!label) {
+            promoted.push(element);
+            continue;
+        }
+
+        const elementWithoutLabel: Record<string, unknown> = { ...element };
+        delete elementWithoutLabel.label;
+        promoted.push(elementWithoutLabel);
+
+        const elementId =
+            typeof element.id === "string" && element.id.trim() !== ""
+                ? element.id
+                : `element-${index + 1}`;
+        const textElementId = nextUniqueId(`${elementId}-label-text`, usedIds);
+        promoted.push(
+            buildLabelTextElement(elementWithoutLabel, label, textElementId),
+        );
+        promotedCount += 1;
+    }
+
+    return {
+        drawables: promoted,
+        promotedCount,
+    };
+}
+
 function defineGlobal(name: string, value: unknown): void {
     Object.defineProperty(globalThis, name, {
         value,
@@ -700,7 +909,7 @@ async function renderExcalidrawSvg(
         elements: drawables as never,
         appState: coerceAppState(appState) as never,
         files: (files ?? null) as never,
-        exportPadding: 24,
+        exportPadding: 48,
     });
 
     return svgElement.outerHTML;
@@ -753,8 +962,12 @@ async function main(): Promise<void> {
     const extracted = extractScene(inputText);
     const { camera, drawables } = resolveFinalState(extracted.elements);
     const styledDrawables = applyStylePreset(drawables, options.stylePreset);
+    const labelPromotion = options.promoteLabels
+        ? promoteLabelsToText(styledDrawables)
+        : { drawables: styledDrawables, promotedCount: 0 };
+    const preparedDrawables = labelPromotion.drawables;
 
-    if (styledDrawables.length === 0) {
+    if (preparedDrawables.length === 0) {
         throw new Error("No drawable Excalidraw elements found after resolving checkpoint state.");
     }
 
@@ -767,7 +980,7 @@ async function main(): Promise<void> {
 
     console.log(`[2/5] Writing source JSON -> ${toRepoRelative(jsonPath)}`);
     const sceneForDisk = buildSourceScene(
-        styledDrawables,
+        preparedDrawables,
         extracted.appState,
         extracted.files,
     );
@@ -775,7 +988,7 @@ async function main(): Promise<void> {
 
     console.log(`[3/5] Rendering Excalidraw-native SVG -> ${toRepoRelative(svgPath)}`);
     const svg = await renderExcalidrawSvg(
-        styledDrawables,
+        preparedDrawables,
         extracted.appState,
         extracted.files,
     );
@@ -813,6 +1026,9 @@ async function main(): Promise<void> {
         );
     }
     console.log(`- Style preset: ${options.stylePreset}`);
+    console.log(
+        `- Label promotion: ${labelPromotion.promotedCount} converted label(s) to standalone text`,
+    );
     console.log("");
     console.log("Blog block snippet:");
     console.log(buildSnippet(preferredImagePath));
