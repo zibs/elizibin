@@ -3,7 +3,8 @@ import type { BlogPost } from "../blog-types";
 export const emojiSystemSuccessesPost: BlogPost = {
     slug: "emoji-system-successes",
     title: "An Emoji Translator",
-    summary: "Building a system that converts text into emoji-only lines.",
+    summary:
+        "Notes on building a system that converts literary text into emoji-only lines, and on what survives, or fails to survive, in the process.",
     publishedAt: "2026-03-04",
     published: false,
     heroImage: "/img/blog/emoji-system-successes/dickinson-woven.png",
@@ -11,24 +12,24 @@ export const emojiSystemSuccessesPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "Who remembers Emoji Dick? It was a seminal work of conceptual writing (to me) that I've long appreciated. Turns out, it (and any other text) can now be generated dynamically via an LLM. It still costs money to do so (although the labor is even more invisible), and can still be orchestrated in the same dynamic of multiple generations and a curation loop to determine the ideal output.",
+            text: "I keep returning to Emoji Dick, which remains, for me, one of the stranger and more revealing works of conceptual writing. It stages translation as reduction, collaboration, expense, joke, and artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what kind of labor is being hidden, what counts as a version, and what exactly is being translated when language is forced into pictographs?",
         },
         {
             type: "paragraph",
-            text: "This post goes into the details of the system that makes this possible. I don't think it'll talk about the ramifications of this or of the differences to Emoji Dick...",
+            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of object that can appear. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line?",
         },
         {
             type: "paragraph",
-            text: "This project started as a small CLI experiment, but over the last few weeks it has become a real system: resumable runs, chunk-level retries, strong artifact contracts, and a dashboard loop that makes long jobs inspectable.",
+            text: "What began as a small CLI experiment gradually became an apparatus for testing that question at scale: resumable runs, chunk-level retries, explicit artifact contracts, and a dashboard that makes the duration and fragility of the process visible rather than magical.",
         },
         {
             type: "heading",
             level: 2,
-            text: "What counted as success this time",
+            text: "What success meant here",
         },
         {
             type: "paragraph",
-            text: "For this project, success means more than a pretty emoji output: we need interruption safety, clear progress signals during long calls, and deterministic final artifacts (`emoji.txt` and `woven.txt`).",
+            text: "Success here had very little to do with elegance. Before asking whether any output was good, I needed to know whether the system could keep faith with the line: survive interruption, show its progress during long calls, and produce stable final artifacts (`emoji.txt` and `woven.txt`) that could actually be inspected afterward.",
         },
         {
             type: "image",
@@ -41,54 +42,54 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The woven version is nicer to look at, but the raw `emoji.txt` form is where the system proves it is behaving. One source line in, one emoji line out, no silent merges, no missing rows.",
+            text: "The woven version is more legible, but the raw `emoji.txt` file matters more to me as evidence. If a line vanishes, if two lines quietly fuse, if place is lost, then whatever literary strangeness follows is resting on a false premise. The first requirement is not beauty but accountable correspondence.",
         },
         {
             type: "heading",
             level: 2,
-            text: "System overview",
+            text: "The apparatus",
         },
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/system-overview.png",
             alt: "Diagram of the Emoji package architecture showing CLI and dashboard entry points, the pipeline runtime core, and run artifacts including progress and outputs.",
             caption:
-                "CLI and dashboard feed the same runtime: worker pool + serialized state writer + provider adapter.",
+                "CLI and dashboard both enter the same runtime: worker pool, serialized state writer, provider adapter, artifact set.",
             centered: true,
             maxHeightPx: 680,
         },
         {
             type: "paragraph",
-            text: "The key design choice is that state writes are serialized even when chunk conversion is parallelized. That keeps `state.json`, `run.manifest.json`, and `progress.jsonl` coherent while workers run concurrently.",
+            text: "The most important technical decision is not glamorous. State writes are serialized even while chunk conversion is parallelized. That keeps `state.json`, `run.manifest.json`, and `progress.jsonl` in agreement, which means a run can be resumed without turning into an archaeological problem.",
         },
         {
             type: "heading",
             level: 2,
-            text: "Chunk lifecycle (why resume works)",
+            text: "How resumption is made possible",
         },
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/chunk-lifecycle.png",
             alt: "Flow diagram showing Emoji chunk processing states from pending queue to claimed chunk, conversion, success or failure outcomes, and resume behavior that resets failed chunks to pending.",
             caption:
-                "Each chunk is tracked explicitly: retries stay local, failed chunks can be resumed without redoing completed work.",
+                "Each chunk is accounted for explicitly: retries stay local, failed work can return to pending, completed work is left where it is.",
             centered: true,
             maxHeightPx: 680,
         },
         {
             type: "paragraph",
-            text: "The runtime path is intentionally boring: claim chunk, emit start event, convert with structured output + retries, write per-chunk file, update state, continue. On resume, failed chunks are reset to pending and completed chunks are left alone.",
+            text: "A chunk moves through a narrow sequence: claimed, attempted, written, marked. Retries remain local to that chunk. Failed work can be sent back to pending. Completed work is not touched again. This is less an achievement of intelligence than a discipline of bookkeeping, but without that discipline the literary question never really gets a fair hearing.",
         },
         {
             type: "heading",
             level: 2,
-            text: "CLI contract we can trust",
+            text: "The contract the CLI has to keep",
         },
         {
             type: "code",
             language: "bash",
             caption:
-                "Typical long-run invocation with explicit runtime controls.",
+                "A typical long run, with the runtime controls exposed instead of hidden.",
             code: `bun run --cwd packages/emoji src/cli.ts run -- \
   --inputFile ./book.txt \
   --parallelism 4 \
@@ -101,44 +102,44 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The provider adapter enforces a strict `json_schema` response contract with exactly one emoji line per source line. That line-locking, plus overlap-aware stitching and deterministic weaving, is what keeps output stable enough to iterate on.",
+            text: "The provider adapter asks for a strict `json_schema` response with exactly one emoji line for each source line. That does not solve the problem of interpretation, but it does keep the experiment honest. Line-locking, overlap-aware stitching, and deterministic weaving are what prevent the output from dissolving into decorative drift.",
         },
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/whitman.png",
             alt: "Screenshot of Walt Whitman lines with emoji-only companion lines, preserving one output line per source line across a longer passage.",
             caption:
-                "A Whitman sample from a longer run. The win is not perfect symbolism; it is sustained structure.",
+                "Whitman from a longer run: not a triumph of symbolism, but a sustained holding of place.",
             centered: true,
             maxHeightPx: 680,
         },
         {
             type: "paragraph",
-            text: "Longer passages are the real test. If the contract only works for a short Dickinson excerpt, it is a demo; if it survives Whitman's longer cadence and keeps place line by line, it starts to feel like infrastructure.",
+            text: "Whitman is useful because the passage wants breadth, catalogue, continuation. If the system can remain lineate under that pressure, then one begins to see not literary success exactly, but a usable formal discipline.",
         },
         {
             type: "paragraph",
-            text: "Here's an example of Rilke's tenth Duino elegy:",
+            text: "Rilke introduces a different difficulty. The line does not simply continue; it broods, turns, and qualifies itself. The output below is still awkward, but the awkwardness is at least inspectable.",
         },
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/rilke-duino.png",
             alt: "Screenshot of a Rilke Duino sample with source lines interleaved with emoji-only responses and a few question-mark markers in the output.",
             caption:
-                "A Rilke sample from the Duino material: still odd in places, but inspectable enough to compare and curate.",
+                "Rilke from the Duino material: the system strains, and the strain becomes visible.",
             centered: true,
             maxHeightPx: 700,
         },
         {
             type: "paragraph",
-            text: "I also tried it with an excerpt of Christian Bök's Eunoia, but it couldn't really mimic the internal constraints without some additional prompting from myself, and even then, it just added that 'i' emoji to the start of each line:",
+            text: "Christian Bök's Eunoia makes the limit clearer still. Its constraint is not merely lexical or imagistic; it is internal, formal, almost infrastructural at the level of the vowel. Even with extra prompting, the system does not really understand that pressure. It mostly notices the surface fact of the letter `i` and repeats the obvious emblem:",
         },
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/eunoia-i.png",
             alt: "Emoji-only output for a Eunoia excerpt, with each line beginning with the blue information emoji on a white background.",
             caption:
-                "Raw Eunoia attempt: the system mostly collapses the constraint into a repeated `i` marker at the start of each line.",
+                "Raw Eunoia attempt: the constraint is registered, but only as a blunt repeated token.",
             centered: true,
             maxHeightPx: 660,
         },
@@ -147,18 +148,18 @@ export const emojiSystemSuccessesPost: BlogPost = {
             src: "/img/blog/emoji-system-successes/eunoia-i-woven.png",
             alt: "Woven Eunoia sample showing source text interleaved with emoji renderings, still anchored by the repeated information emoji at the start of each emoji line.",
             caption:
-                "Woven version of the same Eunoia sample: easier to read, but still not genuinely tracking the excerpt's internal vowel constraint.",
+                "Woven version of the same sample: easier to read, but still not actually carrying the excerpt's internal vowel logic.",
             centered: true,
             maxHeightPx: 760,
         },
         {
             type: "heading",
             level: 2,
-            text: "Next",
+            text: "Conclusion",
         },
         {
             type: "paragraph",
-            text: "Next step is not more complexity. It is polishing defaults and adding stronger before/after quality comparisons while keeping the same resumable guarantees. We now have enough stability to focus on output quality and curation loops. It's also possible to translate entire texts/books if so desired...can emoji be literary? Wan we have an emoji of literature? Is it sculptural? Pictoral?",
+            text: "The next technical tasks are ordinary enough: better defaults, sharper comparisons, more careful prompting around formal constraints, a clearer sense of which kinds of writing this method can and cannot bear. But the more interesting question is not technical. If entire texts can be rendered this way, what sort of object results? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, comic? I do not know yet. That uncertainty is part of the appeal.",
         },
     ],
 };
