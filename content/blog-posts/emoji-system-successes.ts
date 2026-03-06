@@ -3,12 +3,11 @@ import type { BlogPost } from "../blog-types";
 export const emojiSystemSuccessesPost: BlogPost = {
     slug: "emoji-system-successes",
     title: "An Emoji Translator",
-    summary:
-        "Notes on building a system that converts literary text into emoji-only lines, and on what survives, or fails to survive, in the process.",
+    summary: "A system that converts text into emoji-only lines.",
     publishedAt: "2026-03-04",
-    published: false,
+    published: true,
     heroImage: "/img/blog/emoji-system-successes/dickinson-woven.png",
-    tags: ["emoji", "llm", "cli", "dashboard", "build-log"],
+    tags: ["emoji", "llm", "cli", "poetics"],
     blocks: [
         {
             type: "paragraph",
