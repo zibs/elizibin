@@ -9,13 +9,14 @@ export const emojiSystemSuccessesPost: BlogPost = {
     heroImage: "/img/blog/emoji-system-successes/dickinson-woven.png",
     tags: ["emoji", "llm", "cli", "poetics"],
     blocks: [
+        { type: "heading", level: 2, text: "📝 / 📖" },
         {
             type: "paragraph",
-            text: "Who remembers Emoji Dick? One of those seminal pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, and artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what is this new text, what is this readability, what counts as a version, and what exactly is being translated when language is forced into pictographs?",
+            text: "Who remembers [Emoji Dick](https://emojidick.com)? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, and playful but epic artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what is this new text, what is this readability, what counts as a version, iteration, addition, fan fiction, and what exactly is being translated when language is forced into pictographs?",
         },
         {
             type: "paragraph",
-            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line?",
+            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling.",
         },
         {
             type: "paragraph",
@@ -24,11 +25,11 @@ export const emojiSystemSuccessesPost: BlogPost = {
         {
             type: "heading",
             level: 2,
-            text: "What success meant here",
+            text: "Reading the lines",
         },
         {
             type: "paragraph",
-            text: "Success here had very little to do with elegance. Before asking whether any output was good, I needed to know whether the system could keep faith with the line: survive interruption, show its progress during long calls, and produce stable final artifacts (`emoji.txt` and `woven.txt`) that could actually be inspected afterward.",
+            text: "Before asking whether any output was good, I needed to know whether the system could keep faith with the line: survive interruption, show its progress during long calls, and produce stable final artifacts (`emoji.txt` and `woven.txt`) that could actually be inspected afterward.",
         },
         {
             type: "image",
@@ -40,8 +41,13 @@ export const emojiSystemSuccessesPost: BlogPost = {
             maxHeightPx: 640,
         },
         {
+            type: "heading",
+            level: 2,
+            text: "Woven lines",
+        },
+        {
             type: "paragraph",
-            text: "The woven version is more legible, but the raw `emoji.txt` file matters more to me as evidence. If a line vanishes, if two lines quietly fuse, if place is lost, then whatever literary strangeness follows is resting on a false premise. The first requirement is not beauty but accountable correspondence. But that's just my own bias for this first pass. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout, the line.",
+            text: "The woven version is more legible, and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a `emoji.txt` file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.",
         },
         {
             type: "heading",
@@ -154,11 +160,20 @@ export const emojiSystemSuccessesPost: BlogPost = {
         {
             type: "heading",
             level: 2,
+            text: "Biases",
+        },
+        {
+            type: "paragraph",
+            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. and the LLM reveals its own biases too. I'm not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given.",
+        },
+        {
+            type: "heading",
+            level: 2,
             text: "Conclusion",
         },
         {
             type: "paragraph",
-            text: "The next technical tasks are ordinary enough: better defaults, sharper comparisons, more careful prompting around formal constraints, a clearer sense of which kinds of writing this method can and cannot bear. But the more interesting question is not technical. If entire texts can be rendered this way, what sort of texts result? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, comic? I do not know yet. That uncertainty is certainly part of the appeal.",
+            text: "If entire texts can be rendered this way -- at ease -- what sort of texts result? What's the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? I do not know yet. That uncertainty is certainly part of the appeal.",
         },
     ],
 };

@@ -21,7 +21,8 @@ const BODY_CLASSES =
     "bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
-const PARAGRAPH_INLINE_MARKUP_PATTERN = /`([^`\n]+)`|\[([^\]]+)\]\(([^)]+)\)/g;
+const PARAGRAPH_INLINE_MARKUP_PATTERN =
+    /`([^`\n]+)`|\[([^\]]+)\]\(([^)]+)\)|(<\/?(?:i|em)>)/g;
 const BLOG_LIST_LIKE_PARAGRAPH_PATTERN = /^\s*(?:[-*]\s+|\d+\.\s+)/;
 const BLOG_CODE_THEME_LIGHT = "catppuccin-latte";
 const BLOG_CODE_THEME_DARK = "catppuccin-mocha";
@@ -590,6 +591,10 @@ function inlineCodeToHtml(value: string): string {
     return `<code class="blog-inline-code">${escapeHtml(value)}</code>`;
 }
 
+function inlineEmphasisTagToHtml(value: string): string {
+    return value;
+}
+
 function renderParagraphWithInlineLinks(paragraph: string): string {
     const matches = Array.from(paragraph.matchAll(PARAGRAPH_INLINE_MARKUP_PATTERN));
     if (matches.length === 0) {
@@ -604,12 +609,15 @@ function renderParagraphWithInlineLinks(paragraph: string): string {
         const inlineCode = match[1];
         const label = match[2];
         const href = match[3];
+        const emphasisTag = match[4];
         const matchIndex = match.index ?? 0;
 
         rendered += escapeHtml(paragraph.slice(cursor, matchIndex));
 
         if (typeof inlineCode === "string") {
             rendered += inlineCodeToHtml(inlineCode);
+        } else if (typeof emphasisTag === "string") {
+            rendered += inlineEmphasisTagToHtml(emphasisTag);
         } else if (typeof label === "string" && typeof href === "string") {
             rendered += markdownLinkToHtml(label, href);
         } else {
