@@ -11,11 +11,11 @@ export const emojiSystemSuccessesPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I keep returning to Emoji Dick, which remains, for me, one of the stranger and more revealing works of conceptual writing. It stages translation as reduction, collaboration, expense, joke, and artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what kind of labor is being hidden, what counts as a version, and what exactly is being translated when language is forced into pictographs?",
+            text: "Who remembers Emoji Dick? One of those seminal pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, and artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what is this new text, what is this readability, what counts as a version, and what exactly is being translated when language is forced into pictographs?",
         },
         {
             type: "paragraph",
-            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of object that can appear. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line?",
+            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line?",
         },
         {
             type: "paragraph",
@@ -41,7 +41,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The woven version is more legible, but the raw `emoji.txt` file matters more to me as evidence. If a line vanishes, if two lines quietly fuse, if place is lost, then whatever literary strangeness follows is resting on a false premise. The first requirement is not beauty but accountable correspondence.",
+            text: "The woven version is more legible, but the raw `emoji.txt` file matters more to me as evidence. If a line vanishes, if two lines quietly fuse, if place is lost, then whatever literary strangeness follows is resting on a false premise. The first requirement is not beauty but accountable correspondence. But that's just my own bias for this first pass. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout, the line.",
         },
         {
             type: "heading",
@@ -59,7 +59,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The most important technical decision is not glamorous. State writes are serialized even while chunk conversion is parallelized. That keeps `state.json`, `run.manifest.json`, and `progress.jsonl` in agreement, which means a run can be resumed without turning into an archaeological problem.",
+            text: "State writes are serialized even while chunk conversion is parallelized. That keeps `state.json`, `run.manifest.json`, and `progress.jsonl` in agreement, which means a run can be resumed without turning into an archaeological problem, or wasting tokens/money on a failed run.",
         },
         {
             type: "heading",
@@ -77,7 +77,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "A chunk moves through a narrow sequence: claimed, attempted, written, marked. Retries remain local to that chunk. Failed work can be sent back to pending. Completed work is not touched again. This is less an achievement of intelligence than a discipline of bookkeeping, but without that discipline the literary question never really gets a fair hearing.",
+            text: "A chunk moves through a narrow sequence: claimed, attempted, written, marked. Retries remain local to that chunk. Failed work can be sent back to pending. Completed work is not touched again.",
         },
         {
             type: "heading",
@@ -158,7 +158,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The next technical tasks are ordinary enough: better defaults, sharper comparisons, more careful prompting around formal constraints, a clearer sense of which kinds of writing this method can and cannot bear. But the more interesting question is not technical. If entire texts can be rendered this way, what sort of object results? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, comic? I do not know yet. That uncertainty is part of the appeal.",
+            text: "The next technical tasks are ordinary enough: better defaults, sharper comparisons, more careful prompting around formal constraints, a clearer sense of which kinds of writing this method can and cannot bear. But the more interesting question is not technical. If entire texts can be rendered this way, what sort of texts result? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, comic? I do not know yet. That uncertainty is certainly part of the appeal.",
         },
     ],
 };
