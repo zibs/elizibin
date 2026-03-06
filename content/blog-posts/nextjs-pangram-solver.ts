@@ -1,7 +1,7 @@
 import type { BlogPost } from "../blog-types";
 
 export const nextJsPangramSolverPost: BlogPost = {
-    slug: "nextjs-pangram-solver",
+    slug: "nyt-pangram-solver",
     title: "A Simple Pangram Solver for NYT Spelling Bee",
     summary:
         "A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter.",
@@ -16,7 +16,7 @@ export const nextJsPangramSolverPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "You enter the 7 letters, mark the required center letter, press one button, and get back a cleaned list of valid pangrams. The whole thing is intentionally small: one UI, one server route, one model call, and one local filtering step before results come back.",
+            text: "You enter the 7 letters, mark the required center letter, press one button, and (hopefully) get back a cleaned list of valid pangrams. The whole thing is intentionally small: one UI, one server route, one model call, and one local filtering step before results come back.",
         },
         {
             type: "image",
@@ -48,7 +48,7 @@ export const nextJsPangramSolverPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The model handles the word-generation step: find real words that use only the provided letters, include the center letter, and use all 7 letters at least once. After that, the server rechecks every candidate with deterministic local rules before returning anything.",
+            text: "The model handles the word-generation step: find real words that use only the provided letters, including the center letter, and use all 7 letters at least once. After that, the server rechecks every candidate with deterministic local rules before returning anything.",
         },
         {
             type: "code",
@@ -78,7 +78,7 @@ const pangrams = cleanAndFilterPangrams(words, letters, centerLetter);`,
         },
         {
             type: "paragraph",
-            text: "That second step is what makes the app usable. The model can suggest candidates, but the final result still has to pass a straightforward local check.",
+            text: "That second step is what makes the app usable. The model can suggest candidates, but the final result still has to pass a straightforward local validation check.",
         },
         {
             type: "heading",
@@ -110,15 +110,11 @@ const pangrams = cleanAndFilterPangrams(words, letters, centerLetter);`,
         {
             type: "heading",
             level: 2,
-            text: "That is basically it",
+            text: "That is basically it!",
         },
         {
             type: "paragraph",
-            text: "It keeps the API key on the server, validates input on both client and server, and is deployed and usable. But the main appeal is just that it is small, specific, and useful.",
-        },
-        {
-            type: "paragraph",
-            text: "It was also one of those small 2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour. I still like projects in this category: small enough to make quickly, specific enough to keep around.",
+            text: "It was also one of those small early-2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour.",
         },
     ],
 };
