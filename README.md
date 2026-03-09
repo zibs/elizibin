@@ -148,6 +148,17 @@ Disable style preset and keep source styles exactly:
 bun run excalidraw:asset -- --input /tmp/diagram.json --slug my-post --name system-flow --no-style-preset
 ```
 
+Legacy export parity note:
+
+- When regenerating from a preserved repo-local `.excalidraw.json`, start with
+  `--no-style-preset`.
+- If the new `-light` export does not match the existing unsuffixed asset dimensions or bytes,
+  retry with the historical padding used by some older diagrams:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug my-post --name system-flow --no-style-preset --export-padding 48
+```
+
 You can also pipe JSON from stdin:
 
 ```bash

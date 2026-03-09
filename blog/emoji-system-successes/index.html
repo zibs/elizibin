@@ -209,29 +209,41 @@
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Woven lines</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The woven version is more legible, and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a <code class="blog-inline-code">emoji.txt</code> file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The apparatus</h2>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/emoji-system-successes/system-overview-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/emoji-system-successes/system-overview.png"
+        src="../../img/blog/emoji-system-successes/system-overview-light.png"
         alt="Diagram of the Emoji package architecture showing CLI and dashboard entry points, the pipeline runtime core, and run artifacts including progress and outputs."
         loading="lazy"
         class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
         style="max-height: 680px;"
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">CLI and dashboard both enter the same runtime: worker pool, serialized state writer, provider adapter, artifact set.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">CLI and dashboard both enter the same runtime: worker pool, serialized state writer, provider adapter, artifact set.</figcaption>
+        </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">State writes are serialized even while chunk conversion is parallelized. That keeps <code class="blog-inline-code">state.json</code>, <code class="blog-inline-code">run.manifest.json</code>, and <code class="blog-inline-code">progress.jsonl</code> in agreement, which means a run can be resumed without turning into an archaeological problem, or wasting tokens/money on a failed run.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">How resumption is made possible</h2>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/emoji-system-successes/chunk-lifecycle-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/emoji-system-successes/chunk-lifecycle.png"
+        src="../../img/blog/emoji-system-successes/chunk-lifecycle-light.png"
         alt="Flow diagram showing Emoji chunk processing states from pending queue to claimed chunk, conversion, success or failure outcomes, and resume behavior that resets failed chunks to pending."
         loading="lazy"
         class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
         style="max-height: 680px;"
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Each chunk is accounted for explicitly: retries stay local, failed work can return to pending, completed work is left where it is.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Each chunk is accounted for explicitly: retries stay local, failed work can return to pending, completed work is left where it is.</figcaption>
+        </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">A chunk moves through a narrow sequence: claimed, attempted, written, marked. Retries remain local to that chunk. Failed work can be sent back to pending. Completed work is not touched again.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The contract the CLI has to keep</h2>

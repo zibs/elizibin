@@ -31,6 +31,7 @@ type CliOptions = {
     stylePreset: StylePreset;
     promoteLabels: boolean;
     themeVariants: ThemeVariant[];
+    exportPadding: number;
 };
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -76,6 +77,8 @@ Options:
   --out-dir, -o Output base directory (default: img/blog).
   --style-preset Style preset to apply before export (handdrawn-soft|none).
   --variants    Export theme variants (comma-separated: light,dark). Default: light,dark.
+  --export-padding
+               Excalidraw export padding in px. Default: 24.
   --promote-labels / --no-promote-labels
                Convert shape/arrow label text into standalone text elements before export.
   --png         Generate PNG from Excalidraw-native SVG (default behavior).
@@ -154,6 +157,7 @@ function parseArgs(argv: string[]): CliOptions {
     let stylePreset: StylePreset = "handdrawn-soft";
     let promoteLabels = true;
     let themeVariants: ThemeVariant[] = ["light", "dark"];
+    let exportPadding = DEFAULT_EXPORT_PADDING;
 
     for (let index = 0; index < argv.length; index += 1) {
         const token = argv[index];
@@ -226,6 +230,20 @@ function parseArgs(argv: string[]): CliOptions {
             continue;
         }
 
+        if (token === "--export-padding") {
+            const value = argv[index + 1];
+            if (!value) {
+                throw new Error("Missing value for --export-padding.");
+            }
+            const parsed = Number(value);
+            if (!Number.isFinite(parsed) || parsed < 0) {
+                throw new Error("`--export-padding` must be a non-negative number.");
+            }
+            exportPadding = parsed;
+            index += 1;
+            continue;
+        }
+
         if (token === "--no-style-preset") {
             stylePreset = "none";
             continue;
@@ -271,6 +289,7 @@ function parseArgs(argv: string[]): CliOptions {
         stylePreset,
         promoteLabels,
         themeVariants,
+        exportPadding,
     };
 }
 
@@ -955,6 +974,7 @@ async function renderExcalidrawSvg(
     appState?: Record<string, unknown>,
     files: Record<string, unknown> | null = null,
     themeVariant: ThemeVariant = "light",
+    exportPadding = DEFAULT_EXPORT_PADDING,
 ): Promise<string> {
     ensureDomGlobals();
 
@@ -965,7 +985,7 @@ async function renderExcalidrawSvg(
             exportWithDarkMode: themeVariant === "dark",
         }) as never,
         files: (files ?? null) as never,
-        exportPadding: DEFAULT_EXPORT_PADDING,
+        exportPadding,
     });
 
     return svgElement.outerHTML;
@@ -1094,6 +1114,7 @@ async function main(): Promise<void> {
             extracted.appState,
             extracted.files,
             themeVariant,
+            options.exportPadding,
         );
         await writeFile(svgPath, `${svg}\n`, "utf8");
 
@@ -1154,6 +1175,7 @@ async function main(): Promise<void> {
     }
     console.log(`- Style preset: ${options.stylePreset}`);
     console.log(`- Theme variants: ${options.themeVariants.join(", ")}`);
+    console.log(`- Export padding: ${options.exportPadding}`);
     console.log(
         `- Label promotion: ${labelPromotion.promotedCount} converted label(s) to standalone text`,
     );

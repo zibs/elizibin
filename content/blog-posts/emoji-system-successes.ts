@@ -56,7 +56,8 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/emoji-system-successes/system-overview.png",
+            src: "/img/blog/emoji-system-successes/system-overview-light.png",
+            darkSrc: "/img/blog/emoji-system-successes/system-overview-dark.png",
             alt: "Diagram of the Emoji package architecture showing CLI and dashboard entry points, the pipeline runtime core, and run artifacts including progress and outputs.",
             caption:
                 "CLI and dashboard both enter the same runtime: worker pool, serialized state writer, provider adapter, artifact set.",
@@ -74,7 +75,8 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/emoji-system-successes/chunk-lifecycle.png",
+            src: "/img/blog/emoji-system-successes/chunk-lifecycle-light.png",
+            darkSrc: "/img/blog/emoji-system-successes/chunk-lifecycle-dark.png",
             alt: "Flow diagram showing Emoji chunk processing states from pending queue to claimed chunk, conversion, success or failure outcomes, and resume behavior that resets failed chunks to pending.",
             caption:
                 "Each chunk is accounted for explicitly: retries stay local, failed work can return to pending, completed work is left where it is.",

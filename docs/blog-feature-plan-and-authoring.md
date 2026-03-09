@@ -176,6 +176,17 @@ Disable style preset:
 bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name> --no-style-preset
 ```
 
+Legacy export parity note:
+
+- When regenerating from a preserved repo-local `.excalidraw.json`, start with
+  `--no-style-preset`.
+- If the new `-light` export does not match the existing unsuffixed asset, retry with the wider
+  padding some older diagrams used:
+
+```bash
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name> --no-style-preset --export-padding 48
+```
+
 Text rendering reliability note:
 
 - `bun run excalidraw:asset` auto-promotes shape/arrow `label` text into standalone `text`
