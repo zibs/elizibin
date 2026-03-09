@@ -105,8 +105,10 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug my-post --name syst
 This writes:
 
 - `img/blog/<slug>/<name>.excalidraw.json` (source scene)
-- `img/blog/<slug>/<name>.svg` (native Excalidraw style export)
-- `img/blog/<slug>/<name>.png` (default output for blog embedding)
+- `img/blog/<slug>/<name>-light.svg` (light mode SVG export)
+- `img/blog/<slug>/<name>-dark.svg` (dark mode SVG export)
+- `img/blog/<slug>/<name>-light.png` (light mode PNG export, default blog `src`)
+- `img/blog/<slug>/<name>-dark.png` (dark mode PNG export, default blog `darkSrc`)
 
 Default style preset: `handdrawn-soft`
 
@@ -127,6 +129,13 @@ Clipping prevention note:
 - Prefer short lines (roughly <= 30-35 characters per line) over very long single-line captions.
 - Always visually verify generated PNG(s) before finalizing the post.
 
+Default theme export note:
+
+- `bun run excalidraw:asset` now exports both light and dark variants by default.
+- The emitted snippet uses `src` plus `darkSrc` so blog images can switch automatically with
+  `prefers-color-scheme`.
+- If you need a one-off export, pass `--variants light` or `--variants dark`.
+
 Skip PNG generation:
 
 ```bash
@@ -146,6 +155,18 @@ cat /tmp/diagram.json | bun run excalidraw:asset -- --slug my-post --name system
 ```
 
 Then use the emitted snippet in the matching post file in `content/blog-posts/`.
+
+Theme-aware image blocks support:
+
+```ts
+{
+    type: "image",
+    src: "/img/blog/my-post/system-flow-light.png",
+    darkSrc: "/img/blog/my-post/system-flow-dark.png",
+    alt: "Meaningful description of the diagram",
+    caption: "Optional caption",
+}
+```
 
 ### Typecheck
 

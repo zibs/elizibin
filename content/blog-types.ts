@@ -12,6 +12,7 @@ export type BlogHeadingBlock = {
 export type BlogImageBlock = {
     type: "image";
     src: string;
+    darkSrc?: string;
     alt: string;
     caption?: string;
     centered?: boolean;
@@ -62,6 +63,7 @@ export type BlogPost = {
     published: boolean;
     githubUrl?: string;
     heroImage?: string;
+    heroImageDark?: string;
     tags?: string[];
     blocks: BlogBlock[];
 };

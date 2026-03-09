@@ -20,6 +20,7 @@ type SceneExtraction = {
 };
 
 type StylePreset = "handdrawn-soft" | "none";
+type ThemeVariant = "light" | "dark";
 
 type CliOptions = {
     inputPath?: string;
@@ -29,6 +30,7 @@ type CliOptions = {
     generatePng: boolean;
     stylePreset: StylePreset;
     promoteLabels: boolean;
+    themeVariants: ThemeVariant[];
 };
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -56,6 +58,8 @@ const RESVG_FONT_FILES = [
 
 const CONTROL_TYPES = new Set(["cameraUpdate", "restoreCheckpoint", "delete"]);
 const KEBAB_PATTERN = /^[a-z0-9-]+$/;
+const THEME_VARIANTS = ["light", "dark"] as const;
+const DEFAULT_EXPORT_PADDING = 24;
 let hasBootstrappedDom = false;
 
 function usage(): string {
@@ -71,6 +75,7 @@ Options:
   --name,  -n   Asset base filename (kebab-case), no extension.
   --out-dir, -o Output base directory (default: img/blog).
   --style-preset Style preset to apply before export (handdrawn-soft|none).
+  --variants    Export theme variants (comma-separated: light,dark). Default: light,dark.
   --promote-labels / --no-promote-labels
                Convert shape/arrow label text into standalone text elements before export.
   --png         Generate PNG from Excalidraw-native SVG (default behavior).
@@ -108,6 +113,38 @@ function tryParseJson(text: string): unknown | null {
     }
 }
 
+function parseThemeVariants(value: string): ThemeVariant[] {
+    const requestedEntries = value
+        .split(",")
+        .map((entry) => entry.trim())
+        .filter((entry) => entry.length > 0);
+
+    if (requestedEntries.length === 0) {
+        throw new Error("`--variants` must include at least one of: light, dark.");
+    }
+
+    for (const entry of requestedEntries) {
+        if (!THEME_VARIANTS.includes(entry as ThemeVariant)) {
+            throw new Error(`Unknown theme variant "${entry}". Use light and/or dark.`);
+        }
+    }
+
+    const requestedVariants = requestedEntries as ThemeVariant[];
+
+    if (requestedVariants.length === 0) {
+        throw new Error("`--variants` must include at least one of: light, dark.");
+    }
+
+    const uniqueVariants: ThemeVariant[] = [];
+    for (const variant of requestedVariants) {
+        if (!uniqueVariants.includes(variant)) {
+            uniqueVariants.push(variant);
+        }
+    }
+
+    return uniqueVariants;
+}
+
 function parseArgs(argv: string[]): CliOptions {
     let inputPath: string | undefined;
     let slug = "";
@@ -116,6 +153,7 @@ function parseArgs(argv: string[]): CliOptions {
     let generatePng = true;
     let stylePreset: StylePreset = "handdrawn-soft";
     let promoteLabels = true;
+    let themeVariants: ThemeVariant[] = ["light", "dark"];
 
     for (let index = 0; index < argv.length; index += 1) {
         const token = argv[index];
@@ -178,6 +216,16 @@ function parseArgs(argv: string[]): CliOptions {
             continue;
         }
 
+        if (token === "--variants") {
+            const value = argv[index + 1];
+            if (!value) {
+                throw new Error("Missing value for --variants.");
+            }
+            themeVariants = parseThemeVariants(value);
+            index += 1;
+            continue;
+        }
+
         if (token === "--no-style-preset") {
             stylePreset = "none";
             continue;
@@ -222,6 +270,7 @@ function parseArgs(argv: string[]): CliOptions {
         generatePng,
         stylePreset,
         promoteLabels,
+        themeVariants,
     };
 }
 
@@ -889,11 +938,15 @@ function ensureDomGlobals(): void {
     hasBootstrappedDom = true;
 }
 
-function coerceAppState(appState?: Record<string, unknown>): Record<string, unknown> {
+function coerceAppState(
+    appState?: Record<string, unknown>,
+    overrides?: Record<string, unknown>,
+): Record<string, unknown> {
     return {
         viewBackgroundColor: "#ffffff",
         exportWithDarkMode: false,
         ...(appState ?? {}),
+        ...(overrides ?? {}),
     };
 }
 
@@ -901,15 +954,18 @@ async function renderExcalidrawSvg(
     drawables: Array<Record<string, unknown>>,
     appState?: Record<string, unknown>,
     files: Record<string, unknown> | null = null,
+    themeVariant: ThemeVariant = "light",
 ): Promise<string> {
     ensureDomGlobals();
 
     const { exportToSvg } = await import("@excalidraw/utils");
     const svgElement = await exportToSvg({
         elements: drawables as never,
-        appState: coerceAppState(appState) as never,
+        appState: coerceAppState(appState, {
+            exportWithDarkMode: themeVariant === "dark",
+        }) as never,
         files: (files ?? null) as never,
-        exportPadding: 48,
+        exportPadding: DEFAULT_EXPORT_PADDING,
     });
 
     return svgElement.outerHTML;
@@ -931,13 +987,39 @@ function toRepoRelative(absolutePath: string): string {
     return path.relative(REPO_ROOT, absolutePath).split(path.sep).join("/");
 }
 
-function buildSnippet(preferredImagePath: string): string {
-    return `{
-    type: "image",
-    src: "${preferredImagePath}",
-    alt: "TODO: add meaningful diagram alt text",
-    caption: "TODO: optional caption",
-}`;
+function buildSnippet(
+    lightImagePath: string,
+    darkImagePath?: string,
+): string {
+    const lines = [
+        "{",
+        '    type: "image",',
+        `    src: "${lightImagePath}",`,
+    ];
+
+    if (darkImagePath) {
+        lines.push(`    darkSrc: "${darkImagePath}",`);
+    }
+
+    lines.push(
+        '    alt: "TODO: add meaningful diagram alt text",',
+        '    caption: "TODO: optional caption",',
+        "}",
+    );
+
+    return lines.join("\n");
+}
+
+function variantAssetBasename(name: string, variant: ThemeVariant): string {
+    return `${name}-${variant}`;
+}
+
+function formatVariantLabel(themeVariant: ThemeVariant): string {
+    return themeVariant === "dark" ? "dark" : "light";
+}
+
+function logStep(current: number, total: number, message: string): void {
+    console.log(`[${current}/${total}] ${message}`);
 }
 
 function buildSourceScene(
@@ -957,7 +1039,11 @@ function buildSourceScene(
 
 async function main(): Promise<void> {
     const options = parseArgs(process.argv.slice(2));
-    console.log("[1/5] Reading Excalidraw checkpoint input...");
+    const totalSteps =
+        3 + options.themeVariants.length * (options.generatePng ? 2 : 1);
+    let currentStep = 1;
+
+    logStep(currentStep, totalSteps, "Reading Excalidraw checkpoint input...");
     const inputText = await readInputText(options.inputPath);
     const extracted = extractScene(inputText);
     const { camera, drawables } = resolveFinalState(extracted.elements);
@@ -975,10 +1061,9 @@ async function main(): Promise<void> {
     await mkdir(targetDirectory, { recursive: true });
 
     const jsonPath = path.join(targetDirectory, `${options.name}.excalidraw.json`);
-    const svgPath = path.join(targetDirectory, `${options.name}.svg`);
-    const pngPath = path.join(targetDirectory, `${options.name}.png`);
 
-    console.log(`[2/5] Writing source JSON -> ${toRepoRelative(jsonPath)}`);
+    currentStep += 1;
+    logStep(currentStep, totalSteps, `Writing source JSON -> ${toRepoRelative(jsonPath)}`);
     const sceneForDisk = buildSourceScene(
         preparedDrawables,
         extracted.appState,
@@ -986,39 +1071,81 @@ async function main(): Promise<void> {
     );
     await writeFile(jsonPath, `${JSON.stringify(sceneForDisk, null, 2)}\n`, "utf8");
 
-    console.log(`[3/5] Rendering Excalidraw-native SVG -> ${toRepoRelative(svgPath)}`);
-    const svg = await renderExcalidrawSvg(
-        preparedDrawables,
-        extracted.appState,
-        extracted.files,
-    );
-    await writeFile(svgPath, `${svg}\n`, "utf8");
+    const exportedAssets: Array<{
+        variant: ThemeVariant;
+        svgPath: string;
+        pngPath: string;
+        pngCreated: boolean;
+    }> = [];
 
-    let pngCreated = false;
-    if (options.generatePng) {
-        console.log(`[4/5] Rendering PNG from SVG -> ${toRepoRelative(pngPath)}`);
+    for (const themeVariant of options.themeVariants) {
+        const variantName = variantAssetBasename(options.name, themeVariant);
+        const svgPath = path.join(targetDirectory, `${variantName}.svg`);
+        const pngPath = path.join(targetDirectory, `${variantName}.png`);
 
-        try {
-            const pngBytes = renderPngFromSvg(svg);
-            await writeFile(pngPath, pngBytes);
-            pngCreated = true;
-        } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
-            console.warn(`[warn] PNG conversion failed: ${message}. SVG is ready to use.`);
+        currentStep += 1;
+        logStep(
+            currentStep,
+            totalSteps,
+            `Rendering ${formatVariantLabel(themeVariant)} Excalidraw-native SVG -> ${toRepoRelative(svgPath)}`,
+        );
+        const svg = await renderExcalidrawSvg(
+            preparedDrawables,
+            extracted.appState,
+            extracted.files,
+            themeVariant,
+        );
+        await writeFile(svgPath, `${svg}\n`, "utf8");
+
+        let pngCreated = false;
+        if (options.generatePng) {
+            currentStep += 1;
+            logStep(
+                currentStep,
+                totalSteps,
+                `Rendering ${formatVariantLabel(themeVariant)} PNG from SVG -> ${toRepoRelative(pngPath)}`,
+            );
+
+            try {
+                const pngBytes = renderPngFromSvg(svg);
+                await writeFile(pngPath, pngBytes);
+                pngCreated = true;
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                console.warn(
+                    `[warn] ${formatVariantLabel(themeVariant)} PNG conversion failed: ${message}. SVG is ready to use.`,
+                );
+            }
         }
-    } else {
-        console.log("[4/5] PNG generation skipped (--no-png).");
+
+        exportedAssets.push({
+            variant: themeVariant,
+            svgPath,
+            pngPath,
+            pngCreated,
+        });
     }
 
-    const preferredImagePath = pngCreated
-        ? `/${toRepoRelative(pngPath)}`
-        : `/${toRepoRelative(svgPath)}`;
+    const lightAsset =
+        exportedAssets.find((asset) => asset.variant === "light") ?? exportedAssets[0];
+    const darkAsset = exportedAssets.find((asset) => asset.variant === "dark");
+    const preferredLightImagePath = lightAsset.pngCreated
+        ? `/${toRepoRelative(lightAsset.pngPath)}`
+        : `/${toRepoRelative(lightAsset.svgPath)}`;
+    const preferredDarkImagePath = darkAsset
+        ? darkAsset.pngCreated
+            ? `/${toRepoRelative(darkAsset.pngPath)}`
+            : `/${toRepoRelative(darkAsset.svgPath)}`
+        : undefined;
 
-    console.log("[5/5] Done.");
+    currentStep += 1;
+    logStep(currentStep, totalSteps, "Done.");
     console.log(`- Source JSON: /${toRepoRelative(jsonPath)}`);
-    console.log(`- SVG: /${toRepoRelative(svgPath)}`);
-    if (pngCreated) {
-        console.log(`- PNG: /${toRepoRelative(pngPath)}`);
+    for (const asset of exportedAssets) {
+        console.log(`- ${formatVariantLabel(asset.variant)} SVG: /${toRepoRelative(asset.svgPath)}`);
+        if (asset.pngCreated) {
+            console.log(`- ${formatVariantLabel(asset.variant)} PNG: /${toRepoRelative(asset.pngPath)}`);
+        }
     }
     if (camera) {
         console.log(
@@ -1026,12 +1153,13 @@ async function main(): Promise<void> {
         );
     }
     console.log(`- Style preset: ${options.stylePreset}`);
+    console.log(`- Theme variants: ${options.themeVariants.join(", ")}`);
     console.log(
         `- Label promotion: ${labelPromotion.promotedCount} converted label(s) to standalone text`,
     );
     console.log("");
     console.log("Blog block snippet:");
-    console.log(buildSnippet(preferredImagePath));
+    console.log(buildSnippet(preferredLightImagePath, preferredDarkImagePath));
 }
 
 main().catch((error) => {

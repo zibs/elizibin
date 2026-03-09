@@ -90,6 +90,13 @@ type BlogHeroThemeImagePair = {
     pairedBlockIndex: number;
 };
 
+type BlogInlineThemeImagePair = {
+    lightPath: string;
+    darkPath: string;
+    alt: string;
+    caption?: string;
+};
+
 function normalizeRootRelative(value: string): string {
     return value.replace(/^\/+/, "");
 }
@@ -752,6 +759,22 @@ function findFirstImageBlock(blocks: BlogBlock[]): FirstBlogImageBlock | null {
     return null;
 }
 
+function resolveBlogInlineThemeImagePair(
+    block: BlogImageBlock,
+): BlogInlineThemeImagePair | null {
+    const darkPath = block.darkSrc?.trim();
+    if (!darkPath) {
+        return null;
+    }
+
+    return {
+        lightPath: block.src,
+        darkPath,
+        alt: block.alt,
+        caption: block.caption,
+    };
+}
+
 function resolveBlogHeroThemeImagePair(post: BlogPost): BlogHeroThemeImagePair | null {
     if (!post.heroImage) {
         return null;
@@ -760,6 +783,24 @@ function resolveBlogHeroThemeImagePair(post: BlogPost): BlogHeroThemeImagePair |
     const firstImageBlock = findFirstImageBlock(post.blocks);
     if (!firstImageBlock) {
         return null;
+    }
+
+    const inlineThemePair = resolveBlogInlineThemeImagePair(firstImageBlock.block);
+    if (inlineThemePair) {
+        if (
+            normalizeImagePathIdentity(post.heroImage) !==
+            normalizeImagePathIdentity(inlineThemePair.lightPath)
+        ) {
+            return null;
+        }
+
+        return {
+            lightPath: inlineThemePair.lightPath,
+            darkPath: inlineThemePair.darkPath,
+            alt: inlineThemePair.alt,
+            caption: inlineThemePair.caption,
+            pairedBlockIndex: firstImageBlock.index,
+        };
     }
 
     const heroThemeVariant = imagePathThemeVariant(post.heroImage) ?? "light";
@@ -784,9 +825,16 @@ function resolveBlogHeroThemeImagePair(post: BlogPost): BlogHeroThemeImagePair |
     };
 }
 
-function shouldRenderBlogHeroImage(post: BlogPost): boolean {
+function shouldRenderBlogHeroImage(
+    post: BlogPost,
+    heroThemeImagePair: BlogHeroThemeImagePair | null,
+): boolean {
     if (!post.heroImage) {
         return false;
+    }
+
+    if (heroThemeImagePair) {
+        return true;
     }
 
     const firstImageBlock = findFirstImageBlock(post.blocks);
@@ -957,6 +1005,8 @@ function renderBlogBlock(
         return "";
     }
 
+    const themeImagePair = resolveBlogInlineThemeImagePair(block);
+    const darkImageSrc = resolveImageSource(tools, themeImagePair?.darkPath);
     const maxHeightPx =
         typeof block.maxHeightPx === "number" && Number.isFinite(block.maxHeightPx)
             ? Math.max(1, Math.round(block.maxHeightPx))
@@ -965,16 +1015,36 @@ function renderBlogBlock(
     const imageAlignmentClasses = block.centered ? "block mx-auto" : "";
     const imageClassName =
         `${imageSizeClasses} ${imageAlignmentClasses} rounded-xl border border-black/10 dark:border-white/15`.trim();
+    const imageTag =
+        themeImagePair && darkImageSrc
+            ? html(`
+                <picture>
+                    <source
+                        srcset="${escapeHtml(darkImageSrc)}"
+                        media="(prefers-color-scheme: dark)"
+                    />
+                    <img
+                        src="${escapeHtml(imageSrc)}"
+                        alt="${escapeHtml(block.alt)}"
+                        loading="lazy"
+                        class="${imageClassName}"
+                        ${maxHeightPx ? `style="max-height: ${maxHeightPx}px;"` : ""}
+                    />
+                </picture>
+            `).trim()
+            : html(`
+                <img
+                    src="${escapeHtml(imageSrc)}"
+                    alt="${escapeHtml(block.alt)}"
+                    loading="lazy"
+                    class="${imageClassName}"
+                    ${maxHeightPx ? `style="max-height: ${maxHeightPx}px;"` : ""}
+                />
+            `).trim();
 
     return html(`
         <figure class="mb-9 max-w-3xl mx-auto">
-            <img
-                src="${escapeHtml(imageSrc)}"
-                alt="${escapeHtml(block.alt)}"
-                loading="lazy"
-                class="${imageClassName}"
-                ${maxHeightPx ? `style="max-height: ${maxHeightPx}px;"` : ""}
-            />
+            ${imageTag}
             ${
                 block.caption
                     ? `<figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${escapeHtml(block.caption)}</figcaption>`
@@ -1019,8 +1089,9 @@ function renderBlogPostPage(
     const shareImage = resolveBlogShareImage(post);
     const heroThemeImagePair = resolveBlogHeroThemeImagePair(post);
     const heroImageSrc = resolveImageSource(tools, post.heroImage);
+    const heroImageDarkSrc = resolveImageSource(tools, post.heroImageDark);
     const hasTweetEmbed = post.blocks.some((block) => block.type === "tweet");
-    const shouldRenderHeroImage = shouldRenderBlogHeroImage(post);
+    const shouldRenderHeroImage = shouldRenderBlogHeroImage(post, heroThemeImagePair);
     const heroThemeLightImageSrc = resolveImageSource(tools, heroThemeImagePair?.lightPath);
     const heroThemeDarkImageSrc = resolveImageSource(tools, heroThemeImagePair?.darkPath);
     const heroImageMarkup =
@@ -1045,6 +1116,22 @@ function renderBlogPostPage(
                     }
                 </figure>
             `)
+            : heroImageSrc && heroImageDarkSrc && shouldRenderHeroImage
+        ? html(`
+            <figure class="mb-9 max-w-3xl mx-auto">
+                <picture>
+                    <source
+                        srcset="${escapeHtml(heroImageDarkSrc)}"
+                        media="(prefers-color-scheme: dark)"
+                    />
+                    <img
+                        src="${escapeHtml(heroImageSrc)}"
+                        alt="Hero image for ${escapeHtml(post.title)}"
+                        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+                    />
+                </picture>
+            </figure>
+        `)
             : heroImageSrc && shouldRenderHeroImage
         ? html(`
             <figure class="mb-9 max-w-3xl mx-auto">
@@ -1243,6 +1330,24 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
             }
         }
 
+        if (post.heroImageDark) {
+            if (!post.heroImage) {
+                throw new Error(
+                    `Blog post "${post.slug}" has "heroImageDark" without a matching "heroImage".`,
+                );
+            }
+
+            validateLocalImagePath(post.heroImageDark, "Blog post", post.slug, "heroImageDark");
+            if (!/^https?:\/\//.test(post.heroImageDark)) {
+                await assertLocalImageExists(
+                    post.heroImageDark,
+                    "Blog post",
+                    post.slug,
+                    "heroImageDark",
+                );
+            }
+        }
+
         if (post.blocks.length === 0) {
             throw new Error(`Blog post "${post.slug}" must include at least one block.`);
         }
@@ -1392,6 +1497,15 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
             assertNonEmpty(block.src, `${blockPath}.src`, "Blog post", post.slug);
             assertNonEmpty(block.alt, `${blockPath}.alt`, "Blog post", post.slug);
 
+            if (block.darkSrc !== undefined) {
+                assertNonEmpty(
+                    block.darkSrc,
+                    `${blockPath}.darkSrc`,
+                    "Blog post",
+                    post.slug,
+                );
+            }
+
             if (block.caption !== undefined) {
                 assertNonEmpty(
                     block.caption,
@@ -1402,16 +1516,37 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
             }
 
             validateLocalImagePath(block.src, "Blog post", post.slug, `${blockPath}.src`);
+            if (block.darkSrc !== undefined) {
+                validateLocalImagePath(
+                    block.darkSrc,
+                    "Blog post",
+                    post.slug,
+                    `${blockPath}.darkSrc`,
+                );
+            }
 
             if (/^https?:\/\//.test(block.src)) {
+                if (block.darkSrc === undefined || /^https?:\/\//.test(block.darkSrc)) {
+                    continue;
+                }
+            } else {
+                await assertLocalImageExists(
+                    block.src,
+                    "Blog post",
+                    post.slug,
+                    `${blockPath}.src`,
+                );
+            }
+
+            if (block.darkSrc === undefined || /^https?:\/\//.test(block.darkSrc)) {
                 continue;
             }
 
             await assertLocalImageExists(
-                block.src,
+                block.darkSrc,
                 "Blog post",
                 post.slug,
-                `${blockPath}.src`,
+                `${blockPath}.darkSrc`,
             );
         }
     }

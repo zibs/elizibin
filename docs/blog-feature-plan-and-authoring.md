@@ -84,7 +84,8 @@ export type BlogPost = {
     summary: string; // used in blog index cards + meta description
     publishedAt: string; // YYYY-MM-DD
     published: boolean; // false keeps the post out of default build output
-    heroImage?: string; // optional social/share image
+    heroImage?: string; // optional light social/share image
+    heroImageDark?: string; // optional dark-mode hero companion
     tags?: string[];
     blocks: BlogBlock[]; // unlimited length
 };
@@ -132,6 +133,7 @@ export type BlogPost = {
 - Code block language is supported.
 - Tweet block URLs are valid `twitter.com` / `x.com` status links.
 - Each post includes a share image source (`heroImage` or at least one `image` block).
+- If a hero needs theme switching, set `heroImageDark` alongside `heroImage`.
 - Generated internal `href` / `src` / `srcset` references resolve.
 
 Filtering behavior:
@@ -151,8 +153,10 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asse
 Outputs:
 
 - `img/blog/<slug>/<asset-name>.excalidraw.json` (source of truth)
-- `img/blog/<slug>/<asset-name>.svg` (native Excalidraw style export)
-- `img/blog/<slug>/<asset-name>.png` (default output)
+- `img/blog/<slug>/<asset-name>-light.svg` (light mode SVG export)
+- `img/blog/<slug>/<asset-name>-dark.svg` (dark mode SVG export)
+- `img/blog/<slug>/<asset-name>-light.png` (light mode PNG export)
+- `img/blog/<slug>/<asset-name>-dark.png` (dark mode PNG export)
 
 Default style preset: `handdrawn-soft` (applied automatically)
 
@@ -184,7 +188,26 @@ Clipping prevention note:
 - Avoid long single-line captions; wrap into shorter lines (roughly <= 30-35 chars/line).
 - Always visually check generated PNG(s) before inserting into a post.
 
+Default theme export note:
+
+- `bun run excalidraw:asset` exports both light and dark variants by default.
+- The generated snippet uses `src` plus `darkSrc`, and the blog renderer swaps variants with
+  `prefers-color-scheme`.
+- If you only want one side for a special case, pass `--variants light` or `--variants dark`.
+
 You can then reference the generated `.png` (or `.svg`) via an `image` block in the matching post file under `content/blog-posts/`.
+
+Theme-aware blog image block:
+
+```ts
+{
+    type: "image",
+    src: "/img/blog/<slug>/<asset-name>-light.png",
+    darkSrc: "/img/blog/<slug>/<asset-name>-dark.png",
+    alt: "Meaningful description of the diagram",
+    caption: "Optional caption",
+}
+```
 
 ### Excalidraw MCP Runbook (Team)
 
@@ -208,7 +231,8 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asse
 ```ts
 {
     type: "image",
-    src: "/img/blog/<slug>/<asset-name>.png",
+    src: "/img/blog/<slug>/<asset-name>-light.png",
+    darkSrc: "/img/blog/<slug>/<asset-name>-dark.png",
     alt: "Meaningful description of the diagram",
     caption: "Optional caption",
 }
@@ -220,8 +244,10 @@ bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asse
 
 9. Commit:
    - `img/blog/<slug>/<asset-name>.excalidraw.json` (editable source)
-   - `img/blog/<slug>/<asset-name>.png` (primary blog asset)
-   - `img/blog/<slug>/<asset-name>.svg` (optional but recommended for source fidelity)
+   - `img/blog/<slug>/<asset-name>-light.png` (light theme blog asset)
+   - `img/blog/<slug>/<asset-name>-dark.png` (dark theme blog asset)
+   - `img/blog/<slug>/<asset-name>-light.svg` (light theme source-fidelity export)
+   - `img/blog/<slug>/<asset-name>-dark.svg` (dark theme source-fidelity export)
 
 10. Optional: publish a live-edit link by exporting with `mcp__excalidraw__export_to_excalidraw`.
 

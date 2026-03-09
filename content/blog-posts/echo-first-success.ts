@@ -1,31 +1,41 @@
 import type { BlogPost } from "../blog-types";
 
 export const echoFirstSuccessPost: BlogPost = {
-    slug: "echo-first-success",
-    title: "The First Echo Run I Trusted",
-    summary:
-        "A look at the first Echo translation run that felt reproducible enough to keep, and the parts that still need work.",
+    slug: "translating-two-clowns",
+    title: '"Fan Fiction"',
+    summary: "Translating a novella from Spanish to English",
     publishedAt: "2026-03-04",
-    published: false,
-    heroImage: "/img/blog/echo-first-success/system-flow.png",
+    published: true,
+    heroImage: "/img/blog/echo-first-success/system-flow-light.png",
+    heroImageDark: "/img/blog/echo-first-success/system-flow-dark.png",
     tags: ["echo", "translation", "ocr", "llm"],
     blocks: [
         {
             type: "paragraph",
-            text: "I wanted Echo to produce a run I could come back to later and still trust. Before this, it had produced promising results, but not a run that felt solid end to end.",
+            text: "One of my favourite authors is prolific and has written over a hundred novellas. But only thirty or so have been translated and published in English. And they (New Directions) seem to be publishing around a book a year (although 2026 will see five, and last year technically saw two published). Still, at this rate, it will be a long, long time before I'm able to read all his work that is available, unless of course I learned Spanish, which would be the ideal way of handling this situation.",
         },
         {
             type: "paragraph",
-            text: "This one did. It was a full Spanish-to-English pass with artifacts at each stage, enough context to improve chunk-level decisions, and enough saved state that the run could be resumed and inspected later.",
+            text: "Instead, I wanted to experiment with LLM-assisted translations under what I've deemed as fan fiction, since I have no way to tell whether the output is faithful, or hallucinatory; thus it is Borgesian, nonetheless.",
+        },
+        
+        {
+            type: "image",
+            src: "/img/blog/echo-first-success/clowns.jpeg",
+            alt: "Photo of Cesar Aira's Los Dos Payasos beside several printed English draft booklets titled The Two Clowns on a wooden floor.",
+            caption:
+                "The source book plus a few printed English passes for my own archives. Around here, the project stopped feeling hypothetical.",
+            centered: true,
+            maxHeightPx: 760,
         },
         {
             type: "heading",
             level: 2,
-            text: "Why this run counted",
+            text: "What Happened?",
         },
         {
             type: "paragraph",
-            text: "The run was not just a final output file that happened to look decent. It was a full Spanish-to-English pipeline with concrete artifacts at each stage. The committed archive records the translate window from 2026-02-22T18:18:39.571Z to 2026-02-23T00:50:48.888Z, which comes out to 6h 32m 9s across 69 chunks.",
+            text: "The run was not just a final output file that happened to look decent. It was a full Spanish-to-English pipeline with concrete artifacts at each stage. In total, it took 6h 32m 9s across 69 chunks, and maybe cost ~$15?",
         },
         {
             type: "paragraph",
@@ -35,8 +45,8 @@ export const echoFirstSuccessPost: BlogPost = {
             type: "code",
             language: "bash",
             caption: "This is the exact command from the run that worked.",
-            code: `bun run --cwd packages/echo translate -- \
-  --sourceText @.data/echo/runs/clowning-full-context/reconstructed.source.md \
+            code: `bun run translate -- \
+  --sourceText @.data/runs/clowning-full-context/reconstructed.source.md \
   --target en \
   --source es \
   --mode literary \
@@ -46,13 +56,13 @@ export const echoFirstSuccessPost: BlogPost = {
   --contextAfterParagraphs 2 \
   --holisticPass true \
   --holisticContextCharacters 14000 \
-  --styleExamples REFERENCE_TRANSLATION_EXAMPLES_AIRA.md \
+  --styleExamples examples/reference-translation-examples.md \
   --styleExampleCount 5 \
-  --storySummaryPath local-inputs/clowning/story-summary.en.md \
-  --translatorDossierPath local-inputs/clowning/translator-dossier.md \
+  --storySummaryPath examples/story-summary.en.md \
+  --translatorDossierPath examples/translator-dossier.md \
   --faithfulnessCheck true \
   --faithfulnessStrict false \
-  --outDir .data/echo/runs/clowning-full-context-v2 \
+  --outDir .data/runs/clowning-full-context-v2 \
   --force true`,
         },
         {
@@ -62,8 +72,9 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/echo-first-success/system-flow.png",
-            alt: "Simplified Echo system flow from source images through OCR, translation, faithfulness checks, and committed run outputs.",
+            src: "/img/blog/echo-first-success/system-flow-light.png",
+            darkSrc: "/img/blog/echo-first-success/system-flow-dark.png",
+            alt: "Simplified system flow from source images through OCR, translation, faithfulness checks, and committed run outputs.",
             caption:
                 "Ordered inputs, translation with context artifacts, checks, and frozen outputs.",
             centered: true,
@@ -71,7 +82,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "This is a simplified version of the larger package diagram. The important part is that Echo is not translating paragraphs in isolation. Style anchors, a story summary, and a translator dossier all feed into the chunk-level decisions.",
+            text: "This is a simplified version of the larger package diagram. The important part is that the system is not translating paragraphs in isolation. Style anchors, a story summary, and a translator dossier all feed into the chunk-level decisions. This is the system that produced the final output file that happened to look/sound/read/feel decent.",
         },
         {
             type: "heading",
@@ -80,7 +91,8 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/echo-first-success/quality-loop.png",
+            src: "/img/blog/echo-first-success/quality-loop-light.png",
+            darkSrc: "/img/blog/echo-first-success/quality-loop-dark.png",
             alt: "Echo quality loop diagram showing scan inspection, translation, faithfulness checks, candidate sweep, curation, and rerun feedback.",
             caption:
                 "Scan inspection, translation, checks, candidate sweeps, curation, then feedback into the next run.",
@@ -102,7 +114,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "That archive matters because `packages/echo/.data` and `packages/echo/local-inputs` are normally transient or gitignored. Freezing the inputs, logs, hashes, and outputs made the run inspectable later.",
+            text: "That archive matters because `.data` and `local-inputs` are normally transient or gitignored. Freezing the inputs, logs, hashes, and outputs made the run inspectable later.",
         },
         {
             type: "heading",
@@ -111,11 +123,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "It is not fully clean yet. There was still a manual fixup pass on 2026-03-01 for text-level cleanup in one output file, so this is not a fully automatic pipeline yet.",
-        },
-        {
-            type: "paragraph",
-            text: "The runtime is also long. 6h 32m is acceptable for a milestone run, but not for regular iteration.",
+            text: "It's not perfect. I know an actual translator would do a much better job and if anything it shone a brief light on how interesting and difficult that work is. There was still a manual fixup pass on for text-level cleanup in one output file, so this is not a fully automatic pipeline yet. I had to read it, make edits etc. I'm sure it's missing subtleties, nuances, details that a bilingual speaker would not mess up; but that's what makes it fan fiction to me.",
         },
         {
             type: "heading",
@@ -124,7 +132,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The next step is to keep the reproducibility and saved artifacts while reducing friction. Better preflight defaults, better candidate calibration, and fewer post-run hand edits would make the tool much easier to use day to day.",
+            text: "The next step is to keep trying and improving the quality of the translations while keeping the workflow as simple as possible. I'd like to try different authors too, different languages. I'm also only going to do this work with texts that I have bought the physical book of. I don't want to use found PDFs or anything like that, which also turns this project into a bit of a collection project too.",
         },
     ],
 };
