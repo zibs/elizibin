@@ -7,7 +7,8 @@ export const agentReplBuildLogPost: BlogPost = {
         "Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent.",
     publishedAt: "2026-02-16",
     published: true,
-    heroImage: "/img/blog/agent-repl-build-log/system-image.png",
+    heroImage: "/img/blog/agent-repl-build-log/system-image-light.png",
+    heroImageDark: "/img/blog/agent-repl-build-log/system-image-dark.png",
     tags: ["agents", "repl", "typescript"],
     blocks: [
         {
@@ -27,7 +28,8 @@ export const agentReplBuildLogPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/agent-repl-build-log/system-image.svg",
+            src: "/img/blog/agent-repl-build-log/system-image-light.svg",
+            darkSrc: "/img/blog/agent-repl-build-log/system-image-dark.svg",
             alt: "System view of the minimal agent REPL architecture with provider and local tools.",
             caption:
                 "One-screen view: terminal REPL, provider API, and local tools tied together by a tool-call loop.",
@@ -55,7 +57,8 @@ export const agentReplBuildLogPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/agent-repl-build-log/loop-diagram.svg",
+            src: "/img/blog/agent-repl-build-log/loop-diagram-light.svg",
+            darkSrc: "/img/blog/agent-repl-build-log/loop-diagram-dark.svg",
             alt: "Agent loop diagram showing responses requests, function calls, tool execution, and resume.",
             caption:
                 "Two loops: the outer REPL loop and the inner tool-calling loop.",
