@@ -215,16 +215,22 @@
             </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What the command actually does</h2>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/paperplane-one-command-testflight/release-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/paperplane-one-command-testflight/release-flow.png"
+        src="../../img/blog/paperplane-one-command-testflight/release-flow-light.png"
         alt="Diagram of Paperplane release flow: resolve workspace and build number, update config and Info.plist, archive and export IPA, then upload to TestFlight, with dry-run and clean-git guardrails."
         loading="lazy"
         class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
         style="max-height: 560px;"
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Paperplane keeps the release path explicit: resolve, update, build/export, upload, with preflight guardrails.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Paperplane keeps the release path explicit: resolve, update, build/export, upload, with preflight guardrails.</figcaption>
+        </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">1. Finds your iOS workspace and release scheme.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-3">2. Reads the current build number from app config (text-first parsing).</p>

@@ -58,7 +58,8 @@ npx react-native-paperplane`,
         },
         {
             type: "image",
-            src: "/img/blog/paperplane-one-command-testflight/release-flow.png",
+            src: "/img/blog/paperplane-one-command-testflight/release-flow-light.png",
+            darkSrc: "/img/blog/paperplane-one-command-testflight/release-flow-dark.png",
             alt: "Diagram of Paperplane release flow: resolve workspace and build number, update config and Info.plist, archive and export IPA, then upload to TestFlight, with dry-run and clean-git guardrails.",
             caption:
                 "Paperplane keeps the release path explicit: resolve, update, build/export, upload, with preflight guardrails.",
