@@ -287,16 +287,22 @@
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Native lifecycle details</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">On iOS, UIContextMenuInteraction drives three moments that matter to app code: preview is about to be shown, commit happened, and preview finished dismissing. Those map directly to onWillShow, onCommit, and onDismiss so behavior stays easy to reason about from JavaScript.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/react-native-peekie-four-angles/module-architecture-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/react-native-peekie-four-angles/module-architecture.png"
+        src="../../img/blog/react-native-peekie-four-angles/module-architecture-light.png"
         alt="Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to JavaScript callbacks and navigation commit."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Module flow: JS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Module flow: JS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.</figcaption>
+        </figure>
 
                             <figure class="mb-9 max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">

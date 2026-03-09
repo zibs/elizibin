@@ -138,7 +138,8 @@ return (
         },
         {
             type: "image",
-            src: "/img/blog/react-native-peekie-four-angles/module-architecture.png",
+            src: "/img/blog/react-native-peekie-four-angles/module-architecture-light.png",
+            darkSrc: "/img/blog/react-native-peekie-four-angles/module-architecture-dark.png",
             alt: "Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to JavaScript callbacks and navigation commit.",
             caption:
                 "Module flow: JS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.",
