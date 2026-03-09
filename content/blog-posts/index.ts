@@ -23,11 +23,11 @@ export {
 };
 
 export const blogPosts: BlogPost[] = [
-    nextJsPangramSolverPost,
+    hapaxOfflineFirstDictionaryIosPost,
     emojiSystemSuccessesPost,
     echoFirstSuccessPost,
-    hapaxOfflineFirstDictionaryIosPost,
     reactNativePeekieFourAnglesPost,
+    nextJsPangramSolverPost,
     paperplaneOneCommandTestflightPost,
     agentReplBuildLogPost,
     codeshLocalCodexUsageMenubarPost,

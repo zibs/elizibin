@@ -12,15 +12,15 @@ export const emojiSystemSuccessesPost: BlogPost = {
         { type: "heading", level: 2, text: "📝 / 📖" },
         {
             type: "paragraph",
-            text: "Who remembers [Emoji Dick](https://emojidick.com)? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, and playful but epic artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what is this new text, what is this readability, what counts as a version, iteration, addition, fan fiction, and what exactly is being translated when language is forced into pictographs?",
+            text: "Who remembers [Emoji Dick](https://emojidick.com)? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, unreadability, and playful but epic artifact all at once. An LLM makes it newly possibly to generate adjacent objects on demand, but the old questions do not disappear: what is this new text, what is this readability, what counts as a version, iteration, addition, fan fiction, and what exactly is being translated when language is forced into pictographs?",
         },
         {
             type: "paragraph",
-            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling.",
+            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright but impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling, some are not.",
         },
         {
             type: "paragraph",
-            text: "What began as a small CLI experiment gradually became an apparatus for testing that question at scale: resumable runs, chunk-level retries, explicit artifact contracts, and a dashboard that makes the duration and fragility of the process visible rather than magical.",
+            text: "What began as a small CLI experiment gradually became an apparatus for testing that question at scale: resumable runs, chunk-level retries, explicit artifact contracts, and a dashboard that makes the duration and fragility of the process visible.",
         },
         {
             type: "heading",
@@ -29,7 +29,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Before asking whether any output was good, I needed to know whether the system could keep faith with the line: survive interruption, show its progress during long calls, and produce stable final artifacts (`emoji.txt` and `woven.txt`) that could actually be inspected afterward.",
+            text: "I needed to know whether the system could produce stable final artifacts (`emoji.txt` and `woven.txt`) that could actually be inspected afterward. I wanted to see if the system could keep faith with the line: survive interruption, show its progress during long calls etc.",
         },
         {
             type: "image",
@@ -47,7 +47,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The woven version is more legible, and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a `emoji.txt` file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.",
+            text: "The woven version is more legible (to me), and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a `emoji.txt` file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.",
         },
         {
             type: "heading",
@@ -166,7 +166,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. and the LLM reveals its own biases too. I'm not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given.",
+            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. And the LLM reveals its own biases too. I'm not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given. Or at least not without external prompting explaining the text, contextualizing it etc. so that it can at least try to preserve some semblance of its originary effect.",
         },
         {
             type: "heading",
@@ -175,7 +175,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "If entire texts can be rendered this way -- at ease -- what sort of texts result? What's the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? I do not know yet. That uncertainty is certainly part of the appeal.",
+            text: "If entire texts can be rendered this way -- at ease -- what sort of texts result? What's the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? The uncertainty is certainly part of the appeal.",
         },
     ],
 };

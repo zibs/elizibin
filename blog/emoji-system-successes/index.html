@@ -190,24 +190,24 @@
 </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">📝 / 📖</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Who remembers <a href="https://emojidick.com" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">Emoji Dick</a>? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, and playful but epic artifact all at once. An LLM makes it newly easy to generate adjacent objects on demand, but the old questions do not disappear. They merely return in altered form: what is this new text, what is this readability, what counts as a version, iteration, addition, fan fiction, and what exactly is being translated when language is forced into pictographs?</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright, impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">What began as a small CLI experiment gradually became an apparatus for testing that question at scale: resumable runs, chunk-level retries, explicit artifact contracts, and a dashboard that makes the duration and fragility of the process visible rather than magical.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Who remembers <a href="https://emojidick.com" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">Emoji Dick</a>? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, unreadability, and playful but epic artifact all at once. An LLM makes it newly possibly to generate adjacent objects on demand, but the old questions do not disappear: what is this new text, what is this readability, what counts as a version, iteration, addition, fan fiction, and what exactly is being translated when language is forced into pictographs?</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright but impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling, some are not.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">What began as a small CLI experiment gradually became an apparatus for testing that question at scale: resumable runs, chunk-level retries, explicit artifact contracts, and a dashboard that makes the duration and fragility of the process visible.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Reading the lines</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Before asking whether any output was good, I needed to know whether the system could keep faith with the line: survive interruption, show its progress during long calls, and produce stable final artifacts (<code class="blog-inline-code">emoji.txt</code> and <code class="blog-inline-code">woven.txt</code>) that could actually be inspected afterward.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/emoji-system-successes/dickinson-emoji.png"
-        alt="Narrow screenshot showing Emily Dickinson lines converted into one emoji-only line per source line on a dark background."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 640px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Raw line-locked Dickinson output from `emoji.txt`: every source line still has a visible counterpart before weaving.</figcaption>
-</figure>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I needed to know whether the system could produce stable final artifacts (<code class="blog-inline-code">emoji.txt</code> and <code class="blog-inline-code">woven.txt</code>) that could actually be inspected afterward. I wanted to see if the system could keep faith with the line: survive interruption, show its progress during long calls etc.</p>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/emoji-system-successes/dickinson-emoji.png"
+    alt="Narrow screenshot showing Emily Dickinson lines converted into one emoji-only line per source line on a dark background."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 640px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Raw line-locked Dickinson output from `emoji.txt`: every source line still has a visible counterpart before weaving.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Woven lines</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The woven version is more legible, and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a <code class="blog-inline-code">emoji.txt</code> file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The woven version is more legible (to me), and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a <code class="blog-inline-code">emoji.txt</code> file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The apparatus</h2>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <picture>
@@ -258,57 +258,57 @@
 </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The provider adapter asks for a strict <code class="blog-inline-code">json_schema</code> response with exactly one emoji line for each source line. That does not solve the problem of interpretation, but it does keep the experiment honest. Line-locking, overlap-aware stitching, and deterministic weaving are what prevent the output from dissolving into decorative drift.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/emoji-system-successes/whitman.png"
-        alt="Screenshot of Walt Whitman lines with emoji-only companion lines, preserving one output line per source line across a longer passage."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 680px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Whitman from a longer run: not a triumph of symbolism, but a sustained holding of place.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/emoji-system-successes/whitman.png"
+    alt="Screenshot of Walt Whitman lines with emoji-only companion lines, preserving one output line per source line across a longer passage."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 680px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Whitman from a longer run: not a triumph of symbolism, but a sustained holding of place.</figcaption>
+        </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Whitman is useful because the passage wants breadth, catalogue, continuation. If the system can remain lineate under that pressure, then one begins to see not literary success exactly, but a usable formal discipline.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Rilke introduces a different difficulty. The line does not simply continue; it broods, turns, and qualifies itself. The output below is still awkward, but the awkwardness is at least inspectable.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/emoji-system-successes/rilke-duino.png"
-        alt="Screenshot of a Rilke Duino sample with source lines interleaved with emoji-only responses and a few question-mark markers in the output."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 700px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Rilke from the Duino material: the system strains, and the strain becomes visible.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/emoji-system-successes/rilke-duino.png"
+    alt="Screenshot of a Rilke Duino sample with source lines interleaved with emoji-only responses and a few question-mark markers in the output."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 700px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Rilke from the Duino material: the system strains, and the strain becomes visible.</figcaption>
+        </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Christian Bök&#39;s Eunoia makes the limit clearer still. Its constraint is not merely lexical or imagistic; it is internal, formal, almost infrastructural at the level of the vowel. Even with extra prompting, the system does not really understand that pressure. It mostly notices the surface fact of the letter <code class="blog-inline-code">i</code> and repeats the obvious emblem:</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/emoji-system-successes/eunoia-i.png"
-        alt="Emoji-only output for a Eunoia excerpt, with each line beginning with the blue information emoji on a white background."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 660px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Raw Eunoia attempt: the constraint is registered, but only as a blunt repeated token.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/emoji-system-successes/eunoia-i.png"
+    alt="Emoji-only output for a Eunoia excerpt, with each line beginning with the blue information emoji on a white background."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 660px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Raw Eunoia attempt: the constraint is registered, but only as a blunt repeated token.</figcaption>
+        </figure>
 
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/emoji-system-successes/eunoia-i-woven.png"
-        alt="Woven Eunoia sample showing source text interleaved with emoji renderings, still anchored by the repeated information emoji at the start of each emoji line."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 760px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Woven version of the same sample: easier to read, but still not actually carrying the excerpt&#39;s internal vowel logic.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/emoji-system-successes/eunoia-i-woven.png"
+    alt="Woven Eunoia sample showing source text interleaved with emoji renderings, still anchored by the repeated information emoji at the start of each emoji line."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 760px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Woven version of the same sample: easier to read, but still not actually carrying the excerpt&#39;s internal vowel logic.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Biases</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">There are lots of biases in this project; I chose some pretty safe poems to test with. and the LLM reveals its own biases too. I&#39;m not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it&#39;s given.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">There are lots of biases in this project; I chose some pretty safe poems to test with. And the LLM reveals its own biases too. I&#39;m not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it&#39;s given. Or at least not without external prompting explaining the text, contextualizing it etc. so that it can at least try to preserve some semblance of its originary effect.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conclusion</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">If entire texts can be rendered this way -- at ease -- what sort of texts result? What&#39;s the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? I do not know yet. That uncertainty is certainly part of the appeal.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">If entire texts can be rendered this way -- at ease -- what sort of texts result? What&#39;s the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? The uncertainty is certainly part of the appeal.</p>
             </article>
 
                 </main>

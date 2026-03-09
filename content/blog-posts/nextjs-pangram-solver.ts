@@ -13,7 +13,7 @@ export const nextJsPangramSolverPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I made a small Next.js app for finding NYT Spelling Bee pangrams.",
+            text: "In early 2025, I made a small Next.js app for finding NYT Spelling Bee pangrams.",
         },
         {
             type: "paragraph",
