@@ -13,12 +13,12 @@
     <meta property="og:title" content="A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin" />
     <meta property="og:description" content="A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter." />
     <meta property="og:url" content="https://elizibin.com/blog/nyt-pangram-solver/" />
-    <meta property="og:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow.png" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow-light.png" />
     <meta property="og:image:alt" content="Hero image for A Simple Pangram Solver for NYT Spelling Bee" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin" />
     <meta name="twitter:description" content="A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter." />
-    <meta name="twitter:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow.png" />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow-light.png" />
     <meta name="twitter:image:alt" content="Hero image for A Simple Pangram Solver for NYT Spelling Bee" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
@@ -182,11 +182,17 @@
                     A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/nextjs-pangram-solver/system-flow.png"
-        alt="Hero image for A Simple Pangram Solver for NYT Spelling Bee"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-    />
+    <picture>
+        <source
+            srcset="../../img/blog/nextjs-pangram-solver/system-flow-dark.png"
+            media="(prefers-color-scheme: dark)"
+        />
+        <img
+            src="../../img/blog/nextjs-pangram-solver/system-flow-light.png"
+            alt="Hero image for A Simple Pangram Solver for NYT Spelling Bee"
+            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        />
+    </picture>
 </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">I made a small Next.js app for finding NYT Spelling Bee pangrams.</p>
@@ -203,16 +209,22 @@
 </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The shape</h2>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/nextjs-pangram-solver/system-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/nextjs-pangram-solver/system-flow.png"
+        src="../../img/blog/nextjs-pangram-solver/system-flow-light.png"
         alt="Request flow diagram for the pangram solver: user input in the Next.js UI goes to a server route, which builds a prompt, calls gpt-5-mini, then filters and returns only valid pangrams."
         loading="lazy"
         class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
         style="max-height: 640px;"
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Simple shape: form, server route, model call, then local filtering before anything comes back to the UI.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Simple shape: form, server route, model call, then local filtering before anything comes back to the UI.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Model call, then local validation</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The model handles the word-generation step: find real words that use only the provided letters, including the center letter, and use all 7 letters at least once. After that, the server rechecks every candidate with deterministic local rules before returning anything.</p>

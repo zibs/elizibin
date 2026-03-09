@@ -7,7 +7,8 @@ export const nextJsPangramSolverPost: BlogPost = {
         "A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter.",
     publishedAt: "2026-03-05",
     published: true,
-    heroImage: "/img/blog/nextjs-pangram-solver/system-flow.png",
+    heroImage: "/img/blog/nextjs-pangram-solver/system-flow-light.png",
+    heroImageDark: "/img/blog/nextjs-pangram-solver/system-flow-dark.png",
     tags: ["nextjs", "openai", "spelling-bee", "tiny-win"],
     blocks: [
         {
@@ -34,7 +35,8 @@ export const nextJsPangramSolverPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/nextjs-pangram-solver/system-flow.png",
+            src: "/img/blog/nextjs-pangram-solver/system-flow-light.png",
+            darkSrc: "/img/blog/nextjs-pangram-solver/system-flow-dark.png",
             alt: "Request flow diagram for the pangram solver: user input in the Next.js UI goes to a server route, which builds a prompt, calls gpt-5-mini, then filters and returns only valid pangrams.",
             caption:
                 "Simple shape: form, server route, model call, then local filtering before anything comes back to the UI.",
