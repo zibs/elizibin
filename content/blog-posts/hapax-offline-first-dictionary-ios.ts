@@ -2,12 +2,13 @@ import type { BlogPost } from "../blog-types";
 
 export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     slug: "hapax-offline-first-dictionary-ios",
-    title: "Building Hapax: An Offline-First Dictionary App (iOS for now)",
+    title: "Building Hapax: An Offline-First Dictionary App",
     summary:
         "A casual walkthrough of Hapax: an offline-first personal dictionary app.",
     publishedAt: "2026-02-24",
     published: true,
-    heroImage: "/img/blog/hapax-offline-first-dictionary-ios/system-map.png",
+    heroImage: "/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png",
+    heroImageDark: "/img/blog/hapax-offline-first-dictionary-ios/system-map-dark.png",
     tags: ["ios", "react-native", "offline-first", "sqlite", "supabase"],
     blocks: [
         {
@@ -74,7 +75,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions-dark.png",
             alt: "Diagram mapping product constraints to architecture decisions in Hapax.",
             caption: "Constraints drove most of the technical choices.",
         },
@@ -89,7 +91,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/system-map.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/system-map-dark.png",
             alt: "System diagram of Hapax showing UI, local SQLite, sync engine, Supabase, edge functions, and export.",
             caption: "Local-first core with optional remote services.",
         },
@@ -108,7 +111,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/local-db-model.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/local-db-model-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/local-db-model-dark.png",
             alt: "Local SQLite data model diagram for entries, tags, entry_tags, and sync_state.",
             caption: "Core local schema.",
         },
@@ -133,7 +137,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/access-mode-state-machine.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/access-mode-state-machine-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/access-mode-state-machine-dark.png",
             alt: "State diagram for access modes supabase, local, and none.",
             caption: "Session and app access are related but separate.",
         },
@@ -152,7 +157,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/local-mode-migration-flow.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/local-mode-migration-flow-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/local-mode-migration-flow-dark.png",
             alt: "Flow diagram showing local mode data migration from null user_id to signed-in user_id.",
             caption: "How local data becomes syncable account data.",
         },
@@ -171,7 +177,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/sync-push-pull-flow.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/sync-push-pull-flow-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/sync-push-pull-flow-dark.png",
             alt: "Sequence diagram showing push-then-pull sync flow between SQLite and Supabase.",
             caption: "Push first, then reconcile.",
         },
@@ -190,7 +197,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/sync-conflict-timeline.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/sync-conflict-timeline-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/sync-conflict-timeline-dark.png",
             alt: "Timeline diagram showing last-write-wins conflict resolution using updated_at.",
             caption: "Simple conflict rule with clear tradeoffs.",
         },
@@ -209,7 +217,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/query-cache-hygiene.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/query-cache-hygiene-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/query-cache-hygiene-dark.png",
             alt: "Diagram of query cache persistence and cache invalidation during auth and access changes.",
             caption: "Warm cache when stable, reset when identity changes.",
         },
@@ -244,7 +253,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow-dark.png",
             alt: "Flow diagram for entry lifecycle from create to edit, tagging, favorite, and soft delete.",
             caption: "Local-first mutation flow.",
         },
@@ -263,7 +273,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/ai-enrichment-flow.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/ai-enrichment-flow-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/ai-enrichment-flow-dark.png",
             alt: "Flow diagram for AI enrichment from local entry to edge function and sync pull back.",
             caption: "AI as assist, not source of truth.",
         },
@@ -282,7 +293,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/ai-suggestions-cache-flow.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/ai-suggestions-cache-flow-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/ai-suggestions-cache-flow-dark.png",
             alt: "Diagram showing AI suggestions cache hit and cache miss paths based on input hash.",
             caption: "On-demand suggestions with cache reuse.",
         },
@@ -309,7 +321,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/export-flow.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/export-flow-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/export-flow-dark.png",
             alt: "Export flow diagram for JSON and CSV output on web and native.",
             caption: "Straightforward local export path.",
         },
@@ -320,7 +333,8 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/hapax-offline-first-dictionary-ios/closing-pillars.png",
+            src: "/img/blog/hapax-offline-first-dictionary-ios/closing-pillars-light.png",
+            darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/closing-pillars-dark.png",
             alt: "Simple summary diagram of local-first data, sync, and user-controlled features.",
             caption: "Small app, clear priorities.",
         },

@@ -3,23 +3,23 @@
         <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Building Hapax: An Offline-First Dictionary App (iOS for now) | Blog | Eli Zibin</title>
+    <title>Building Hapax: An Offline-First Dictionary App | Blog | Eli Zibin</title>
     <meta
         name="description"
         content="A casual walkthrough of Hapax: an offline-first personal dictionary app."
     />
     <link rel="canonical" href="https://elizibin.com/blog/hapax-offline-first-dictionary-ios/" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Building Hapax: An Offline-First Dictionary App (iOS for now) | Blog | Eli Zibin" />
+    <meta property="og:title" content="Building Hapax: An Offline-First Dictionary App | Blog | Eli Zibin" />
     <meta property="og:description" content="A casual walkthrough of Hapax: an offline-first personal dictionary app." />
     <meta property="og:url" content="https://elizibin.com/blog/hapax-offline-first-dictionary-ios/" />
-    <meta property="og:image" content="https://elizibin.com/img/blog/hapax-offline-first-dictionary-ios/system-map.png" />
-    <meta property="og:image:alt" content="Hero image for Building Hapax: An Offline-First Dictionary App (iOS for now)" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png" />
+    <meta property="og:image:alt" content="Hero image for Building Hapax: An Offline-First Dictionary App" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Building Hapax: An Offline-First Dictionary App (iOS for now) | Blog | Eli Zibin" />
+    <meta name="twitter:title" content="Building Hapax: An Offline-First Dictionary App | Blog | Eli Zibin" />
     <meta name="twitter:description" content="A casual walkthrough of Hapax: an offline-first personal dictionary app." />
-    <meta name="twitter:image" content="https://elizibin.com/img/blog/hapax-offline-first-dictionary-ios/system-map.png" />
-    <meta name="twitter:image:alt" content="Hero image for Building Hapax: An Offline-First Dictionary App (iOS for now)" />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png" />
+    <meta name="twitter:image:alt" content="Hero image for Building Hapax: An Offline-First Dictionary App" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
     <link
@@ -166,7 +166,7 @@
                     </a>
                 </p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
-                    Building Hapax: An Offline-First Dictionary App (iOS for now)
+                    Building Hapax: An Offline-First Dictionary App
                 </h2>
                 <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
                     24/02/2026
@@ -183,11 +183,17 @@
                     A casual walkthrough of Hapax: an offline-first personal dictionary app.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/system-map.png"
-        alt="Hero image for Building Hapax: An Offline-First Dictionary App (iOS for now)"
-        class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-    />
+    <picture>
+        <source
+            srcset="../../img/blog/hapax-offline-first-dictionary-ios/system-map-dark.png"
+            media="(prefers-color-scheme: dark)"
+        />
+        <img
+            src="../../img/blog/hapax-offline-first-dictionary-ios/system-map-light.png"
+            alt="Hero image for Building Hapax: An Offline-First Dictionary App"
+            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        />
+    </picture>
 </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is a small dictionary app I built for myself. I try to write down/look up every word I come across that I don&#39;t know. I&#39;ve kept a word list for years as a basic csv, but I&#39;ve always wanted to experiment with it in an app format.</p>
@@ -256,43 +262,61 @@
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Product constraints that shaped architecture</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is iOS-first today. Android and Expo web are possible, but not a real priority yet.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The main constraints were straightforward: offline support, fast local interactions, and optional account usage instead of hard auth gating.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions-light.png"
         alt="Diagram mapping product constraints to architecture decisions in Hapax."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Constraints drove most of the technical choices.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Constraints drove most of the technical choices.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">System map in one screen</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">UI writes to local SQLite first. Sync reconciles with Supabase when available. AI helpers run through edge functions and feed back into normal data flow.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/system-map-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/system-map.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/system-map-light.png"
         alt="System diagram of Hapax showing UI, local SQLite, sync engine, Supabase, edge functions, and export."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Local-first core with optional remote services.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Local-first core with optional remote services.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">SQLite as the source of truth</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">All core screens read from SQLite. That keeps search and list views fast and keeps the app usable when offline.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The main local tables are entries, tags, entry_tags, and sync_state. Sync metadata sits with rows so pending work is easy to track.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/local-db-model-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/local-db-model.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/local-db-model-light.png"
         alt="Local SQLite data model diagram for entries, tags, entry_tags, and sync_state."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Core local schema.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Core local schema.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Auth is not access mode</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">A useful design choice was separating sign-in state from app access.</p>
@@ -307,72 +331,102 @@
 </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">This means someone can use local mode immediately, then sign in later if they want sync across devices.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/access-mode-state-machine-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/access-mode-state-machine.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/access-mode-state-machine-light.png"
         alt="State diagram for access modes supabase, local, and none."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Session and app access are related but separate.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Session and app access are related but separate.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Local mode migration on sign-in</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Local mode rows are stored with user_id as null. On sign-in, those rows are reassigned to the signed-in user.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Tag collisions are merged by name, migrated rows are marked pending, and the process is safe to retry.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/local-mode-migration-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/local-mode-migration-flow.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/local-mode-migration-flow-light.png"
         alt="Flow diagram showing local mode data migration from null user_id to signed-in user_id."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">How local data becomes syncable account data.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">How local data becomes syncable account data.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Sync engine deep dive</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Sync runs one job at a time per user. That avoids overlapping transactions and keeps behavior predictable.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The flow is push local pending changes first, then pull remote updates, then update cursors. If something fails, retries use backoff.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/sync-push-pull-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/sync-push-pull-flow.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/sync-push-pull-flow-light.png"
         alt="Sequence diagram showing push-then-pull sync flow between SQLite and Supabase."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Push first, then reconcile.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Push first, then reconcile.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conflict policy and tradeoffs</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Conflict handling is intentionally simple: newer updated_at wins.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">It is not perfect, but it is easy to understand and keeps sync logic small enough to maintain.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/sync-conflict-timeline-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/sync-conflict-timeline.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/sync-conflict-timeline-light.png"
         alt="Timeline diagram showing last-write-wins conflict resolution using updated_at."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Simple conflict rule with clear tradeoffs.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Simple conflict rule with clear tradeoffs.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Query layer and cache hygiene</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">TanStack Query handles cached reads. MMKV persists cache between launches.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">When access mode or user changes, cache hygiene clears old context and invalidates key queries.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/query-cache-hygiene-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/query-cache-hygiene.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/query-cache-hygiene-light.png"
         alt="Diagram of query cache persistence and cache invalidation during auth and access changes."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Warm cache when stable, reset when identity changes.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Warm cache when stable, reset when identity changes.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Entry lifecycle end-to-end</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Create, edit, tag updates, favorite toggles, and soft delete all start as local writes.</p>
@@ -415,44 +469,62 @@
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Tag flows in practice.</figcaption>
 </figure>
 
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/entry-lifecycle-flow-light.png"
         alt="Flow diagram for entry lifecycle from create to edit, tagging, favorite, and soft delete."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Local-first mutation flow.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Local-first mutation flow.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">AI enrichment flow</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Enrichment is optional. It can fill fields like definition, etymology, notes, and tags. I&#39;ve been really happy with how this is working so far!</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The app uses a sync-safe path: create local entry, sync if needed, call edge function, pull updates, refresh queries.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/ai-enrichment-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/ai-enrichment-flow.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/ai-enrichment-flow-light.png"
         alt="Flow diagram for AI enrichment from local entry to edge function and sync pull back."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">AI as assist, not source of truth.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">AI as assist, not source of truth.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">AI suggestions flow</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Suggestions are user-triggered and cached server-side.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">A hash of entry content and tags is used to decide whether cached suggestions can be reused or regenerated.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/ai-suggestions-cache-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/ai-suggestions-cache-flow.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/ai-suggestions-cache-flow-light.png"
         alt="Diagram showing AI suggestions cache hit and cache miss paths based on input hash."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">On-demand suggestions with cache reuse.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">On-demand suggestions with cache reuse.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Export and portability</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Exports are local and simple: JSON or CSV from local data. This way I can always go back to my original data and workflow if needed.</p>
@@ -476,28 +548,40 @@
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Settings and export entry points.</figcaption>
 </figure>
 
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/export-flow-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/export-flow.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/export-flow-light.png"
         alt="Export flow diagram for JSON and CSV output on web and native."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Straightforward local export path.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Straightforward local export path.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Closing thoughts</h2>
-                <figure class="mb-9 max-w-3xl mx-auto">
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <picture>
+    <source
+        srcset="../../img/blog/hapax-offline-first-dictionary-ios/closing-pillars-dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
     <img
-        src="../../img/blog/hapax-offline-first-dictionary-ios/closing-pillars.png"
+        src="../../img/blog/hapax-offline-first-dictionary-ios/closing-pillars-light.png"
         alt="Simple summary diagram of local-first data, sync, and user-controlled features."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Small app, clear priorities.</figcaption>
-</figure>
+</picture>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Small app, clear priorities.</figcaption>
+        </figure>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top. It&#39;s available on TestFlight, but probably won&#39;t make it to the App Store as it&#39;s sort of just for me.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Thanks for reading!</p>
