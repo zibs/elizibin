@@ -9,7 +9,9 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     published: true,
     githubUrl: "https://github.com/FormidableLabs/victory-native-xl",
     heroImage:
-        "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png",
+        "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-light.png",
+    heroImageDark:
+        "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-dark.png",
     tags: ["react-native", "charts", "open-source", "maintenance"],
     blocks: [
         {
@@ -27,7 +29,9 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "image",
-            src: "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png",
+            src: "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-light.png",
+            darkSrc:
+                "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-dark.png",
             alt: "Diagram of Victory Native XL chart architecture showing input data and chart props flowing through transformInputData and makeScale into chart state, then into rendering primitives and Skia canvas, with gesture and reanimated interaction feedback.",
             caption:
                 "A practical architecture snapshot: input and transform layers feeding Skia rendering, with interaction state in the loop.",

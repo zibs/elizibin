@@ -13,12 +13,12 @@
     <meta property="og:title" content="Building Charts in Victory Native XL | Blog | Eli Zibin" />
     <meta property="og:description" content="Helping out with chart feature work and OSS maintenance in Victory Native XL." />
     <meta property="og:url" content="https://elizibin.com/blog/victory-native-xl/" />
-    <meta property="og:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-light.png" />
     <meta property="og:image:alt" content="Hero image for Building Charts in Victory Native XL" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Building Charts in Victory Native XL | Blog | Eli Zibin" />
     <meta name="twitter:description" content="Helping out with chart feature work and OSS maintenance in Victory Native XL." />
-    <meta name="twitter:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png" />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-light.png" />
     <meta name="twitter:image:alt" content="Hero image for Building Charts in Victory Native XL" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
@@ -186,13 +186,17 @@
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Chart architecture at a glance</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">This is the simplified model I keep in my head while working in the codebase: data and props enter the chart container, transform and scale logic normalize it into chart state, rendering primitives draw to Skia, and gesture/reanimated state feeds interaction updates back into the loop.</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/victory-native-xl-charting-and-maintenance/chart-architecture.png"
-        alt="Diagram of Victory Native XL chart architecture showing input data and chart props flowing through transformInputData and makeScale into chart state, then into rendering primitives and Skia canvas, with gesture and reanimated interaction feedback."
-        loading="lazy"
-        class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
-    />
+    <picture>
+        <source
+            srcset="../../img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-dark.png"
+            media="(prefers-color-scheme: dark)"
+        />
+        <img
+            src="../../img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-light.png"
+            alt="Diagram of Victory Native XL chart architecture showing input data and chart props flowing through transformInputData and makeScale into chart state, then into rendering primitives and Skia canvas, with gesture and reanimated interaction feedback."
+            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
+        />
+    </picture>
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">A practical architecture snapshot: input and transform layers feeding Skia rendering, with interaction state in the loop.</figcaption>
 </figure>
 
