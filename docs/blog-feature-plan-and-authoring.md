@@ -180,11 +180,13 @@ Legacy export parity note:
 
 - When regenerating from a preserved repo-local `.excalidraw.json`, start with
   `--no-style-preset`.
+- If the preserved scene relied on inline Excalidraw `label` rendering and the new `-light`
+  output does not match, retry with `--no-promote-labels`.
 - If the new `-light` export does not match the existing unsuffixed asset, retry with the wider
   padding some older diagrams used:
 
 ```bash
-bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name> --no-style-preset --export-padding 48
+bun run excalidraw:asset -- --input /tmp/diagram.json --slug <slug> --name <asset-name> --no-style-preset --no-promote-labels --export-padding 48
 ```
 
 Text rendering reliability note:
