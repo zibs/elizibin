@@ -195,8 +195,8 @@
     </picture>
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">One of my favourite authors is prolific and has written over a hundred novellas. But only thirty or so have been translated and published in English. And they (New Directions) seem to be publishing around a book a year (although 2026 will see five, and last year technically saw two published). Still, at this rate, it will be a long, long time before I&#39;m able to read all his work that is available, unless of course I learned Spanish, which would be the ideal way of handling this situation.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Instead, I wanted to experiment with LLM-assisted translations under what I&#39;ve deemed as fan fiction, since I have no way to tell whether the output is faithful, or hallucinatory; thus it is Borgesian, nonetheless.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">One of my favourite authors is prolific and has written over a hundred novellas. But only thirty or so have been translated and published in English. And they (New Directions) seem to be publishing around a book a year (although 2026 will see five, and last year technically saw two published). Still, at this rate, it will be a long, long time before I&#39;m able to read all of his work that is available, unless of course I learned Spanish, which would be the ideal way of handling this situation. It seems like that hasn&#39;t happened yet though.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">So, instead I wanted to experiment with LLM-assisted translations under what I&#39;ve deemed as fan fiction, since I have no way to tell whether the output is faithful, or hallucinatory; thus it is Borgesian at least, nonetheless.</p>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <img
     src="../../img/blog/echo-first-success/clowns.jpeg"
@@ -205,12 +205,12 @@
     class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
     style="max-height: 760px;"
 />
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The source book plus a few printed English passes for my own archives. Around here, the project stopped feeling hypothetical.</figcaption>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The source book plus a few printed English editionsfor my own archives.</figcaption>
         </figure>
 
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What Happened?</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The run was not just a final output file that happened to look decent. It was a full Spanish-to-English pipeline with concrete artifacts at each stage. In total, it took 6h 32m 9s across 69 chunks, and maybe cost ~$15?</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">For this project, success meant three things: usable output, a resumable workflow, and enough saved state to inspect or rerun the result later.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Did it work? What happened?</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It worked! Not only did the translation seem plenty acceptable to me (after a decent amount of trial and error and experiments with various models and methods), but I also had a full Spanish-to-English pipeline system with concrete artifacts at each stage. In total, it took 6h 32m 9s across 69 chunks to translate this novella, and it maybe cost ~$15?</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">For this project, I wanted to be able to reproduce the results reliably, so success meant three things: usable output, a resumable workflow, and enough saved state to inspect or rerun the result later, and allow for me to iterate on the process at various phases.</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
         BASH
@@ -258,14 +258,14 @@
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Scan inspection, translation, checks, candidate sweeps, curation, then feedback into the next run.</figcaption>
         </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The biggest change was treating translation as a loop instead of a single model call. Scan and inspect seams, translate with context, run faithfulness checks in report mode, sweep candidates where needed, curate, then feed the results back into the dossier and style anchors.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The biggest change was treating translation as a loop instead of a single model call. Scan and inspect seams, translate with context, run faithfulness checks in &#39;report&#39; mode, sweep candidates where needed, curate, then feed the results back into the dossier and style anchors.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why this one held together</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Two things made this run feel more solid. First, resumable runtime artifacts like <code class="blog-inline-code">scan.progress.jsonl</code>, <code class="blog-inline-code">translate.progress.jsonl</code>, and the stitch outputs meant I could see where the run was and pick it back up if needed. Second, the committed archive preserved local inputs and outputs that would otherwise be transient.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Two things made this run feel more real. First, resumable runtime artifacts like <code class="blog-inline-code">scan.progress.jsonl</code>, <code class="blog-inline-code">translate.progress.jsonl</code>, and the stitch outputs meant I could see where the run was and pick it back up if needed. Second, the committed archive preserved local inputs and outputs that would otherwise be transient. Also, the translation quality was finally satisfactory.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">That archive matters because <code class="blog-inline-code">.data</code> and <code class="blog-inline-code">local-inputs</code> are normally transient or gitignored. Freezing the inputs, logs, hashes, and outputs made the run inspectable later.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What is still rough</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It&#39;s not perfect. I know an actual translator would do a much better job and if anything it shone a brief light on how interesting and difficult that work is. There was still a manual fixup pass on for text-level cleanup in one output file, so this is not a fully automatic pipeline yet. I had to read it, make edits etc. I&#39;m sure it&#39;s missing subtleties, nuances, details that a bilingual speaker would not mess up; but that&#39;s what makes it fan fiction to me.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It&#39;s not perfect. I know an actual real translator would do a much better job and if anything it shone a brief light on how interesting and difficult that work is. I had to read it, make edits etc. I&#39;m sure it&#39;s missing subtleties, nuances, details that a bilingual speaker would not mess up; but that&#39;s what makes it &lt;b&gt;fan fiction&lt;/b&gt; to me.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Next</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The next step is to keep trying and improving the quality of the translations while keeping the workflow as simple as possible. I&#39;d like to try different authors too, different languages. I&#39;m also only going to do this work with texts that I have bought the physical book of. I don&#39;t want to use found PDFs or anything like that, which also turns this project into a bit of a collection project too.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The next step is to keep trying and improving the quality of the translations while keeping the workflow as simple as possible. I&#39;d like to try different authors too, different languages. I&#39;m also only going to do this work with texts that I have bought the physical book of. I don&#39;t want to use found PDFs or anything like that, which also turns this project into a bit of a collection project too. Thanks for reading!</p>
             </article>
 
                 </main>

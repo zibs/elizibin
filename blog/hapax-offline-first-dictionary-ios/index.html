@@ -6,18 +6,18 @@
     <title>Building Hapax: An Offline-First Dictionary App | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="A casual walkthrough of Hapax: an offline-first personal dictionary app."
+        content="A walkthrough of Hapax: an offline-first personal dictionary app."
     />
     <link rel="canonical" href="https://elizibin.com/blog/hapax-offline-first-dictionary-ios/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Building Hapax: An Offline-First Dictionary App | Blog | Eli Zibin" />
-    <meta property="og:description" content="A casual walkthrough of Hapax: an offline-first personal dictionary app." />
+    <meta property="og:description" content="A walkthrough of Hapax: an offline-first personal dictionary app." />
     <meta property="og:url" content="https://elizibin.com/blog/hapax-offline-first-dictionary-ios/" />
     <meta property="og:image" content="https://elizibin.com/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png" />
     <meta property="og:image:alt" content="Hero image for Building Hapax: An Offline-First Dictionary App" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Building Hapax: An Offline-First Dictionary App | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="A casual walkthrough of Hapax: an offline-first personal dictionary app." />
+    <meta name="twitter:description" content="A walkthrough of Hapax: an offline-first personal dictionary app." />
     <meta name="twitter:image" content="https://elizibin.com/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png" />
     <meta name="twitter:image:alt" content="Hero image for Building Hapax: An Offline-First Dictionary App" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -180,7 +180,7 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    A casual walkthrough of Hapax: an offline-first personal dictionary app.
+                    A walkthrough of Hapax: an offline-first personal dictionary app.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <picture>
@@ -196,9 +196,9 @@
     </picture>
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is a small dictionary app I built for myself. I try to write down/look up every word I come across that I don&#39;t know. I&#39;ve kept a word list for years as a basic csv, but I&#39;ve always wanted to experiment with it in an app format.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7"> It&#39;s built as local-first data with an optional sign-in, practical sync features, and lightweight AI helpers to fill in details and enrich entries.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The app is designed to save first and organize later via entry or AI enrichment. This post is a straightforward tour of how it works.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is a small dictionary app I built for myself. I try to write down/look up every word I come across that I don&#39;t know. I&#39;ve kept a word list for years as a basic csv and google sheet, but I&#39;ve always wanted to experiment with it in an app format.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It&#39;s built as a local-first app with an optional sign-in, practical sync features, and lightweight AI helpers to fill in details and enrich entries.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The app is designed to save first and fill-in later via entry or AI enrichment. This post is a straightforward tour of how it works.</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <video
         src="../../img/blog/hapax-offline-first-dictionary-ios/clicking-words.mp4"
@@ -234,10 +234,10 @@
     >
         Sorry, your browser does not support the video tag.
     </video>
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Same flow in dark mode.</figcaption>
+    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Another flow in dark mode.</figcaption>
 </figure>
 
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Why Hapax exists</h2>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Adding Words Flow</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">I wanted a quick capture flow that does not depend on a network and does not force me to fully edit every entry in the moment.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">So the core idea is simple: add the word now, enrich it later.</p>
                 <figure class="mb-9 max-w-3xl mx-auto">
@@ -259,9 +259,9 @@
     <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Capture in a few seconds.</figcaption>
 </figure>
 
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Product constraints that shaped architecture</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is iOS-first today. Android and Expo web are possible, but not a real priority yet.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The main constraints were straightforward: offline support, fast local interactions, and optional account usage instead of hard auth gating.</p>
+                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Requirements that helped shaped architecture</h2>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is iOS-first for now. Android and Expo web are possible, and web will probably land next.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The main requirements were straightforward: offline support, fast local interactions, and optional account usage instead of hard auth gating.</p>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <picture>
     <source
@@ -276,7 +276,7 @@
         
     />
 </picture>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Constraints drove most of the technical choices.</figcaption>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Desires and Decisions</figcaption>
         </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">System map in one screen</h2>
@@ -300,7 +300,7 @@
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">SQLite as the source of truth</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">All core screens read from SQLite. That keeps search and list views fast and keeps the app usable when offline.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The main local tables are entries, tags, entry_tags, and sync_state. Sync metadata sits with rows so pending work is easy to track.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The main local tables are entries, <code class="blog-inline-code">tags</code>, <code class="blog-inline-code">entry_tags</code>, and <code class="blog-inline-code">sync_state</code>. Sync metadata sits with rows so pending work is easy to track.</p>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <picture>
     <source
@@ -349,7 +349,7 @@
         </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Local mode migration on sign-in</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Local mode rows are stored with user_id as null. On sign-in, those rows are reassigned to the signed-in user.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Local mode rows are stored with <code class="blog-inline-code">user_id</code> as null. On sign-in, those rows are reassigned to the signed-in user.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Tag collisions are merged by name, migrated rows are marked pending, and the process is safe to retry.</p>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <picture>
@@ -389,7 +389,7 @@
         </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Conflict policy and tradeoffs</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Conflict handling is intentionally simple: newer updated_at wins.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Conflict handling is intentionally simple: newer <code class="blog-inline-code">updated_at</code> wins.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">It is not perfect, but it is easy to understand and keeps sync logic small enough to maintain.</p>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <picture>
@@ -583,7 +583,7 @@
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Small app, clear priorities.</figcaption>
         </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top. It&#39;s available on TestFlight, but probably won&#39;t make it to the App Store as it&#39;s sort of just for me.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is intentionally simple. The main goal is to make word capture easy, with optional sync and optional AI on top. Altogether, it&#39;s working really well for my use cases. It&#39;s available on TestFlight, but probably won&#39;t make it to the App Store.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Thanks for reading!</p>
             </article>
 

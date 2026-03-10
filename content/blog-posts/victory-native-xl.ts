@@ -16,7 +16,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I've worked on [victory-native-xl](https://github.com/FormidableLabs/victory-native-xl) for a while now, but have recently more-or-less paused my involvement just due to time constraints. It is a great open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm).",
+            text: "I've worked on [victory-native-xl](https://github.com/FormidableLabs/victory-native-xl) for a while now, but have recently more-or-less paused my involvement just due to time constraints. It is a great open source charting project with a real user base (around 1.1k stars and roughly 180k weekly downloads on npm). My appreciation goes to the foundational creators and all contributors for helping it along its way so far!",
         },
         {
             type: "heading",
@@ -43,7 +43,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "These are two of a couple of concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart (with nice gradients!) and a donut-style pie chart configuration (the gif is a bit artifacty) (among others).",
+            text: "These are two of a couple of concrete chart patterns I helped ship in Victory Native XL: a dashed-axis area chart (with nice gradients!) and a donut-style pie chart configuration (the gif is a bit artifacty), (among others).",
         },
         {
             type: "image",
@@ -70,11 +70,11 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "A big part of my work was supporting different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real product workloads and trying to maintain compatibility with the existing API.",
+            text: "A big part of my work was supporting different chart styles and improving the implementation details around them so they are flexible without being fragile. The goal was always to keep the API usable while making behavior predictable for real  workloads and trying to maintain compatibility with the existing API.",
         },
         {
             type: "paragraph",
-            text: "That means thinking beyond visuals. A chart that looks good in a screenshot but breaks in one layout edge case is not done. The finishing work is usually in interaction behavior, data-shape tolerance, and clear defaults.",
+            text: "That means thinking beyond visuals. The finishing work is usually in interaction behavior, data-shape tolerance, and clear defaults, docs and examples.",
         },
         {
             type: "heading",
@@ -83,11 +83,11 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "I also spent a lot of time on maintenance: triaging issues, reproducing bugs, reviewing and responding to pull requests, and following through on edge-case reports. This is less visible than feature work, but it is a big part of keeping the library pleasant to use.",
+            text: "I also spent a lot of time on maintenance: triaging issues, upgrading dependencies as the react native ecosystem evolves, reproducing bugs, reviewing and responding to pull requests, and following through on edge-case reports. This is less visible than feature work, but it is a big part of keeping the library pleasant to use.",
         },
         {
             type: "paragraph",
-            text: "In practice, that maintenance loop shortens time-to-clarity when something breaks, reduces duplicate confusion across issues, and turns one-off bug reports into durable fixes.",
+            text: "In practice, that maintenance loop shortens time-to-clarity when something breaks, reduces duplicate confusion across issues, and increases the capacity for fixes and improvements.",
         },
         {
             type: "heading",
@@ -108,7 +108,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "4. It's not going to be perfect. There's always open issues, bugs, uncertainty about some PRs, not enough time etc. I think accepting that partially in this context helps at least to keep shipping.",
+            text: "4. It's not going to be perfect. There's always open issues, bugs, uncertainty about some PRs, not enough time etc. I think accepting that partially in this context helps at least to keep shipping. After all, everyone is always welcome to open a PR, help with an issue, etc.",
         },
         {
             type: "heading",

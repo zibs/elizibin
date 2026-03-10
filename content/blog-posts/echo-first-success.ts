@@ -12,34 +12,34 @@ export const echoFirstSuccessPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "One of my favourite authors is prolific and has written over a hundred novellas. But only thirty or so have been translated and published in English. And they (New Directions) seem to be publishing around a book a year (although 2026 will see five, and last year technically saw two published). Still, at this rate, it will be a long, long time before I'm able to read all his work that is available, unless of course I learned Spanish, which would be the ideal way of handling this situation.",
+            text: "One of my favourite authors is prolific and has written over a hundred novellas. But only thirty or so have been translated and published in English. And they (New Directions) seem to be publishing around a book a year (although 2026 will see five, and last year technically saw two published). Still, at this rate, it will be a long, long time before I'm able to read all of his work that is available, unless of course I learned Spanish, which would be the ideal way of handling this situation. It seems like that hasn't happened yet though.",
         },
         {
             type: "paragraph",
-            text: "Instead, I wanted to experiment with LLM-assisted translations under what I've deemed as fan fiction, since I have no way to tell whether the output is faithful, or hallucinatory; thus it is Borgesian, nonetheless.",
+            text: "So, instead I wanted to experiment with LLM-assisted translations under what I've deemed as fan fiction, since I have no way to tell whether the output is faithful, or hallucinatory; thus it is Borgesian at least, nonetheless.",
         },
-        
+
         {
             type: "image",
             src: "/img/blog/echo-first-success/clowns.jpeg",
             alt: "Photo of Cesar Aira's Los Dos Payasos beside several printed English draft booklets titled The Two Clowns on a wooden floor.",
             caption:
-                "The source book plus a few printed English passes for my own archives. Around here, the project stopped feeling hypothetical.",
+                "The source book plus a few printed English editionsfor my own archives.",
             centered: true,
             maxHeightPx: 760,
         },
         {
             type: "heading",
             level: 2,
-            text: "What Happened?",
+            text: "Did it work? What happened?",
         },
         {
             type: "paragraph",
-            text: "The run was not just a final output file that happened to look decent. It was a full Spanish-to-English pipeline with concrete artifacts at each stage. In total, it took 6h 32m 9s across 69 chunks, and maybe cost ~$15?",
+            text: "It worked! Not only did the translation seem plenty acceptable to me (after a decent amount of trial and error and experiments with various models and methods), but I also had a full Spanish-to-English pipeline system with concrete artifacts at each stage. In total, it took 6h 32m 9s across 69 chunks to translate this novella, and it maybe cost ~$15?",
         },
         {
             type: "paragraph",
-            text: "For this project, success meant three things: usable output, a resumable workflow, and enough saved state to inspect or rerun the result later.",
+            text: "For this project, I wanted to be able to reproduce the results reliably, so success meant three things: usable output, a resumable workflow, and enough saved state to inspect or rerun the result later, and allow for me to iterate on the process at various phases.",
         },
         {
             type: "code",
@@ -101,7 +101,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The biggest change was treating translation as a loop instead of a single model call. Scan and inspect seams, translate with context, run faithfulness checks in report mode, sweep candidates where needed, curate, then feed the results back into the dossier and style anchors.",
+            text: "The biggest change was treating translation as a loop instead of a single model call. Scan and inspect seams, translate with context, run faithfulness checks in 'report' mode, sweep candidates where needed, curate, then feed the results back into the dossier and style anchors.",
         },
         {
             type: "heading",
@@ -110,7 +110,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Two things made this run feel more solid. First, resumable runtime artifacts like `scan.progress.jsonl`, `translate.progress.jsonl`, and the stitch outputs meant I could see where the run was and pick it back up if needed. Second, the committed archive preserved local inputs and outputs that would otherwise be transient.",
+            text: "Two things made this run feel more real. First, resumable runtime artifacts like `scan.progress.jsonl`, `translate.progress.jsonl`, and the stitch outputs meant I could see where the run was and pick it back up if needed. Second, the committed archive preserved local inputs and outputs that would otherwise be transient. Also, the translation quality was finally satisfactory.",
         },
         {
             type: "paragraph",
@@ -123,7 +123,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "It's not perfect. I know an actual translator would do a much better job and if anything it shone a brief light on how interesting and difficult that work is. There was still a manual fixup pass on for text-level cleanup in one output file, so this is not a fully automatic pipeline yet. I had to read it, make edits etc. I'm sure it's missing subtleties, nuances, details that a bilingual speaker would not mess up; but that's what makes it fan fiction to me.",
+            text: "It's not perfect. I know an actual real translator would do a much better job and if anything it shone a brief light on how interesting and difficult that work is. I had to read it, make edits etc. I'm sure it's missing subtleties, nuances, details that a bilingual speaker would not mess up; but that's what makes it <b>fan fiction</b> to me.",
         },
         {
             type: "heading",
@@ -132,7 +132,7 @@ export const echoFirstSuccessPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The next step is to keep trying and improving the quality of the translations while keeping the workflow as simple as possible. I'd like to try different authors too, different languages. I'm also only going to do this work with texts that I have bought the physical book of. I don't want to use found PDFs or anything like that, which also turns this project into a bit of a collection project too.",
+            text: "The next step is to keep trying and improving the quality of the translations while keeping the workflow as simple as possible. I'd like to try different authors too, different languages. I'm also only going to do this work with texts that I have bought the physical book of. I don't want to use found PDFs or anything like that, which also turns this project into a bit of a collection project too. Thanks for reading!",
         },
     ],
 };

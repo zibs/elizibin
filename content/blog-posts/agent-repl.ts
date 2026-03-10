@@ -182,7 +182,7 @@ while (hasFunctionCalls(response.output)) {
         },
         {
             type: "paragraph",
-            text: "This was fun and educational: small, understandable, and practical enough to understand. Next step is looking at other more advanced agent runtime features and sdks, but the core loop here of what I wanted to see is fundamentally complete. Thanks for reading!",
+            text: "This was fun and educational: small, understandable, and practical enough to understand. Next step is looking at other more advanced agent runtime features and SDKs, but the core loop here of what I wanted to see is fundamentally complete. Thanks for reading!",
         },
     ],
 };

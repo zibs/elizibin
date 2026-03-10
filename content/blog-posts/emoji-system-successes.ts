@@ -57,7 +57,8 @@ export const emojiSystemSuccessesPost: BlogPost = {
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/system-overview-light.png",
-            darkSrc: "/img/blog/emoji-system-successes/system-overview-dark.png",
+            darkSrc:
+                "/img/blog/emoji-system-successes/system-overview-dark.png",
             alt: "Diagram of the Emoji package architecture showing CLI and dashboard entry points, the pipeline runtime core, and run artifacts including progress and outputs.",
             caption:
                 "CLI and dashboard both enter the same runtime: worker pool, serialized state writer, provider adapter, artifact set.",
@@ -76,7 +77,8 @@ export const emojiSystemSuccessesPost: BlogPost = {
         {
             type: "image",
             src: "/img/blog/emoji-system-successes/chunk-lifecycle-light.png",
-            darkSrc: "/img/blog/emoji-system-successes/chunk-lifecycle-dark.png",
+            darkSrc:
+                "/img/blog/emoji-system-successes/chunk-lifecycle-dark.png",
             alt: "Flow diagram showing Emoji chunk processing states from pending queue to claimed chunk, conversion, success or failure outcomes, and resume behavior that resets failed chunks to pending.",
             caption:
                 "Each chunk is accounted for explicitly: retries stay local, failed work can return to pending, completed work is left where it is.",
@@ -166,7 +168,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. And the LLM reveals its own biases too. I'm not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given. Or at least not without external prompting explaining the text, contextualizing it etc. so that it can at least try to preserve some semblance of its originary effect.",
+            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. And the LLM reveals its own biases too. I'm not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given.  Or at least not without external prompting explaining the text, contextualizing it etc. so that it can at least try to preserve some semblance of its originary effect. (Essentially I guess like via poetics one can detect the harness of and adumbrate parts of the LLM in some ways.)",
         },
         {
             type: "heading",

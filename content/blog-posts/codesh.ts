@@ -2,7 +2,7 @@ import type { BlogPost } from "../blog-types";
 
 export const codeshLocalCodexUsageMenubarPost: BlogPost = {
     slug: "codesh",
-    title: "Codesh: Local Codex Usage in Your Menu Bar",
+    title: "Codesh: See Codex Session Usage in Your Menu Bar",
     summary:
         "A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.",
     publishedAt: "2026-02-21",
@@ -13,7 +13,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I wanted a tiny utility that shows Codex usage without opening the CLI or digging through logs. Codesh is that app: local-only, simple, and focused on one job in the macOS menu bar.",
+            text: "I wanted a tiny utility that shows Codex session usage without opening the CLI or digging through logs. Codesh is that app: local-only, simple, and focused on one job in the macOS menu bar.",
         },
         {
             type: "image",
@@ -75,7 +75,7 @@ export const codeshLocalCodexUsageMenubarPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "It was interesting to learn a bit about the signing and distribution process for macOS apps. It's currently signed and available on Github Releases. I'm happy with the result and will continue to use it myself. I think we are in a new age of mini self-built utilities like this. Thanks for reading!",
+            text: "It was interesting to learn a bit about the signing and distribution process for macOS apps. It's currently signed and available on [Github Releases](https://github.com/zibs/codesh/releases). I'm happy with the result and will continue to use it myself. I think we are in a new age of mini self-built utilities like this. Thanks for reading!",
         },
     ],
 };
