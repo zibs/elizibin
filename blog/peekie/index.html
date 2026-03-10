@@ -198,7 +198,7 @@
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Peek and Pop is one of those interactions that I didn&#39;t realize wasn&#39;t built into React Native/React Navigation until I tried it. But now it is possible to have it: <a href="https://www.npmjs.com/package/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">react-native-peekie</a> is a small iOS-focused Expo module designed to make that integration predictable in production code.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">What problem this module solves</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">iOS exposes preview and commit behavior through UIContextMenuInteraction. On React Native projects, that usually means custom native work, one-off wrappers, or coupling the feature to a specific router. The goal here was a reusable module with a compositional API that stays router-agnostic.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">iOS exposes preview and commit behavior through <code class="blog-inline-code">UIContextMenuInteraction</code>. On React Native projects, that usually means custom native work, one-off wrappers, or coupling the feature to a specific router. The goal here was a reusable module with a compositional API that stays router-agnostic.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The source code for this module is on <a href="https://github.com/zibs/react-native-peekie" target="_blank" rel="noreferrer" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">GitHub</a>. The examples below assume a standard React Navigation setup, but the pattern works with any routing approach, or even no routing at all.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Integration in a real screen</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">The core model is straightforward: define a trigger surface, define a preview surface, and handle commit. Commit is where you perform the real navigation.</p>
@@ -286,7 +286,7 @@
             </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Native lifecycle details</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">On iOS, UIContextMenuInteraction drives three moments that matter to app code: preview is about to be shown, commit happened, and preview finished dismissing. Those map directly to onWillShow, onCommit, and onDismiss so behavior stays easy to reason about from JavaScript.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">On iOS, <code class="blog-inline-code">UIContextMenuInteraction</code> drives three moments that matter to app code: preview is about to be shown, commit happened, and preview finished dismissing. Those map directly to <code class="blog-inline-code">onWillShow</code>, <code class="blog-inline-code">onCommit</code>, and <code class="blog-inline-code">onDismiss</code> so behavior stays easy to reason about from TypeScript.</p>
                         <figure class="mb-9 max-w-3xl mx-auto">
             <picture>
     <source
@@ -295,13 +295,13 @@
     />
     <img
         src="../../img/blog/react-native-peekie-four-angles/module-architecture-light.png"
-        alt="Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to JavaScript callbacks and navigation commit."
+        alt="Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to TypeScript callbacks and navigation commit."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
         
     />
 </picture>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Module flow: JS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.</figcaption>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Module flow: TS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.</figcaption>
         </figure>
 
                             <figure class="mb-9 max-w-3xl mx-auto">
@@ -317,7 +317,7 @@
             </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Sizing and scroll behavior</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Explicit preferredContentSize plus scrollable preview content gives a predictable experience across different row widths.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Explicit <code class="blog-inline-code">preferredContentSize</code> plus scrollable preview content gives a predictable experience across different row widths.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">When this native pattern is the right call</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Native integration is worth the cost when the interaction is system-owned, touch-sensitive, and user expectations are tied to platform behavior. Peek and Pop is exactly that case.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Production checklist</h2>

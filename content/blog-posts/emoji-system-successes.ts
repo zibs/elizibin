@@ -12,11 +12,11 @@ export const emojiSystemSuccessesPost: BlogPost = {
         { type: "heading", level: 2, text: "📝 / 📖" },
         {
             type: "paragraph",
-            text: "Who remembers [Emoji Dick](https://emojidick.com)? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, unreadability, and playful but epic artifact all at once. An LLM makes it newly possibly to generate adjacent objects on demand, but the old questions do not disappear: what is this new text, what is this readability, what counts as a version, iteration, addition, fan fiction, and what exactly is being translated when language is forced into pictographs?",
+            text: "Who remembers [Emoji Dick](https://emojidick.com)? One of those seminal (to me) pieces of conceptual writing. It stages translation as reduction, collaboration, expense, labour critique, joke, unreadability, and playful but epic artifact all at once. An LLM makes it newly possibly to generate adjacent objects on demand, but the old questions do not disappear: what is this resulting text, what is this readability or lack thereof, what counts as a version, an edition, an iteration, an addition, fan fiction, and what exactly is being translated when language is forced into pictographs? Is it useful in any way?",
         },
         {
             type: "paragraph",
-            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery determines the kind of texts that can be generated. But I also want to stay with the literary question behind it, which is less obvious and more interesting: can emoji do any real poetic work, or do they only cast a bright but impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling, some are not.",
+            text: "This post is partly technical and partly speculative. I want to show the machinery because the machinery obviously determines the kind of texts that can be generated. But I also want to see: can emoji do any real poetic work, or do they only cast a bright but impoverished gloss over the line? Some of these lines can be quite fun, cute, compelling, and some are not.",
         },
         {
             type: "paragraph",
@@ -47,7 +47,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The woven version is more legible (to me), and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a `emoji.txt` file which is just the raw emoji output. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.",
+            text: "The woven version is more legible (to me), and it also lets me think about these lines as couplets in a way, which I also like. The effect is simple <i>ostranie</i>. There is also a `emoji.txt` file which is just the raw emoji output. My eyes drift between the words and lines I know and the emoticons of the ones I don't. I think I could give the LLM more freedom to play with its own notions of translation, but for now I wanted a fairly faithful adherence to the source text/typographical layout; the line.",
         },
         {
             type: "heading",
@@ -124,11 +124,11 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Whitman is useful because the passage wants breadth, catalogue, continuation. If the system can remain lineate under that pressure, then one begins to see not literary success exactly, but a usable formal discipline.",
+            text: "Whitman is useful because the passage wants breadth, catalogue, continuation. If the system can remain lineate under these conditions, it's a decent sign that something is working.",
         },
         {
             type: "paragraph",
-            text: "Rilke introduces a different difficulty. The line does not simply continue; it broods, turns, and qualifies itself. The output below is still awkward, but the awkwardness is at least inspectable.",
+            text: "Rilke introduces a different difficulty. The line does not simply continue; it broods, turns, and qualifies itself. The output below is still awkward, but the awkwardness is at least inspectable. Certain motifs still recur with the emojies, so that's a good sign too I think.",
         },
         {
             type: "image",
@@ -141,7 +141,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Christian Bök's Eunoia makes the limit clearer still. Its constraint is not merely lexical or imagistic; it is internal, formal, almost infrastructural at the level of the vowel. Even with extra prompting, the system does not really understand that pressure. It mostly notices the surface fact of the letter `i` and repeats the obvious emblem:",
+            text: "Christian Bök's Eunoia makes the limit clearer though. Its constraint is not merely lexical or imagistic; it is internal, formal, infrastructural at the level of the vowel. Even with extra prompting, the system does not really understand that pressure. After telling it the constraint, it mostly notices the surface fact of the letter `i` and repeats the obvious emblem:",
         },
         {
             type: "image",
@@ -168,7 +168,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. And the LLM reveals its own biases too. I'm not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given.  Or at least not without external prompting explaining the text, contextualizing it etc. so that it can at least try to preserve some semblance of its originary effect. (Essentially I guess like via poetics one can detect the harness of and adumbrate parts of the LLM in some ways.)",
+            text: "There are lots of biases in this project; I chose some pretty safe poems to test with. And the LLM reveals its own biases too. I'm also not sure what a truly political text would look like, or how the LLM would internally censor itself, flatten the text, etc. as it rewrote what it's given.  Or at least not without external prompting explaining the text, contextualizing it etc. so that it can at least try to preserve some semblance of its originary effect. (Essentially I guess like via poetics one can detect the harness of and adumbrate parts of the LLM's poetic process in some ways.)",
         },
         {
             type: "heading",
@@ -177,7 +177,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "If entire texts can be rendered this way -- at ease -- what sort of texts result? What's the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? The uncertainty is certainly part of the appeal.",
+            text: "If entire texts can be rendered this way -- at ease -- what sort of texts result? What's the point? Can emoji be literary? Can there be an emoji literature? Is such a thing sculptural, pictorial, mnemonic, poetic, comic? The uncertainty is certainly part of the appeal. You could turn this into a chrome extension, a camera filter, something else. Thanks for reading!",
         },
     ],
 };

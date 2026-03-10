@@ -27,7 +27,7 @@ export const reactNativePeekieFourAnglesPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "iOS exposes preview and commit behavior through UIContextMenuInteraction. On React Native projects, that usually means custom native work, one-off wrappers, or coupling the feature to a specific router. The goal here was a reusable module with a compositional API that stays router-agnostic.",
+            text: "iOS exposes preview and commit behavior through `UIContextMenuInteraction`. On React Native projects, that usually means custom native work, one-off wrappers, or coupling the feature to a specific router. The goal here was a reusable module with a compositional API that stays router-agnostic.",
         },
         {
             type: "paragraph",
@@ -134,15 +134,15 @@ return (
         },
         {
             type: "paragraph",
-            text: "On iOS, UIContextMenuInteraction drives three moments that matter to app code: preview is about to be shown, commit happened, and preview finished dismissing. Those map directly to onWillShow, onCommit, and onDismiss so behavior stays easy to reason about from JavaScript.",
+            text: "On iOS, `UIContextMenuInteraction` drives three moments that matter to app code: preview is about to be shown, commit happened, and preview finished dismissing. Those map directly to `onWillShow`, `onCommit`, and `onDismiss` so behavior stays easy to reason about from TypeScript.",
         },
         {
             type: "image",
             src: "/img/blog/react-native-peekie-four-angles/module-architecture-light.png",
             darkSrc: "/img/blog/react-native-peekie-four-angles/module-architecture-dark.png",
-            alt: "Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to JavaScript callbacks and navigation commit.",
+            alt: "Architecture diagram showing react-native-peekie flow from React Native components to Expo native module views, into UIContextMenuInteraction and preview controller, then back to TypeScript callbacks and navigation commit.",
             caption:
-                "Module flow: JS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.",
+                "Module flow: TS component composition, native trigger/content views, iOS context menu preview lifecycle, and commit callback handling.",
         },
         {
             type: "code",
@@ -159,7 +159,7 @@ const handleDismiss = (_event: PeekPreviewEvent) => onDismiss?.();`,
         },
         {
             type: "paragraph",
-            text: "Explicit preferredContentSize plus scrollable preview content gives a predictable experience across different row widths.",
+            text: "Explicit `preferredContentSize` plus scrollable preview content gives a predictable experience across different row widths.",
         },
         {
             type: "heading",

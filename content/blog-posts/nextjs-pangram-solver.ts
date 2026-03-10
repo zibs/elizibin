@@ -4,7 +4,7 @@ export const nextJsPangramSolverPost: BlogPost = {
     slug: "nyt-pangram-solver",
     title: "A Simple Pangram Solver for NYT Spelling Bee",
     summary:
-        "A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter.",
+        "A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter.",
     publishedAt: "2026-03-05",
     published: true,
     heroImage: "/img/blog/nextjs-pangram-solver/system-flow-light.png",
@@ -116,7 +116,7 @@ const pangrams = cleanAndFilterPangrams(words, letters, centerLetter);`,
         },
         {
             type: "paragraph",
-            text: "It was also one of those small early-2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour.",
+            text: "It was also one of those small early-2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour. Thanks for reading!",
         },
     ],
 };
