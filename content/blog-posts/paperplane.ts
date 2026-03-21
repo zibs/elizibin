@@ -25,7 +25,7 @@ export const paperplaneOneCommandTestflightPost: BlogPost = {
         {
             type: "heading",
             level: 2,
-            text: "What this solves in plain language",
+            text: "What this solves",
         },
         {
             type: "paragraph",
@@ -47,7 +47,8 @@ export const paperplaneOneCommandTestflightPost: BlogPost = {
         {
             type: "code",
             language: "bash",
-            caption: "The minimal path: inspect first (if you want), then run the real release.",
+            caption:
+                "The minimal path: inspect first (if you want), then run the real release.",
             code: `npx react-native-paperplane --dry-run
 npx react-native-paperplane`,
         },
@@ -59,7 +60,8 @@ npx react-native-paperplane`,
         {
             type: "image",
             src: "/img/blog/paperplane-one-command-testflight/release-flow-light.png",
-            darkSrc: "/img/blog/paperplane-one-command-testflight/release-flow-dark.png",
+            darkSrc:
+                "/img/blog/paperplane-one-command-testflight/release-flow-dark.png",
             alt: "Diagram of Paperplane release flow: resolve workspace and build number, update config and Info.plist, archive and export IPA, then upload to TestFlight, with dry-run and clean-git guardrails.",
             caption:
                 "Paperplane keeps the release path explicit: resolve, update, build/export, upload, with preflight guardrails.",

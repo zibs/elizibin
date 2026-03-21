@@ -13,7 +13,7 @@ export const agentReplBuildLogPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "This is a small and simple learning exercise: make a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:",
+            text: "This is a small and simple learning exercise: make a miniature agent runtime that mimics the fundamentals of a real agent loop. No framework magic, no SDK, just one clear loop: user input, model output, tool calls, repeat. I was inspired by this tweet below:",
         },
         {
             type: "tweet",
@@ -182,7 +182,7 @@ while (hasFunctionCalls(response.output)) {
         },
         {
             type: "paragraph",
-            text: "This was fun and educational: small, understandable, and practical enough to understand. Next step is looking at other more advanced agent runtime features and sdks, but the core loop here of what I wanted to see is fundamentally complete. Thanks for reading!",
+            text: "This was fun and educational: small, understandable, and practical enough to understand. Next step is looking at other more advanced agent runtime features and SDKs, but the core loop here of what I wanted to see is fundamentally complete. Thanks for reading!",
         },
     ],
 };

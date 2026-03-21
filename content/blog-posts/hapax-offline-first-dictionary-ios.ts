@@ -4,7 +4,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     slug: "hapax-offline-first-dictionary-ios",
     title: "Building Hapax: An Offline-First Dictionary App",
     summary:
-        "A casual walkthrough of Hapax: an offline-first personal dictionary app.",
+        "A walkthrough of Hapax: an offline-first personal dictionary app.",
     publishedAt: "2026-02-24",
     published: true,
     heroImage: "/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png",
@@ -13,15 +13,15 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "Hapax is a small dictionary app I built for myself. I try to write down/look up every word I come across that I don't know. I've kept a word list for years as a basic csv, but I've always wanted to experiment with it in an app format.",
+            text: "Hapax is a small dictionary app I built for myself. I try to write down/look up every word I come across that I don't know. I've kept a word list for years as a basic csv and google sheet, but I've always wanted to experiment with it in an app format.",
         },
         {
             type: "paragraph",
-            text: " It's built as local-first data with an optional sign-in, practical sync features, and lightweight AI helpers to fill in details and enrich entries.",
+            text: "It's built as a local-first app with an optional sign-in, practical sync features, and lightweight AI helpers to fill in details and enrich entries.",
         },
         {
             type: "paragraph",
-            text: "The app is designed to save first and organize later via entry or AI enrichment. This post is a straightforward tour of how it works.",
+            text: "The app is designed to save first and fill-in later via entry or AI enrichment. This post is a straightforward tour of how it works.",
         },
         {
             type: "video",
@@ -35,14 +35,14 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
             type: "video",
             src: "/img/blog/hapax-offline-first-dictionary-ios/darkmode.mp4",
             alt: "Screen recording of the Hapax app in dark mode.",
-            caption: "Same flow in dark mode.",
+            caption: "Another flow in dark mode.",
             centered: true,
             maxHeightPx: 640,
         },
         {
             type: "heading",
             level: 2,
-            text: "Why Hapax exists",
+            text: "Adding Words Flow",
         },
         {
             type: "paragraph",
@@ -63,22 +63,22 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         {
             type: "heading",
             level: 2,
-            text: "Product constraints that shaped architecture",
+            text: "Requirements that helped shaped architecture",
         },
         {
             type: "paragraph",
-            text: "Hapax is iOS-first today. Android and Expo web are possible, but not a real priority yet.",
+            text: "Hapax is iOS-first for now. Android and Expo web are possible, and web will probably land next.",
         },
         {
             type: "paragraph",
-            text: "The main constraints were straightforward: offline support, fast local interactions, and optional account usage instead of hard auth gating.",
+            text: "The main requirements were straightforward: offline support, fast local interactions, and optional account usage instead of hard auth gating.",
         },
         {
             type: "image",
             src: "/img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions-light.png",
             darkSrc: "/img/blog/hapax-offline-first-dictionary-ios/constraints-to-decisions-dark.png",
             alt: "Diagram mapping product constraints to architecture decisions in Hapax.",
-            caption: "Constraints drove most of the technical choices.",
+            caption: "Desires and Decisions",
         },
         {
             type: "heading",
@@ -107,7 +107,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "The main local tables are entries, tags, entry_tags, and sync_state. Sync metadata sits with rows so pending work is easy to track.",
+            text: "The main local tables are entries, `tags`, `entry_tags`, and `sync_state`. Sync metadata sits with rows so pending work is easy to track.",
         },
         {
             type: "image",
@@ -149,7 +149,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Local mode rows are stored with user_id as null. On sign-in, those rows are reassigned to the signed-in user.",
+            text: "Local mode rows are stored with `user_id` as null. On sign-in, those rows are reassigned to the signed-in user.",
         },
         {
             type: "paragraph",
@@ -189,7 +189,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Conflict handling is intentionally simple: newer updated_at wins.",
+            text: "Conflict handling is intentionally simple: newer `updated_at` wins.",
         },
         {
             type: "paragraph",
@@ -340,7 +340,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Hapax is intentionally simple. The main goal is still to make word capture easy and reliable, with optional sync and optional AI on top. It's available on TestFlight, but probably won't make it to the App Store as it's sort of just for me.",
+            text: "Hapax is intentionally simple. The main goal is to make word capture easy, with optional sync and optional AI on top. Altogether, it's working really well for my use cases. It's available on TestFlight, but probably won't make it to the App Store.",
         },
         {
             type: "paragraph",

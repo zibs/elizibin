@@ -1,175 +1,255 @@
 # Blog Style Guide
 
-This is the voice guide for blog drafting in this repo.
+This file is the main voice reference for blog drafting in this repo.
 
-Use it as the primary tone reference. Do not infer voice only from older posts, because some existing posts skew more technical, more launchy, and more "build log" than the desired default.
+The goal is not "clean internet tech prose." The goal is to sound like Eli: casual, specific, interested, a little dry, and actually present on the page.
+
+Do not reach for startup language. Do not reach for polished LLM-blog language. Keep it real.
+
+## What This Guide Is For
+
+Use this guide to keep posts from drifting into:
+
+- startup launch copy
+- product-marketing tone
+- "here is the system we built" memo voice
+- generic AI-written smoothness
+
+The writing can be technical, literary, reflective, or mixed. It should still sound like one person showing you something they made, noticed, tested, or got obsessed with.
+
+## Current Calibration
+
+Use the stronger recent posts as the main tone reference:
+
+- `content/blog-posts/echo-first-success.ts`
+- `content/blog-posts/emoji-system-successes.ts`
+- `content/blog-posts/nextjs-pangram-solver.ts`
+- `content/blog-posts/codesh.ts`
+- `content/blog-posts/paperplane.ts`
+- `content/blog-posts/hapax-offline-first-dictionary-ios.ts`
+
+Those posts tend to work because they:
+
+- start from a real itch, curiosity, or use case
+- sound like someone talking, not positioning
+- let taste, uncertainty, and judgment show up
+- keep technical detail tied to why the thing mattered
+
+Some older posts are still useful for structure, assets, and technical coverage, but they are not the default tone target:
+
+- `content/blog-posts/agent-repl.ts`
+- `content/blog-posts/peekie.ts`
+- `content/blog-posts/victory-native-xl.ts`
+
+Those drift more easily into launch-post, module-overview, or engineering-memo shapes.
 
 ## Core Voice
 
 Default to a voice that feels:
 
+- personal
 - casual
-- warm
-- relaxed
-- lightly playful
 - observant
 - specific
+- lightly dry
+- unforced
+- technically fluent without sounding managerial
 
-The writing should sound like a smart person talking to other people on the internet, not like a startup launch post, a product memo, or a grinder/optimization thread.
+The best version of the voice usually sounds like:
 
-The best default vibe is:
-
-- "I made this thing, here is the interesting part"
-- "this was fun / weird / useful"
-- "let me show you around"
+- "I wanted this, so I made it."
+- "This weird thing interested me, so I kept going."
+- "Here is the part that is actually worth showing."
+- "This part worked, this part was awkward, this part surprised me."
 
 Not:
 
-- "we shipped a solution that unlocks..."
-- "here is the architecture of the system we built"
-- "this milestone proves..."
+- "We built a solution that enables..."
+- "This architecture unlocks..."
+- "This milestone demonstrates..."
+- "Here is a comprehensive overview of the system..."
 
-## Desired Reader Experience
+## Tone Principles
 
-Readers should feel like:
+- Write like a person who actually made or used the thing.
+- Prefer `I` over `we` unless the work was genuinely collaborative.
+- Start from the human reason, not the abstract category.
+- Keep the interesting detail in. Do not sand off the weird local specificity.
+- Let taste show up. It is good for the post to have preferences and judgments.
+- Let uncertainty show up when it is real. The newer posts are better when they admit limits, ambiguity, awkwardness, bias, or partial success.
+- Explain technical details because they are interesting or clarifying, not because the post needs to sound substantial.
+- Keep the writing relaxed even when the subject is technical.
+- If the project was easy, say it was easy. Do not manufacture struggle or complexity to make the post feel more important.
 
-- they are being let in on something interesting
-- the author is enjoying explaining it
-- technical details are there when useful, not as a flex
-- the post has a point of view, not just a changelog
+## What "Casual" Means Here
 
-Posts can be technical. They should not feel tense, over-professionalized, or performatively intense.
+Casual does not mean sloppy, jokey, or fake-friendly.
 
-## Tone Rules
+It means:
 
-- Write in first person when it helps the piece feel personal and grounded.
-- Prefer plain language over formal framing.
-- Prefer curiosity over authority.
-- Prefer lightness over hype.
-- Prefer concrete observations over sweeping claims.
-- Prefer a human rhythm over rigid "sectioned memo" prose.
-- Let the post have taste and personality, but do not force jokes.
-- Aim more dry and observant than quirky or performative.
+- plain words over polished abstraction
+- contractions are fine
+- occasional parenthetical asides are fine
+- rhetorical questions are fine when they are real questions
+- a sentence can sound a little spoken
+- a paragraph can be short if that is the cleanest shape
+- one sentence can be enough
+
+The tone should feel like someone who knows what they are talking about and does not need to posture about it.
 
 ## What To Avoid
 
-Avoid drafts that read like:
+Avoid posts that read like:
 
-- a build log
 - a launch announcement
+- a product one-pager
 - a startup founder update
-- a technical spec with a friendly intro attached
-- a productivity or grind mindset post
+- internal engineering documentation with a friendly intro
+- a feature checklist dressed up as a story
+- generic "AI blog post" prose
 
-Avoid this kind of energy:
+Avoid this energy:
 
-- agitated
-- self-congratulatory
-- overly optimized
-- chest-thumpy
-- too eager to sound important
-- overly whimsical
-- meme-y
-- cutesy for the sake of sounding casual
+- hype
+- chest-thumping
+- fake certainty
+- too much self-congratulation
+- strained cleverness
+- cutesy "internet casual" voice
+- managerial seriousness about small personal tools
 
-Avoid overusing structures like:
+Do not try to fix tone by banning individual words. The problem is usually sentence shape and posture, not one bad noun.
 
-- "What we built"
-- "Architecture overview"
-- "Production checklist"
-- "Lessons learned"
-- long numbered inventories of features or accomplishments
+Bad pattern:
 
-Those shapes are fine when they are truly the clearest way to explain something, but they should not be the default.
+- abstract framing
+- polished claim
+- feature inventory
+- tidy lesson
+- triumphant ending
 
-## Preferred Post Shape
+Better pattern:
 
-Most posts should feel more like a guided walk than a status report.
+- real reason
+- show the thing
+- talk about the interesting decision or tension
+- admit rough edges
+- end lightly
 
-A good default shape is:
+## Structural Defaults
 
-1. Start with the interesting human reason the project exists.
+Most posts should feel more like a guided walk than a report.
+
+Good default shape for a small tool post:
+
+1. Start with the specific annoyance, curiosity, or desire.
 2. Show the thing early.
-3. Explain the most fun, surprising, or consequential decisions.
-4. Go deeper only where the detail earns its keep.
-5. End with a light closing note, not a victory lap.
+3. Explain the one or two decisions that actually matter.
+4. Include technical detail only where it earns attention.
+5. End with "that is basically it," not a victory speech.
 
-Technical detail is welcome, but it should arrive as part of the story instead of taking over the whole piece.
+Small wins can stay small. A post does not need a dramatic arc if the work mostly just went well.
+You do not need to fill space. If two sentences do the job, stop there.
+
+Good default shape for a bigger technical system post:
+
+1. Start with the use case or personal reason it exists.
+2. Show real behavior early with screenshots, video, or a one-screen diagram.
+3. Walk through the few decisions that define the system.
+4. Mention tradeoffs, constraints, and rough edges without turning the post into a design review.
+5. Close small.
+
+Good default shape for an experiment / literary / LLM post:
+
+1. Start from the question or obsession.
+2. Show artifacts early.
+3. Explain the apparatus only as much as needed.
+4. Leave room for interpretation, doubt, or open-endedness.
+5. Do not force a takeaway if the point is partly exploratory.
 
 ## Technical Writing Guidance
 
-When a post is technical:
+When a post gets technical:
 
-- explain the plain-English version before the implementation version
+- explain the plain-language version before the implementation version
 - keep code samples short and meaningful
-- include architecture only when it helps the reader see the shape of the system
-- focus on what was interesting, annoying, elegant, brittle, or unexpectedly nice
-- mention tradeoffs without turning the whole post into a design review
+- prefer one useful diagram over a huge conceptual dump
+- focus on what was interesting, annoying, brittle, elegant, or unexpectedly nice
+- keep implementation detail connected to the actual use of the thing
 
-If a section starts sounding like internal engineering documentation, pull it back.
+If a section starts sounding like repo docs or a PR description, pull it back.
 
-## Word Choice And Cadence
+## Sentence Rhythm And Cadence
 
 Prefer:
 
-- shorter paragraphs
+- short or medium paragraphs
 - direct sentences
-- occasional asides
+- occasional longer reflective paragraphs when the thought needs it
 - mild informality
 - concrete nouns and verbs
+- a mix of blunt sentences and more winding ones when that matches the idea
 
-Do not write like a press release.
-Do not write like a LinkedIn post.
-Do not write like an investor update.
+Do not over-polish everything into the same cadence.
 
-The voice can be polished, but it should still feel loose in the shoulders.
+A little looseness helps. A sentence can qualify itself. A paragraph can take a turn. The writing does not need to sound "content designed."
 
-## Summary And Title Guidance
+## Titles And Summaries
 
-Titles and summaries should be clear, specific, and a little alive.
+Titles and summaries should sound like honest invitations, not positioning copy.
 
-Good titles usually:
+Prefer titles that are:
 
-- say what the thing is
-- hint at why it is interesting
-- avoid sounding like product marketing
+- plain
+- specific
+- slightly odd or alive when that fits
+- willing to be small
 
-Summaries should not sound like taglines. They should sound like an honest one-line invitation.
+Avoid title shapes like:
 
-## Voice Calibration Examples
+- "We Built..."
+- "Introducing..."
+- "Architecture of..."
+- "How We Leveraged..."
+- "Production-Ready..."
 
-Less aligned:
+Summaries should sound like a person telling you what the post is, not a tagline.
 
-> We built a minimal agent REPL to explore tool-calling workflows and provider flexibility.
+## Strong Patterns From The Recent Posts
 
-More aligned:
+These patterns are worth preserving:
 
-> I wanted a tiny agent REPL I could actually understand in one sitting, so I made one.
+- starting from a concrete personal motive
+- showing the artifact early
+- using first-person judgment like "I wanted," "I liked," "I was happy with," "I was not sure"
+- letting the post mix technical explanation with taste or interpretation
+- admitting when something is partial, awkward, biased, or unfinished
+- ending with a small human note instead of a "key takeaway"
 
-Less aligned:
+## Recurring Failure Modes
 
-> This architecture enables predictable production behavior across navigation contexts.
+These are the main ways the voice drifts off:
 
-More aligned:
-
-> The nice part is that it behaves predictably without turning the component into a giant wrapper mess.
-
-Less aligned:
-
-> This post walks through the system we built and the key milestones that made it successful.
-
-More aligned:
-
-> This started as a small itch, got more interesting than I expected, and now it is a post.
+- headings like "What we built," "Production checklist," or "Architecture overview" taking over the post
+- numbered feature lists where normal prose would be more natural
+- sounding more official than the project actually is
+- writing as if the post needs to justify the project's importance
+- inflating a mostly straightforward build into a saga
+- flattening everything into clean, balanced, generic sentences
+- letting reflective paragraphs get so clause-heavy that the voice turns baggy instead of conversational
+- ending with a pitch, a lesson list, or a triumph speech
 
 ## Final Check Before Calling A Draft Done
 
 Ask:
 
 - Does this sound like a person, not a brand?
-- Is the post enjoyable to read, not just informative?
-- Did the technical detail stay connected to the human reason for the project?
-- Would this still be interesting if the reader never uses the tool?
-- Did the ending stay relaxed instead of turning into a pitch or a triumph speech?
+- Does this sound like Eli, not like a generic smart model?
+- Is there at least one sentence here that feels genuinely lived-in or specific?
+- Did I start from the real reason for the project instead of a category label?
+- Did I accidentally turn the post into a launch announcement or mini spec?
+- If the work mostly went smoothly, did I let the post stay calm and simple?
+- Are the technical sections there because they are interesting, not because they make the post look serious?
+- Did the ending stay relaxed?
 
-If the answer to any of those is no, revise the tone before shipping the draft.
+If any of those answers is no, revise the voice before shipping the draft.

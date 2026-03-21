@@ -6,18 +6,18 @@
     <title>A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter."
+        content="A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter."
     />
     <link rel="canonical" href="https://elizibin.com/blog/nyt-pangram-solver/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin" />
-    <meta property="og:description" content="A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter." />
+    <meta property="og:description" content="A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter." />
     <meta property="og:url" content="https://elizibin.com/blog/nyt-pangram-solver/" />
     <meta property="og:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow-light.png" />
     <meta property="og:image:alt" content="Hero image for A Simple Pangram Solver for NYT Spelling Bee" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter." />
+    <meta name="twitter:description" content="A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter." />
     <meta name="twitter:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow-light.png" />
     <meta name="twitter:image:alt" content="Hero image for A Simple Pangram Solver for NYT Spelling Bee" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -179,7 +179,7 @@
 </p>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    A small Next.js app that finds valid Spelling Bee pangrams from seven letters and a required center letter.
+                    A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <picture>
@@ -195,18 +195,18 @@
     </picture>
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I made a small Next.js app for finding NYT Spelling Bee pangrams.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">In early 2025, I made a small Next.js app for finding NYT Spelling Bee pangrams.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">You enter the 7 letters, mark the required center letter, press one button, and (hopefully) get back a cleaned list of valid pangrams. The whole thing is intentionally small: one UI, one server route, one model call, and one local filtering step before results come back.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/nextjs-pangram-solver/solved.jpeg"
-        alt="Mobile screenshot of the Pangram Solver app showing letters entered, center letter O selected, and JOCULAR returned as the pangram result."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 760px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The whole loop in one screen: letters in, one tap, pangram back.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/nextjs-pangram-solver/solved.jpeg"
+    alt="Mobile screenshot of the Pangram Solver app showing letters entered, center letter O selected, and JOCULAR returned as the pangram result."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 760px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The whole loop in one screen: letters in, one tap, pangram back.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The shape</h2>
                         <figure class="mb-9 max-w-3xl mx-auto">
@@ -260,30 +260,30 @@
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">That second step is what makes the app usable. The model can suggest candidates, but the final result still has to pass a straightforward local validation check.</p>
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">UI states</h2>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">There are really only two states that matter: before the solve and after the solve. I wanted both to stay simple. Very little chrome, one clear action, and a result list that is easy to scan.</p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/nextjs-pangram-solver/empty.jpeg"
-        alt="Mobile screenshot of the Pangram Solver app in its empty state with blank inputs and the Find Pangrams button disabled."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 760px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Empty state: waiting for the 7 letters and the center letter.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/nextjs-pangram-solver/empty.jpeg"
+    alt="Mobile screenshot of the Pangram Solver app in its empty state with blank inputs and the Find Pangrams button disabled."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 760px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Empty state: waiting for the 7 letters and the center letter.</figcaption>
+        </figure>
 
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <img
-        src="../../img/blog/nextjs-pangram-solver/solved.jpeg"
-        alt="Mobile screenshot of the Pangram Solver app showing a completed solve with JOCULAR listed under Pangrams Found."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 760px;"
-    />
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Solved state: one valid pangram back after the server filters the model output.</figcaption>
-</figure>
+                        <figure class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/nextjs-pangram-solver/solved.jpeg"
+    alt="Mobile screenshot of the Pangram Solver app showing a completed solve with JOCULAR listed under Pangrams Found."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 760px;"
+/>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Solved state: one valid pangram back after the server filters the model output.</figcaption>
+        </figure>
 
                 <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">That is basically it!</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It was also one of those small early-2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour.</p>
+                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It was also one of those small early-2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour. Thanks for reading!</p>
             </article>
 
                 </main>
