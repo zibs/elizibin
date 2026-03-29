@@ -463,7 +463,7 @@ function renderHead(
                 .blog-tag-cloud {
                     display: flex;
                     flex-wrap: wrap;
-                    gap: 0.65rem;
+                    gap: 0.58rem;
                 }
 
                 .blog-tag {
@@ -474,8 +474,8 @@ function renderHead(
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    min-height: 1.92rem;
-                    padding: 0.42rem 0.82rem;
+                    min-height: 1.8rem;
+                    padding: 0.36rem 0.74rem;
                     border-radius: 999px;
                     border: 1px solid transparent;
                     background:
@@ -560,9 +560,9 @@ function renderHead(
                     position: relative;
                     z-index: 1;
                     font-family: "Roboto Mono", monospace;
-                    font-size: 0.67rem;
+                    font-size: 0.64rem;
                     line-height: 1;
-                    letter-spacing: 0.11em;
+                    letter-spacing: 0.1em;
                     text-transform: uppercase;
                     text-shadow: 0 1px 16px rgba(255, 255, 255, 0.28);
                 }
@@ -747,12 +747,12 @@ function renderHead(
 
                 @media (max-width: 640px) {
                     .blog-tag-cloud {
-                        gap: 0.55rem;
+                        gap: 0.48rem;
                     }
 
                     .blog-tag {
-                        min-height: 1.8rem;
-                        padding-inline: 0.72rem;
+                        min-height: 1.68rem;
+                        padding-inline: 0.64rem;
                     }
 
                     .blog-collab-callout {
@@ -1237,7 +1237,7 @@ function renderBlogCollaborativeCallout(): string {
             <div class="blog-collab-callout-badge" aria-hidden="true">CO-WRITTEN</div>
             <div class="blog-collab-callout-panel">
                 <p class="blog-collab-callout-kicker">Tiny disclosure</p>
-                <p class="blog-collab-callout-title">by Eli and Codex.</p>
+                <p class="blog-collab-callout-title">by Eli and Codex</p>
                 <p class="blog-collab-callout-body">This post was co-drafted, then edited by a human.</p>
             </div>
         </aside>
@@ -1553,7 +1553,7 @@ function renderBlogPostPage(
                 <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
                     ${escapeHtml(post.title)}
                 </h2>
-                <div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-6">
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
                     <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
                         ${escapeHtml(formatPublishedAt(post.publishedAt))}
                     </p>
