@@ -22,7 +22,7 @@ const BODY_CLASSES =
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
 const PARAGRAPH_INLINE_MARKUP_PATTERN =
-    /`([^`\n]+)`|\[([^\]]+)\]\(([^)]+)\)|(<\/?(?:i|em)>)/g;
+    /`([^`\n]+)`|\[([^\]]+)\]\(([^)]+)\)|~~([^~\n]+)~~|(<\/?(?:i|em)>)/g;
 const BLOG_LIST_LIKE_PARAGRAPH_PATTERN = /^\s*(?:[-*]\s+|\d+\.\s+)/;
 const BLOG_CODE_THEME_LIGHT = "catppuccin-latte";
 const BLOG_CODE_THEME_DARK = "catppuccin-mocha";
@@ -460,6 +460,190 @@ function renderHead(
                     line-height: 1.6;
                 }
 
+                .blog-tag-cloud {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.65rem;
+                }
+
+                .blog-tag {
+                    --mx: 50%;
+                    --my: 50%;
+                    position: relative;
+                    isolation: isolate;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 1.92rem;
+                    padding: 0.42rem 0.82rem;
+                    border-radius: 999px;
+                    border: 1px solid transparent;
+                    background:
+                        linear-gradient(
+                            135deg,
+                            hsl(var(--tag-hue-a) 72% 98% / 0.74),
+                            rgba(255, 255, 255, 0.8) 45%,
+                            hsl(var(--tag-hue-c) 68% 98% / 0.66)
+                        ) padding-box,
+                        linear-gradient(
+                            120deg,
+                            hsl(var(--tag-hue-a) 58% 74% / 0.54),
+                            hsl(var(--tag-hue-b) 60% 76% / 0.6) 46%,
+                            hsl(var(--tag-hue-c) 56% 72% / 0.52)
+                        ) border-box;
+                    box-shadow:
+                        0 9px 20px rgba(0, 0, 0, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.88);
+                    backdrop-filter: blur(18px) saturate(135%);
+                    -webkit-backdrop-filter: blur(18px) saturate(135%);
+                    overflow: hidden;
+                    cursor: default;
+                    user-select: none;
+                    -webkit-user-select: none;
+                    -webkit-tap-highlight-color: transparent;
+                    transform: translateY(0) scale(1);
+                    transition:
+                        transform 180ms ease,
+                        box-shadow 220ms ease,
+                        border-color 220ms ease;
+                }
+
+                .blog-tag::before {
+                    content: "";
+                    position: absolute;
+                    inset: -32%;
+                    border-radius: inherit;
+                    background:
+                        radial-gradient(
+                            90px circle at var(--mx) var(--my),
+                            hsl(var(--tag-hue-b) 64% 74% / 0.11),
+                            transparent 54%
+                        ),
+                        linear-gradient(
+                            180deg,
+                            rgba(255, 255, 255, 0.58),
+                            rgba(255, 255, 255, 0.08) 42%,
+                            transparent 74%
+                        );
+                    opacity: 0;
+                    transition: opacity 180ms ease;
+                    pointer-events: none;
+                    z-index: 0;
+                }
+
+                .blog-tag::after {
+                    content: "";
+                    position: absolute;
+                    top: -35%;
+                    left: -55%;
+                    width: 42%;
+                    height: 170%;
+                    background:
+                        linear-gradient(
+                            115deg,
+                            transparent 0%,
+                            rgba(255, 255, 255, 0.04) 18%,
+                            rgba(255, 255, 255, 0.42) 48%,
+                            rgba(255, 255, 255, 0.1) 58%,
+                            transparent 78%
+                        );
+                    opacity: 0;
+                    transform: translateX(0) skewX(-18deg);
+                    transition:
+                        transform 640ms ease,
+                        opacity 180ms ease;
+                    pointer-events: none;
+                    z-index: 0;
+                }
+
+                .blog-tag-label {
+                    position: relative;
+                    z-index: 1;
+                    font-family: "Roboto Mono", monospace;
+                    font-size: 0.67rem;
+                    line-height: 1;
+                    letter-spacing: 0.11em;
+                    text-transform: uppercase;
+                    text-shadow: 0 1px 16px rgba(255, 255, 255, 0.28);
+                }
+
+                .blog-tag[data-active="true"] {
+                    transform: translateY(-3px) scale(1.03);
+                    box-shadow:
+                        0 14px 28px rgba(0, 0, 0, 0.1),
+                        0 0 18px hsl(var(--tag-hue-b) 62% 72% / 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+                }
+
+                .blog-tag[data-active="true"]::before {
+                    opacity: 1;
+                }
+
+                .blog-tag[data-active="true"]::after {
+                    opacity: 0.52;
+                    transform: translateX(430%) skewX(-18deg);
+                }
+
+                .blog-collab-callout {
+                    display: inline-flex;
+                    align-items: baseline;
+                    gap: 0.26rem;
+                    width: fit-content;
+                    max-width: 100%;
+                    margin: 0;
+                    padding: 0.25rem 0.52rem;
+                    border-radius: 999px;
+                    border: 1px solid rgba(0, 0, 0, 0.1);
+                    background: linear-gradient(
+                        135deg,
+                        rgba(255, 247, 252, 0.94),
+                        rgba(245, 249, 255, 0.94)
+                    );
+                    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+                }
+
+                .blog-collab-callout-panel {
+                    display: inline-flex;
+                    align-items: baseline;
+                    gap: 0.36rem;
+                    text-align: left;
+                }
+
+                .blog-collab-callout-badge {
+                    flex: 0 0 auto;
+                    font-family: "Roboto Mono", monospace;
+                    font-size: 0.5rem;
+                    font-weight: 700;
+                    letter-spacing: 0.06em;
+                    line-height: 1;
+                    text-transform: uppercase;
+                    opacity: 0.72;
+                }
+
+                .blog-collab-callout-kicker {
+                    display: none;
+                    margin: 0;
+                    font-family: "Roboto Mono", monospace;
+                    font-size: 0.72rem;
+                    letter-spacing: 0.16em;
+                    line-height: 1.5;
+                    text-transform: uppercase;
+                    opacity: 0.72;
+                }
+
+                .blog-collab-callout-title {
+                    margin: 0;
+                    font-family: "Roboto Mono", monospace;
+                    font-size: 0.64rem;
+                    line-height: 1;
+                    opacity: 0.82;
+                }
+
+                .blog-collab-callout-body {
+                    display: none;
+                    margin: 0;
+                }
+
                 @media (prefers-color-scheme: dark) {
                     .gradient-text {
                         background: linear-gradient(
@@ -494,6 +678,94 @@ function renderHead(
                     .blog-code-block .shiki {
                         border-color: rgba(255, 255, 255, 0.2);
                         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+                    }
+
+                    .blog-tag {
+                        background:
+                            linear-gradient(
+                                135deg,
+                                rgba(24, 24, 24, 0.84),
+                                rgba(14, 14, 14, 0.66) 46%,
+                                rgba(31, 24, 28, 0.74)
+                            ) padding-box,
+                            linear-gradient(
+                                120deg,
+                                hsl(var(--tag-dark-hue-a) 58% 62% / 0.58),
+                                hsl(var(--tag-dark-hue-b) 60% 66% / 0.64) 46%,
+                                hsl(var(--tag-dark-hue-c) 56% 64% / 0.56)
+                            ) border-box;
+                        box-shadow:
+                            0 14px 28px rgba(0, 0, 0, 0.32),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+                    }
+
+                    .blog-tag::before {
+                        background:
+                            radial-gradient(
+                                90px circle at var(--mx) var(--my),
+                                hsl(var(--tag-dark-hue-b) 62% 72% / 0.1),
+                                transparent 56%
+                            ),
+                            linear-gradient(
+                                180deg,
+                                rgba(255, 255, 255, 0.12),
+                                rgba(255, 255, 255, 0.04) 34%,
+                                transparent 72%
+                            );
+                    }
+
+                    .blog-tag-label {
+                        color: rgba(245, 243, 238, 0.95);
+                        text-shadow: 0 1px 18px rgba(0, 0, 0, 0.52);
+                    }
+
+                    .blog-tag[data-active="true"] {
+                        box-shadow:
+                            0 18px 34px rgba(0, 0, 0, 0.4),
+                            0 0 20px hsl(var(--tag-dark-hue-c) 58% 66% / 0.06),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+                    }
+
+                    .blog-tag[data-active="true"]::after {
+                        opacity: 0.34;
+                    }
+
+                    .blog-collab-callout {
+                        border-color: rgba(255, 255, 255, 0.15);
+                        background: linear-gradient(
+                            135deg,
+                            rgba(34, 25, 32, 0.95),
+                            rgba(18, 26, 34, 0.95)
+                        );
+                        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+                    }
+                }
+
+                @media (max-width: 640px) {
+                    .blog-tag-cloud {
+                        gap: 0.55rem;
+                    }
+
+                    .blog-tag {
+                        min-height: 1.8rem;
+                        padding-inline: 0.72rem;
+                    }
+
+                    .blog-collab-callout {
+                        padding: 0.24rem 0.48rem;
+                    }
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .blog-tag,
+                    .blog-tag::before,
+                    .blog-tag::after {
+                        animation: none;
+                        transition: none;
+                    }
+
+                    .blog-tag[data-active="true"] {
+                        transform: none;
                     }
                 }
             </style>
@@ -567,7 +839,7 @@ function renderHomeBlogList(tools: RenderTools, blogEntries: BlogPost[]): string
             : "";
         const metaRowMarkup = `<div class="mt-1 flex items-center gap-x-2"><span class="font-roboto-mono text-xs opacity-70">(${escapeHtml(formatPublishedAt(post.publishedAt))})</span>${githubIconMarkup}</div>`;
 
-        return `<li><div><a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">${escapeHtml(post.title)}</a></div>${metaRowMarkup}<p class="font-roboto-mono text-base leading-relaxed mt-1">${renderParagraphWithInlineLinks(post.summary)}</p></li>`;
+        return `<li><div><a href="${postHref}" class="${PRIMARY_LINK_CLASSES}">${escapeHtml(post.title)}</a></div>${metaRowMarkup}<p class="font-roboto-mono text-base leading-relaxed mt-1">${renderParagraphInlineMarkup(post.summary)}</p></li>`;
     });
 
     if (allItems.length === 0) {
@@ -598,11 +870,15 @@ function inlineCodeToHtml(value: string): string {
     return `<code class="blog-inline-code">${escapeHtml(value)}</code>`;
 }
 
+function inlineStrikethroughToHtml(value: string): string {
+    return `<s>${escapeHtml(value)}</s>`;
+}
+
 function inlineEmphasisTagToHtml(value: string): string {
     return value;
 }
 
-function renderParagraphWithInlineLinks(paragraph: string): string {
+function renderParagraphInlineMarkup(paragraph: string): string {
     const matches = Array.from(paragraph.matchAll(PARAGRAPH_INLINE_MARKUP_PATTERN));
     if (matches.length === 0) {
         return escapeHtml(paragraph);
@@ -616,13 +892,16 @@ function renderParagraphWithInlineLinks(paragraph: string): string {
         const inlineCode = match[1];
         const label = match[2];
         const href = match[3];
-        const emphasisTag = match[4];
+        const strikethrough = match[4];
+        const emphasisTag = match[5];
         const matchIndex = match.index ?? 0;
 
         rendered += escapeHtml(paragraph.slice(cursor, matchIndex));
 
         if (typeof inlineCode === "string") {
             rendered += inlineCodeToHtml(inlineCode);
+        } else if (typeof strikethrough === "string") {
+            rendered += inlineStrikethroughToHtml(strikethrough);
         } else if (typeof emphasisTag === "string") {
             rendered += inlineEmphasisTagToHtml(emphasisTag);
         } else if (typeof label === "string" && typeof href === "string") {
@@ -854,17 +1133,105 @@ function renderBlogTags(tags: string[] | undefined): string {
         return "";
     }
 
-    const tagMarkup = tags
-        .map(
-            (tag) =>
-                `<span class="inline-flex rounded-full border border-black/15 dark:border-white/20 px-3 py-1 text-xs uppercase tracking-wide">${escapeHtml(tag)}</span>`,
-        )
-        .join("\n                        ");
+    const tagMarkup = tags.map((tag) => renderBlogTag(tag)).join("\n                        ");
 
     return html(`
-        <p class="font-roboto-mono text-sm leading-relaxed flex flex-wrap gap-2 mb-8">
+        <div class="blog-tag-cloud mb-8" role="list" aria-label="Post tags">
                         ${tagMarkup}
-        </p>
+        </div>
+    `);
+}
+
+function hashTagSeed(tag: string): number {
+    let hash = 2166136261;
+
+    for (const character of tag.toLowerCase()) {
+        hash ^= character.charCodeAt(0);
+        hash = Math.imul(hash, 16777619);
+    }
+
+    return hash >>> 0;
+}
+
+const BLOG_TAG_COLOR_FAMILIES = [
+    [220, 246, 278],
+    [194, 214, 236],
+    [296, 316, 336],
+    [162, 182, 204],
+    [244, 270, 302],
+] as const;
+
+const BLOG_TAG_DARK_COLOR_FAMILIES = [
+    [146, 156, 54],
+    [150, 166, 50],
+    [142, 154, 60],
+    [158, 170, 56],
+    [148, 162, 64],
+] as const;
+
+function normalizeHue(value: number): number {
+    return ((value % 360) + 360) % 360;
+}
+
+function renderBlogTag(tag: string): string {
+    const seed = hashTagSeed(tag);
+    const family = BLOG_TAG_COLOR_FAMILIES[seed % BLOG_TAG_COLOR_FAMILIES.length];
+    const darkFamily =
+        BLOG_TAG_DARK_COLOR_FAMILIES[seed % BLOG_TAG_DARK_COLOR_FAMILIES.length];
+    const hueA = normalizeHue(family[0] + (((seed >>> 5) % 11) - 5));
+    const hueB = normalizeHue(family[1] + (((seed >>> 10) % 11) - 5));
+    const hueC = normalizeHue(family[2] + (((seed >>> 15) % 11) - 5));
+    const darkHueA = normalizeHue(darkFamily[0] + (((seed >>> 4) % 9) - 4));
+    const darkHueB = normalizeHue(darkFamily[1] + (((seed >>> 9) % 9) - 4));
+    const darkHueC = normalizeHue(darkFamily[2] + (((seed >>> 14) % 9) - 4));
+
+    return `<span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: ${hueA}; --tag-hue-b: ${hueB}; --tag-hue-c: ${hueC}; --tag-dark-hue-a: ${darkHueA}; --tag-dark-hue-b: ${darkHueB}; --tag-dark-hue-c: ${darkHueC};"><span class="blog-tag-label">${escapeHtml(tag)}</span></span>`;
+}
+
+function renderBlogTagPointerScript(): string {
+    return html(`
+        <script>
+            (() => {
+                if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                    return;
+                }
+
+                const tags = document.querySelectorAll(".blog-tag");
+                for (const tag of tags) {
+                    const setPointerPosition = (event) => {
+                        const rect = tag.getBoundingClientRect();
+                        tag.style.setProperty("--mx", \`\${event.clientX - rect.left}px\`);
+                        tag.style.setProperty("--my", \`\${event.clientY - rect.top}px\`);
+                    };
+
+                    tag.addEventListener("pointerenter", (event) => {
+                        tag.dataset.active = "true";
+                        setPointerPosition(event);
+                    });
+
+                    tag.addEventListener("pointermove", setPointerPosition);
+
+                    tag.addEventListener("pointerleave", () => {
+                        tag.dataset.active = "false";
+                        tag.style.removeProperty("--mx");
+                        tag.style.removeProperty("--my");
+                    });
+                }
+            })();
+        </script>
+    `);
+}
+
+function renderBlogCollaborativeCallout(): string {
+    return html(`
+        <aside class="blog-collab-callout" aria-label="AI collaboration note">
+            <div class="blog-collab-callout-badge" aria-hidden="true">CO-WRITTEN</div>
+            <div class="blog-collab-callout-panel">
+                <p class="blog-collab-callout-kicker">Tiny disclosure</p>
+                <p class="blog-collab-callout-title">by Eli and Codex.</p>
+                <p class="blog-collab-callout-body">This post was co-drafted, then edited by a human.</p>
+            </div>
+        </aside>
     `);
 }
 
@@ -892,7 +1259,7 @@ function renderBlogBlock(
 ): string {
     if (block.type === "paragraph") {
         const marginClass = blogParagraphMarginClass(paragraphSpacing);
-        return `<p class="font-roboto-mono text-lg leading-relaxed ${marginClass}">${renderParagraphWithInlineLinks(block.text)}</p>`;
+        return `<p class="font-roboto-mono text-lg leading-relaxed ${marginClass}">${renderParagraphInlineMarkup(block.text)}</p>`;
     }
 
     if (block.type === "heading") {
@@ -1091,6 +1458,7 @@ function renderBlogPostPage(
     const heroImageSrc = resolveImageSource(tools, post.heroImage);
     const heroImageDarkSrc = resolveImageSource(tools, post.heroImageDark);
     const hasTweetEmbed = post.blocks.some((block) => block.type === "tweet");
+    const hasBlogTags = Boolean(post.tags?.length);
     const shouldRenderHeroImage = shouldRenderBlogHeroImage(post, heroThemeImagePair);
     const heroThemeLightImageSrc = resolveImageSource(tools, heroThemeImagePair?.lightPath);
     const heroThemeDarkImageSrc = resolveImageSource(tools, heroThemeImagePair?.darkPath);
@@ -1149,6 +1517,7 @@ function renderBlogPostPage(
     const tweetWidgetScriptMarkup = hasTweetEmbed
         ? `<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`
         : "";
+    const blogTagScriptMarkup = hasBlogTags ? renderBlogTagPointerScript() : "";
 
     return renderLayout({
         tools,
@@ -1175,17 +1544,21 @@ function renderBlogPostPage(
                 <h2 class="font-roboto-mono text-2xl md:text-3xl tracking-normal leading-tight mb-3">
                     ${escapeHtml(post.title)}
                 </h2>
-                <p class="font-roboto-mono text-sm leading-relaxed opacity-75 mb-6">
-                    ${escapeHtml(formatPublishedAt(post.publishedAt))}
-                </p>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-6">
+                    <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
+                        ${escapeHtml(formatPublishedAt(post.publishedAt))}
+                    </p>
+                    ${renderBlogCollaborativeCallout()}
+                </div>
                 ${renderBlogTags(post.tags)}
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    ${escapeHtml(post.summary)}
+                    ${renderParagraphInlineMarkup(post.summary)}
                 </p>
                 ${heroImageMarkup}
                 ${renderBlogBlocks(tools, blogBlocksToRender, highlightCode)}
             </article>
             ${tweetWidgetScriptMarkup}
+            ${blogTagScriptMarkup}
         `),
     });
 }
