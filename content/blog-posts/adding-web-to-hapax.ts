@@ -13,7 +13,7 @@ export const addingWebToHapaxPost: BlogPost = {
     blocks: [
         {
             type: "paragraph",
-            text: "I wanted Hapax in a browser so I could use it on my laptop sometimes.",
+            text: "I wanted Hapax in a browser so I could use it on my laptop sometimes. If you want the earlier iOS-first walkthrough first, it's [Building Hapax: An Offline-First Dictionary App](/blog/hapax-offline-first-dictionary-ios/index.html).",
         },
         {
             type: "image",

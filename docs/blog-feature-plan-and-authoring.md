@@ -24,7 +24,11 @@ Companion voice guide:
   - `video`
   - `code`
   - `tweet`
-- Inline markdown-style links in paragraph text: `[label](https://example.com)`.
+- Inline paragraph markup in paragraph/summary text:
+  - markdown-style links: `[label](https://example.com)`
+  - inline code with backticks: `code`
+  - strikethrough: `~~text~~`
+  - raw `<i>` / `<em>` tags
 - Static syntax highlighting via Shiki with light/dark theme support.
 
 Out of scope for now:
@@ -106,7 +110,7 @@ export type BlogPost = {
 ## Rendering Rules
 
 - Render blocks in order; no max block count.
-- `paragraph` -> `<p>` with inline markdown-link conversion.
+- `paragraph` -> `<p>` with inline conversion for markdown links, inline code, `~~strikethrough~~`, and raw `<i>/<em>` tags.
 - `heading` -> `<h2>/<h3>/<h4>` by level.
 - `image` -> `<figure><img/><figcaption/></figure>` when caption exists.
 - `video` -> `<figure><video/></figure>` with optional caption.

@@ -480,13 +480,13 @@ function renderHead(
                     border: 1px solid transparent;
                     background:
                         linear-gradient(
-                            135deg,
+                            var(--tag-fill-angle),
                             hsl(var(--tag-hue-a) 72% 98% / 0.74),
                             rgba(255, 255, 255, 0.8) 45%,
                             hsl(var(--tag-hue-c) 68% 98% / 0.66)
                         ) padding-box,
                         linear-gradient(
-                            120deg,
+                            var(--tag-border-angle),
                             hsl(var(--tag-hue-a) 58% 74% / 0.54),
                             hsl(var(--tag-hue-b) 60% 76% / 0.6) 46%,
                             hsl(var(--tag-hue-c) 56% 72% / 0.52)
@@ -540,7 +540,7 @@ function renderHead(
                     height: 170%;
                     background:
                         linear-gradient(
-                            115deg,
+                            var(--tag-shimmer-angle),
                             transparent 0%,
                             rgba(255, 255, 255, 0.04) 18%,
                             rgba(255, 255, 255, 0.42) 48%,
@@ -568,7 +568,9 @@ function renderHead(
                 }
 
                 .blog-tag[data-active="true"] {
-                    transform: translateY(-3px) scale(1.03);
+                    transform:
+                        translateY(calc(-1 * var(--tag-hover-lift)))
+                        scale(var(--tag-hover-scale));
                     box-shadow:
                         0 14px 28px rgba(0, 0, 0, 0.1),
                         0 0 18px hsl(var(--tag-hue-b) 62% 72% / 0.06),
@@ -681,35 +683,37 @@ function renderHead(
                     }
 
                     .blog-tag {
+                        backdrop-filter: blur(8px) saturate(112%);
+                        -webkit-backdrop-filter: blur(8px) saturate(112%);
                         background:
                             linear-gradient(
-                                135deg,
-                                rgba(24, 24, 24, 0.84),
-                                rgba(14, 14, 14, 0.66) 46%,
-                                rgba(31, 24, 28, 0.74)
+                                var(--tag-fill-angle),
+                                rgba(18, 25, 22, 0.94),
+                                rgba(20, 20, 17, 0.92) 46%,
+                                rgba(29, 26, 18, 0.93)
                             ) padding-box,
                             linear-gradient(
-                                120deg,
-                                hsl(var(--tag-dark-hue-a) 58% 62% / 0.58),
-                                hsl(var(--tag-dark-hue-b) 60% 66% / 0.64) 46%,
-                                hsl(var(--tag-dark-hue-c) 56% 64% / 0.56)
+                                var(--tag-border-angle),
+                                hsl(var(--tag-dark-hue-a) 66% 64% / 0.68),
+                                hsl(var(--tag-dark-hue-b) 68% 68% / 0.78) 46%,
+                                hsl(var(--tag-dark-hue-c) 64% 66% / 0.66)
                             ) border-box;
                         box-shadow:
-                            0 14px 28px rgba(0, 0, 0, 0.32),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+                            0 10px 18px rgba(0, 0, 0, 0.22),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.06);
                     }
 
                     .blog-tag::before {
                         background:
                             radial-gradient(
-                                90px circle at var(--mx) var(--my),
-                                hsl(var(--tag-dark-hue-b) 62% 72% / 0.1),
-                                transparent 56%
+                                72px circle at var(--mx) var(--my),
+                                hsl(var(--tag-dark-hue-b) 70% 72% / 0.08),
+                                transparent 52%
                             ),
                             linear-gradient(
                                 180deg,
-                                rgba(255, 255, 255, 0.12),
-                                rgba(255, 255, 255, 0.04) 34%,
+                                rgba(255, 255, 255, 0.08),
+                                rgba(255, 255, 255, 0.03) 34%,
                                 transparent 72%
                             );
                     }
@@ -721,13 +725,13 @@ function renderHead(
 
                     .blog-tag[data-active="true"] {
                         box-shadow:
-                            0 18px 34px rgba(0, 0, 0, 0.4),
-                            0 0 20px hsl(var(--tag-dark-hue-c) 58% 66% / 0.06),
+                            0 14px 24px rgba(0, 0, 0, 0.3),
+                            0 0 14px hsl(var(--tag-dark-hue-c) 64% 66% / 0.04),
                             inset 0 1px 0 rgba(255, 255, 255, 0.12);
                     }
 
                     .blog-tag[data-active="true"]::after {
-                        opacity: 0.34;
+                        opacity: 0.22;
                     }
 
                     .blog-collab-callout {
@@ -1161,14 +1165,6 @@ const BLOG_TAG_COLOR_FAMILIES = [
     [244, 270, 302],
 ] as const;
 
-const BLOG_TAG_DARK_COLOR_FAMILIES = [
-    [146, 156, 54],
-    [150, 166, 50],
-    [142, 154, 60],
-    [158, 170, 56],
-    [148, 162, 64],
-] as const;
-
 function normalizeHue(value: number): number {
     return ((value % 360) + 360) % 360;
 }
@@ -1176,16 +1172,29 @@ function normalizeHue(value: number): number {
 function renderBlogTag(tag: string): string {
     const seed = hashTagSeed(tag);
     const family = BLOG_TAG_COLOR_FAMILIES[seed % BLOG_TAG_COLOR_FAMILIES.length];
-    const darkFamily =
-        BLOG_TAG_DARK_COLOR_FAMILIES[seed % BLOG_TAG_DARK_COLOR_FAMILIES.length];
     const hueA = normalizeHue(family[0] + (((seed >>> 5) % 11) - 5));
     const hueB = normalizeHue(family[1] + (((seed >>> 10) % 11) - 5));
     const hueC = normalizeHue(family[2] + (((seed >>> 15) % 11) - 5));
-    const darkHueA = normalizeHue(darkFamily[0] + (((seed >>> 4) % 9) - 4));
-    const darkHueB = normalizeHue(darkFamily[1] + (((seed >>> 9) % 9) - 4));
-    const darkHueC = normalizeHue(darkFamily[2] + (((seed >>> 14) % 9) - 4));
+    const darkGreen = 140 + ((seed >>> 4) % 24);
+    const darkYellow = 48 + ((seed >>> 9) % 18);
+    const darkAccent =
+        (seed & 1) === 0
+            ? 168 + ((seed >>> 14) % 14)
+            : 82 + ((seed >>> 14) % 14);
+    const darkOrder = (seed >>> 18) % 3;
+    const [darkHueA, darkHueB, darkHueC] =
+        darkOrder === 0
+            ? [darkGreen, darkAccent, darkYellow]
+            : darkOrder === 1
+              ? [darkAccent, darkGreen, darkYellow]
+              : [darkGreen, darkYellow, darkAccent];
+    const fillAngle = 132 + (((seed >>> 21) % 19) - 9);
+    const borderAngle = 112 + (((seed >>> 25) % 17) - 8);
+    const shimmerAngle = 108 + (((seed >>> 29) % 11) - 5);
+    const hoverLift = (2.2 + ((seed >>> 7) % 5) * 0.18).toFixed(2);
+    const hoverScale = (1.02 + ((seed >>> 12) % 4) * 0.006).toFixed(3);
 
-    return `<span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: ${hueA}; --tag-hue-b: ${hueB}; --tag-hue-c: ${hueC}; --tag-dark-hue-a: ${darkHueA}; --tag-dark-hue-b: ${darkHueB}; --tag-dark-hue-c: ${darkHueC};"><span class="blog-tag-label">${escapeHtml(tag)}</span></span>`;
+    return `<span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: ${hueA}; --tag-hue-b: ${hueB}; --tag-hue-c: ${hueC}; --tag-dark-hue-a: ${darkHueA}; --tag-dark-hue-b: ${darkHueB}; --tag-dark-hue-c: ${darkHueC}; --tag-fill-angle: ${fillAngle}deg; --tag-border-angle: ${borderAngle}deg; --tag-shimmer-angle: ${shimmerAngle}deg; --tag-hover-lift: ${hoverLift}px; --tag-hover-scale: ${hoverScale};"><span class="blog-tag-label">${escapeHtml(tag)}</span></span>`;
 }
 
 function renderBlogTagPointerScript(): string {

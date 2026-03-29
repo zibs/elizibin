@@ -67,7 +67,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
         },
         {
             type: "paragraph",
-            text: "Hapax is iOS-first for now. Android and Expo web are possible, and web will probably land next.",
+            text: "Hapax is iOS-first for now. Android and Expo web are possible, and ~~web will probably land next~~ (see [Adding Web to Hapax](/blog/adding-web-to-hapax/index.html)).",
         },
         {
             type: "paragraph",

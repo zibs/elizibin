@@ -27,9 +27,12 @@ When adding a new post:
 2. Set `published: false` while drafting, then flip to `published: true` when ready to ship.
 3. Export it from `content/blog-posts/index.ts` and include it in `blogPosts` ordering.
 
-You can embed links in paragraph text using markdown-style links:
+Paragraph and summary text support a small inline markup set:
 
+- backticks for inline code: `inline code`
 - `[Link text](https://example.com)`
+- `~~strikethrough~~`
+- raw `<i>` / `<em>` tags
 
 Blog posts support block-based composition:
 
