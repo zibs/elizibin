@@ -474,8 +474,8 @@ function renderHead(
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    min-height: 1.8rem;
-                    padding: 0.36rem 0.74rem;
+                    min-height: 1.7rem;
+                    padding: 0.31rem 0.66rem;
                     border-radius: 999px;
                     border: 1px solid transparent;
                     background:
@@ -516,7 +516,7 @@ function renderHead(
                     background:
                         radial-gradient(
                             90px circle at var(--mx) var(--my),
-                            hsl(var(--tag-hue-b) 64% 74% / 0.11),
+                            hsl(var(--tag-hue-b) 64% 74% / 0.08),
                             transparent 54%
                         ),
                         linear-gradient(
@@ -543,8 +543,8 @@ function renderHead(
                             var(--tag-shimmer-angle),
                             transparent 0%,
                             rgba(255, 255, 255, 0.04) 18%,
-                            rgba(255, 255, 255, 0.42) 48%,
-                            rgba(255, 255, 255, 0.1) 58%,
+                            rgba(255, 255, 255, 0.32) 48%,
+                            rgba(255, 255, 255, 0.08) 58%,
                             transparent 78%
                         );
                     opacity: 0;
@@ -560,9 +560,9 @@ function renderHead(
                     position: relative;
                     z-index: 1;
                     font-family: "Roboto Mono", monospace;
-                    font-size: 0.64rem;
+                    font-size: 0.61rem;
                     line-height: 1;
-                    letter-spacing: 0.1em;
+                    letter-spacing: 0.09em;
                     text-transform: uppercase;
                     text-shadow: 0 1px 16px rgba(255, 255, 255, 0.28);
                 }
@@ -572,78 +572,31 @@ function renderHead(
                         translateY(calc(-1 * var(--tag-hover-lift)))
                         scale(var(--tag-hover-scale));
                     box-shadow:
-                        0 14px 28px rgba(0, 0, 0, 0.1),
-                        0 0 18px hsl(var(--tag-hue-b) 62% 72% / 0.06),
+                        0 10px 20px rgba(0, 0, 0, 0.08),
+                        0 0 12px hsl(var(--tag-hue-b) 62% 72% / 0.04),
                         inset 0 1px 0 rgba(255, 255, 255, 0.92);
                 }
 
                 .blog-tag[data-active="true"]::before {
-                    opacity: 1;
+                    opacity: 0.72;
                 }
 
                 .blog-tag[data-active="true"]::after {
-                    opacity: 0.52;
-                    transform: translateX(430%) skewX(-18deg);
+                    opacity: 0.34;
+                    transform: translateX(350%) skewX(-18deg);
                 }
 
                 .blog-collab-callout {
                     display: inline-flex;
-                    align-items: baseline;
-                    gap: 0.26rem;
-                    width: fit-content;
-                    max-width: 100%;
+                    align-items: center;
                     margin: 0;
-                    padding: 0.25rem 0.52rem;
-                    border-radius: 999px;
-                    border: 1px solid rgba(0, 0, 0, 0.1);
-                    background: linear-gradient(
-                        135deg,
-                        rgba(255, 247, 252, 0.94),
-                        rgba(245, 249, 255, 0.94)
-                    );
-                    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
-                }
-
-                .blog-collab-callout-panel {
-                    display: inline-flex;
-                    align-items: baseline;
-                    gap: 0.36rem;
-                    text-align: left;
-                }
-
-                .blog-collab-callout-badge {
-                    flex: 0 0 auto;
                     font-family: "Roboto Mono", monospace;
                     font-size: 0.5rem;
                     font-weight: 700;
                     letter-spacing: 0.06em;
                     line-height: 1;
                     text-transform: uppercase;
-                    opacity: 0.72;
-                }
-
-                .blog-collab-callout-kicker {
-                    display: none;
-                    margin: 0;
-                    font-family: "Roboto Mono", monospace;
-                    font-size: 0.72rem;
-                    letter-spacing: 0.16em;
-                    line-height: 1.5;
-                    text-transform: uppercase;
-                    opacity: 0.72;
-                }
-
-                .blog-collab-callout-title {
-                    margin: 0;
-                    font-family: "Roboto Mono", monospace;
-                    font-size: 0.64rem;
-                    line-height: 1;
-                    opacity: 0.82;
-                }
-
-                .blog-collab-callout-body {
-                    display: none;
-                    margin: 0;
+                    opacity: 0.68;
                 }
 
                 @media (prefers-color-scheme: dark) {
@@ -707,7 +660,7 @@ function renderHead(
                         background:
                             radial-gradient(
                                 72px circle at var(--mx) var(--my),
-                                hsl(var(--tag-dark-hue-b) 70% 72% / 0.08),
+                                hsl(var(--tag-dark-hue-b) 70% 72% / 0.06),
                                 transparent 52%
                             ),
                             linear-gradient(
@@ -725,39 +678,27 @@ function renderHead(
 
                     .blog-tag[data-active="true"] {
                         box-shadow:
-                            0 14px 24px rgba(0, 0, 0, 0.3),
-                            0 0 14px hsl(var(--tag-dark-hue-c) 64% 66% / 0.04),
+                            0 11px 20px rgba(0, 0, 0, 0.26),
+                            0 0 10px hsl(var(--tag-dark-hue-c) 64% 66% / 0.03),
                             inset 0 1px 0 rgba(255, 255, 255, 0.12);
                     }
 
                     .blog-tag[data-active="true"]::after {
-                        opacity: 0.22;
+                        opacity: 0.14;
                     }
 
-                    .blog-collab-callout {
-                        border-color: rgba(255, 255, 255, 0.15);
-                        background: linear-gradient(
-                            135deg,
-                            rgba(34, 25, 32, 0.95),
-                            rgba(18, 26, 34, 0.95)
-                        );
-                        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
-                    }
                 }
 
                 @media (max-width: 640px) {
                     .blog-tag-cloud {
-                        gap: 0.48rem;
+                        gap: 0.44rem;
                     }
 
                     .blog-tag {
-                        min-height: 1.68rem;
-                        padding-inline: 0.64rem;
+                        min-height: 1.58rem;
+                        padding-inline: 0.58rem;
                     }
 
-                    .blog-collab-callout {
-                        padding: 0.24rem 0.48rem;
-                    }
                 }
 
                 @media (prefers-reduced-motion: reduce) {
@@ -1191,8 +1132,8 @@ function renderBlogTag(tag: string): string {
     const fillAngle = 132 + (((seed >>> 21) % 19) - 9);
     const borderAngle = 112 + (((seed >>> 25) % 17) - 8);
     const shimmerAngle = 108 + (((seed >>> 29) % 11) - 5);
-    const hoverLift = (2.2 + ((seed >>> 7) % 5) * 0.18).toFixed(2);
-    const hoverScale = (1.02 + ((seed >>> 12) % 4) * 0.006).toFixed(3);
+    const hoverLift = (1.45 + ((seed >>> 7) % 5) * 0.12).toFixed(2);
+    const hoverScale = (1.008 + ((seed >>> 12) % 4) * 0.004).toFixed(3);
 
     return `<span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: ${hueA}; --tag-hue-b: ${hueB}; --tag-hue-c: ${hueC}; --tag-dark-hue-a: ${darkHueA}; --tag-dark-hue-b: ${darkHueB}; --tag-dark-hue-c: ${darkHueC}; --tag-fill-angle: ${fillAngle}deg; --tag-border-angle: ${borderAngle}deg; --tag-shimmer-angle: ${shimmerAngle}deg; --tag-hover-lift: ${hoverLift}px; --tag-hover-scale: ${hoverScale};"><span class="blog-tag-label">${escapeHtml(tag)}</span></span>`;
 }
@@ -1233,14 +1174,9 @@ function renderBlogTagPointerScript(): string {
 
 function renderBlogCollaborativeCallout(): string {
     return html(`
-        <aside class="blog-collab-callout" aria-label="AI collaboration note">
-            <div class="blog-collab-callout-badge" aria-hidden="true">CO-WRITTEN</div>
-            <div class="blog-collab-callout-panel">
-                <p class="blog-collab-callout-kicker">Tiny disclosure</p>
-                <p class="blog-collab-callout-title">by Eli and Codex</p>
-                <p class="blog-collab-callout-body">This post was co-drafted, then edited by a human.</p>
-            </div>
-        </aside>
+        <p class="blog-collab-callout" aria-label="AI collaboration note">
+            CO-WRITTEN BY ELI AND CODEX
+        </p>
     `);
 }
 
