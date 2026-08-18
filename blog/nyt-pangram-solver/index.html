@@ -6,18 +6,18 @@
     <title>A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter."
+        content="A tiny app for finding pangrams from seven letters and a required center letter."
     />
     <link rel="canonical" href="https://elizibin.com/blog/nyt-pangram-solver/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin" />
-    <meta property="og:description" content="A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter." />
+    <meta property="og:description" content="A tiny app for finding pangrams from seven letters and a required center letter." />
     <meta property="og:url" content="https://elizibin.com/blog/nyt-pangram-solver/" />
     <meta property="og:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow-light.png" />
     <meta property="og:image:alt" content="Hero image for A Simple Pangram Solver for NYT Spelling Bee" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="A Simple Pangram Solver for NYT Spelling Bee | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter." />
+    <meta name="twitter:description" content="A tiny app for finding pangrams from seven letters and a required center letter." />
     <meta name="twitter:image" content="https://elizibin.com/img/blog/nextjs-pangram-solver/system-flow-light.png" />
     <meta name="twitter:image:alt" content="Hero image for A Simple Pangram Solver for NYT Spelling Bee" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -389,7 +389,6 @@
                     <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
                         05/03/2026
                     </p>
-                    <span class="font-roboto-mono text-sm leading-relaxed opacity-75">project</span>
 
                     <p class="blog-collab-callout" aria-label="AI collaboration note">
     CO-WRITTEN BY ELI AND CODEX
@@ -400,11 +399,10 @@
                 <span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: 199; --tag-hue-b: 212; --tag-hue-c: 235; --tag-dark-hue-a: 144; --tag-dark-hue-b: 87; --tag-dark-hue-c: 60; --tag-fill-angle: 138deg; --tag-border-angle: 114deg; --tag-shimmer-angle: 107deg; --tag-hover-lift: 1.93px; --tag-hover-scale: 1.008;"><span class="blog-tag-label">nextjs</span></span>
                 <span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: 246; --tag-hue-b: 269; --tag-hue-c: 298; --tag-dark-hue-a: 152; --tag-dark-hue-b: 90; --tag-dark-hue-c: 57; --tag-fill-angle: 126deg; --tag-border-angle: 120deg; --tag-shimmer-angle: 110deg; --tag-hover-lift: 1.93px; --tag-hover-scale: 1.012;"><span class="blog-tag-label">openai</span></span>
                 <span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: 162; --tag-hue-b: 178; --tag-hue-c: 202; --tag-dark-hue-a: 168; --tag-dark-hue-b: 142; --tag-dark-hue-c: 57; --tag-fill-angle: 128deg; --tag-border-angle: 107deg; --tag-shimmer-angle: 105deg; --tag-hover-lift: 1.81px; --tag-hover-scale: 1.012;"><span class="blog-tag-label">spelling-bee</span></span>
-                <span class="blog-tag" role="listitem" data-active="false" style="--tag-hue-a: 190; --tag-hue-b: 215; --tag-hue-c: 232; --tag-dark-hue-a: 173; --tag-dark-hue-b: 152; --tag-dark-hue-c: 55; --tag-fill-angle: 132deg; --tag-border-angle: 105deg; --tag-shimmer-angle: 108deg; --tag-hover-lift: 1.57px; --tag-hover-scale: 1.008;"><span class="blog-tag-label">tiny-win</span></span>
 </div>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter.
+                    A tiny app for finding pangrams from seven letters and a required center letter.
                 </p>
                 <figure class="mb-9 max-w-3xl mx-auto">
     <picture>
@@ -420,9 +418,8 @@
     </picture>
 </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">In early 2025, I made a small Next.js app for finding NYT Spelling Bee pangrams.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">You enter the 7 letters, mark the required center letter, press one button, and (hopefully) get back a cleaned list of valid pangrams. The whole thing is intentionally small: one UI, one server route, one model call, and one local filtering step before results come back.</p>
-                        <figure class="mb-9 max-w-3xl mx-auto">
+                <p id="intro" data-block-id="intro" class="font-roboto-mono text-lg leading-relaxed mb-7">In early 2025, I made a small Next.js app for finding NYT Spelling Bee pangrams. You enter seven letters, pick the required center letter, and press one button.</p>
+                        <figure id="solved-screen" data-block-id="solved-screen" class="mb-9 max-w-3xl mx-auto">
             <img
     src="../../img/blog/nextjs-pangram-solver/solved.jpeg"
     alt="Mobile screenshot of the Pangram Solver app showing letters entered, center letter O selected, and JOCULAR returned as the pangram result."
@@ -430,11 +427,11 @@
     class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
     style="max-height: 760px;"
 />
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The whole loop in one screen: letters in, one tap, pangram back.</figcaption>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Seven letters in, one pangram back.</figcaption>
         </figure>
 
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">The shape</h2>
-                        <figure class="mb-9 max-w-3xl mx-auto">
+                <h2 id="how-it-works" data-block-id="how-it-works" class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">How it works</h2>
+                        <figure id="system-flow" data-block-id="system-flow" class="mb-9 max-w-3xl mx-auto">
             <picture>
     <source
         srcset="../../img/blog/nextjs-pangram-solver/system-flow-dark.png"
@@ -448,67 +445,11 @@
         style="max-height: 640px;"
     />
 </picture>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Simple shape: form, server route, model call, then local filtering before anything comes back to the UI.</figcaption>
+            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">One form, one server route, one model call, then a local filter.</figcaption>
         </figure>
 
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">Model call, then local validation</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The model handles the word-generation step: find real words that use only the provided letters, including the center letter, and use all 7 letters at least once. After that, the server rechecks every candidate with deterministic local rules before returning anything.</p>
-                            <figure class="mb-9 max-w-3xl mx-auto">
-                <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
-                    TS
-                </p>
-                <div class="blog-code-block">
-                    <pre class="shiki shiki-themes catppuccin-latte catppuccin-mocha" style="--shiki-light:#4c4f69;--shiki-dark:#cdd6f4;--shiki-light-bg:#eff1f5;--shiki-dark-bg:#1e1e2e" tabindex="0"><code><span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> instructions </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "You are a word expert specialized in finding pangrams..."</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
-<span class="line"></span>
-<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> input </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> `Given letters "</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">${</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">letters</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">" with "</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">${</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">centerLetter</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">" as center letter...</span></span>
-<span class="line"><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">- Each word must contain the center letter</span></span>
-<span class="line"><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">- Use only the available letters</span></span>
-<span class="line"><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">- Use all 7 letters at least once</span></span>
-<span class="line"><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">- Return only words, one per line`</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
-<span class="line"></span>
-<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> response </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> await</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> openai</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">responses</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">create</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">{</span></span>
-<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  model</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> "gpt-5-mini"</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
-<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  instructions</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
-<span class="line"><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">  input</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span></span>
-<span class="line"><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">}</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
-<span class="line"></span>
-<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> content </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> response</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">output_text </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">||</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1"> ""</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
-<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> words </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> content</span></span>
-<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">  .</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">split</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">"</span><span style="--shiki-light:#EA76CB;--shiki-dark:#F5C2E7">\n</span><span style="--shiki-light:#40A02B;--shiki-dark:#A6E3A1">"</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span></span>
-<span class="line"><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">  .</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">filter</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">(</span><span style="--shiki-light:#E64553;--shiki-light-font-style:italic;--shiki-dark:#EBA0AC;--shiki-dark-font-style:italic">line</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">:</span><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7"> string</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">)</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5"> =></span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> line</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic">trim</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">()</span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">.</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">length </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">></span><span style="--shiki-light:#FE640B;--shiki-dark:#FAB387"> 0</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span>
-<span class="line"></span>
-<span class="line"><span style="--shiki-light:#8839EF;--shiki-dark:#CBA6F7">const</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> pangrams </span><span style="--shiki-light:#179299;--shiki-dark:#94E2D5">=</span><span style="--shiki-light:#1E66F5;--shiki-light-font-style:italic;--shiki-dark:#89B4FA;--shiki-dark-font-style:italic"> cleanAndFilterPangrams</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4">(words</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> letters</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">,</span><span style="--shiki-light:#4C4F69;--shiki-dark:#CDD6F4"> centerLetter)</span><span style="--shiki-light:#7C7F93;--shiki-dark:#9399B2">;</span></span></code></pre>
-                </div>
-                <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">The nice pattern here is descriptive prompt in, deterministic filter out.</figcaption>
-            </figure>
-
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">That second step is what makes the app usable. The model can suggest candidates, but the final result still has to pass a straightforward local validation check.</p>
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">UI states</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">There are really only two states that matter: before the solve and after the solve. I wanted both to stay simple. Very little chrome, one clear action, and a result list that is easy to scan.</p>
-                        <figure class="mb-9 max-w-3xl mx-auto">
-            <img
-    src="../../img/blog/nextjs-pangram-solver/empty.jpeg"
-    alt="Mobile screenshot of the Pangram Solver app in its empty state with blank inputs and the Find Pangrams button disabled."
-    loading="lazy"
-    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-    style="max-height: 760px;"
-/>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Empty state: waiting for the 7 letters and the center letter.</figcaption>
-        </figure>
-
-                        <figure class="mb-9 max-w-3xl mx-auto">
-            <img
-    src="../../img/blog/nextjs-pangram-solver/solved.jpeg"
-    alt="Mobile screenshot of the Pangram Solver app showing a completed solve with JOCULAR listed under Pangrams Found."
-    loading="lazy"
-    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-    style="max-height: 760px;"
-/>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Solved state: one valid pangram back after the server filters the model output.</figcaption>
-        </figure>
-
-                <h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">That is basically it!</h2>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It was also one of those small early-2025 builds where I mostly described what I wanted, let an LLM produce the first pass, and then cleaned it up into something real in about an hour. Thanks for reading!</p>
+                <p id="local-filter" data-block-id="local-filter" class="font-roboto-mono text-lg leading-relaxed mb-7">The model suggests words. The server then drops anything that misses the center letter, uses another letter, or fails to use all seven. That small local check is what makes the result usable.</p>
+                <p id="done" data-block-id="done" class="font-roboto-mono text-sm leading-relaxed mb-7 opacity-75">I mostly described what I wanted, let an LLM make the first pass, and cleaned it up into something real in about an hour. That was basically it.</p>
             </article>
 
             <script>

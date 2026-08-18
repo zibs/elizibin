@@ -1543,7 +1543,6 @@ function renderBlogPostPage(
                     <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
                         ${escapeHtml(formatPublishedAt(post.publishedAt))}
                     </p>
-                    <span class="font-roboto-mono text-sm leading-relaxed opacity-75">${escapeHtml(post.kind)}</span>
                     ${updatedAtMarkup ? `<span class="font-roboto-mono text-sm leading-relaxed opacity-75">${updatedAtMarkup}</span>` : ""}
                     ${renderBlogCollaborativeCallout()}
                 </div>
