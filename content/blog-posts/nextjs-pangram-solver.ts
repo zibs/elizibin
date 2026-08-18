@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const nextJsPangramSolverPost: BlogPost = {
     slug: "nyt-pangram-solver",
     title: "A Simple Pangram Solver for NYT Spelling Bee",
+    kind: "project",
     summary:
         "A small Next.js app that finds valid NYT Spelling Bee pangrams from seven letters and a required center letter.",
     publishedAt: "2026-03-05",

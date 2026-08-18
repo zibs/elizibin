@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const echoFirstSuccessPost: BlogPost = {
     slug: "translating-two-clowns",
     title: '"Fan Fiction"',
+    kind: "essay",
     summary: "Translating a novella from Spanish to English",
     publishedAt: "2026-03-04",
     published: true,

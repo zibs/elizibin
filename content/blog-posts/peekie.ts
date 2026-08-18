@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const reactNativePeekieFourAnglesPost: BlogPost = {
     slug: "peekie",
     title: "Shipping iOS Peek and Pop in React Native",
+    kind: "project",
     summary:
         "Introducing react-native-peekie: a Peek and Pop React Native library for iOS.",
     publishedAt: "2026-02-17",

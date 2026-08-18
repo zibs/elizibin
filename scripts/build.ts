@@ -2,7 +2,7 @@ import { mkdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createHighlighter } from "shiki";
 import {
-    blogPosts,
+    loadBlogPosts,
     type BlogBlock,
     type BlogPost,
 } from "../content/site-content";
@@ -20,6 +20,8 @@ const PRIMARY_LINK_CLASSES =
 const BODY_CLASSES =
     "bg-[rgb(252,252,252)] dark:bg-[rgb(7,7,7)] text-black dark:text-[rgb(238,234,234)]";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const BLOG_BLOCK_ID_PATTERN = SLUG_PATTERN;
+const BLOG_POST_KINDS = new Set(["note", "project", "essay"]);
 const MARKDOWN_LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
 const PARAGRAPH_INLINE_MARKUP_PATTERN =
     /`([^`\n]+)`|\[([^\]]+)\]\(([^)]+)\)|~~([^~\n]+)~~|(<\/?(?:i|em)>)/g;
@@ -169,7 +171,7 @@ function stripIndent(text: string): string {
 }
 
 function html(markup: string): string {
-    return `${stripIndent(markup)}\n`;
+    return `${stripIndent(markup).replace(/[ \t]+$/gm, "")}\n`;
 }
 
 function toPosixPath(value: string): string {
@@ -260,6 +262,15 @@ function formatPublishedAt(publishedAt: string): string {
     const year = String(parsedDate.getUTCFullYear());
 
     return `${day}/${month}/${year}`;
+}
+
+function renderBlogBlockIdentity(block: BlogBlock): string {
+    if (!block.id) {
+        return "";
+    }
+
+    const escapedId = escapeHtml(block.id);
+    return ` id="${escapedId}" data-block-id="${escapedId}"`;
 }
 
 function normalizeBlogCodeLanguage(language: string): BlogCodeLanguage | null {
@@ -920,10 +931,13 @@ function resolveBlogShareImage(post: BlogPost): { path: string; alt: string } | 
         };
     }
 
-    const firstImageBlock = post.blocks.find(
-        (block): block is Extract<BlogBlock, { type: "image" }> =>
-            block.type === "image",
-    );
+    const firstImageBlock = post.blocks.flatMap((block) =>
+        block.type === "image"
+            ? [block]
+            : block.type === "media-group"
+              ? block.items.filter((item) => item.type === "image")
+              : [],
+    )[0];
 
     if (!firstImageBlock) {
         return null;
@@ -1201,22 +1215,52 @@ function renderBlogBlock(
     block: BlogBlock,
     highlightCode: BlogCodeHighlight,
     paragraphSpacing: BlogParagraphSpacing = "default",
+    inMediaGroup = false,
 ): string {
+    const identityAttributes = renderBlogBlockIdentity(block);
+
     if (block.type === "paragraph") {
         const marginClass = blogParagraphMarginClass(paragraphSpacing);
-        return `<p class="font-roboto-mono text-lg leading-relaxed ${marginClass}">${renderParagraphInlineMarkup(block.text)}</p>`;
+        return `<p${identityAttributes} class="font-roboto-mono text-lg leading-relaxed ${marginClass}">${renderParagraphInlineMarkup(block.text)}</p>`;
+    }
+
+    if (block.type === "note") {
+        return `<aside${identityAttributes} class="font-roboto-mono text-sm leading-relaxed mb-7 pl-4 border-l-2 border-black/20 dark:border-white/25 opacity-85">${renderParagraphInlineMarkup(block.text)}</aside>`;
+    }
+
+    if (block.type === "caption") {
+        return `<p${identityAttributes} class="font-roboto-mono text-sm leading-relaxed mb-7 opacity-75">${renderParagraphInlineMarkup(block.text)}</p>`;
     }
 
     if (block.type === "heading") {
         if (block.level === 2) {
-            return `<h2 class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">${escapeHtml(block.text)}</h2>`;
+            return `<h2${identityAttributes} class="font-roboto-mono text-2xl md:text-3xl leading-tight tracking-normal mt-12 mb-6">${escapeHtml(block.text)}</h2>`;
         }
 
         if (block.level === 3) {
-            return `<h3 class="font-roboto-mono text-xl md:text-2xl leading-tight tracking-normal mt-10 mb-5">${escapeHtml(block.text)}</h3>`;
+            return `<h3${identityAttributes} class="font-roboto-mono text-xl md:text-2xl leading-tight tracking-normal mt-10 mb-5">${escapeHtml(block.text)}</h3>`;
         }
 
-        return `<h4 class="font-roboto-mono text-lg md:text-xl leading-tight tracking-normal mt-8 mb-4">${escapeHtml(block.text)}</h4>`;
+        return `<h4${identityAttributes} class="font-roboto-mono text-lg md:text-xl leading-tight tracking-normal mt-8 mb-4">${escapeHtml(block.text)}</h4>`;
+    }
+
+    if (block.type === "media-group") {
+        const itemsMarkup = block.items
+            .map((item) => renderBlogBlock(tools, item, highlightCode, "default", true))
+            .join("\n");
+
+        return html(`
+            <section${identityAttributes} class="mb-9 max-w-3xl mx-auto">
+                <div class="space-y-9">
+                    ${itemsMarkup}
+                </div>
+                ${
+                    block.caption
+                        ? `<p class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">${renderParagraphInlineMarkup(block.caption)}</p>`
+                        : ""
+                }
+            </section>
+        `);
     }
 
     if (block.type === "code") {
@@ -1225,7 +1269,7 @@ function renderBlogBlock(
         const highlightedCode = highlightCode(block.code, block.language);
 
         return html(`
-            <figure class="mb-9 max-w-3xl mx-auto">
+            <figure${identityAttributes} class="mb-9 max-w-3xl mx-auto">
                 <p class="font-roboto-mono text-xs uppercase tracking-wider opacity-70 mb-3">
                     ${escapeHtml(languageLabel)}
                 </p>
@@ -1248,7 +1292,7 @@ function renderBlogBlock(
         }
 
         return html(`
-            <figure class="mb-9 max-w-3xl mx-auto">
+            <figure${identityAttributes} class="mb-9 max-w-3xl mx-auto">
                 <div class="flex justify-center">
                     <blockquote class="twitter-tweet" data-dnt="true">
                         <a href="${escapeHtml(tweetUrl)}">${escapeHtml(tweetUrl)}</a>
@@ -1287,7 +1331,7 @@ function renderBlogBlock(
         const playsInline = block.playsInline ?? true;
 
         return html(`
-            <figure class="mb-9 max-w-3xl mx-auto">
+            <figure${identityAttributes} class="${inMediaGroup ? "m-0 min-w-0" : "mb-9 max-w-3xl mx-auto"}">
                 <video
                     src="${escapeHtml(videoSrc)}"
                     aria-label="${escapeHtml(block.alt)}"
@@ -1355,7 +1399,7 @@ function renderBlogBlock(
             `).trim();
 
     return html(`
-        <figure class="mb-9 max-w-3xl mx-auto">
+        <figure${identityAttributes} class="${inMediaGroup ? "m-0 min-w-0" : "mb-9 max-w-3xl mx-auto"}">
             ${imageTag}
             ${
                 block.caption
@@ -1407,10 +1451,13 @@ function renderBlogPostPage(
     const shouldRenderHeroImage = shouldRenderBlogHeroImage(post, heroThemeImagePair);
     const heroThemeLightImageSrc = resolveImageSource(tools, heroThemeImagePair?.lightPath);
     const heroThemeDarkImageSrc = resolveImageSource(tools, heroThemeImagePair?.darkPath);
+    const heroIdentityAttributes = heroThemeImagePair
+        ? renderBlogBlockIdentity(post.blocks[heroThemeImagePair.pairedBlockIndex])
+        : "";
     const heroImageMarkup =
         heroThemeImagePair && heroThemeLightImageSrc && heroThemeDarkImageSrc && shouldRenderHeroImage
             ? html(`
-                <figure class="mb-9 max-w-3xl mx-auto">
+                <figure${heroIdentityAttributes} class="mb-9 max-w-3xl mx-auto">
                     <picture>
                         <source
                             srcset="${escapeHtml(heroThemeDarkImageSrc)}"
@@ -1463,6 +1510,9 @@ function renderBlogPostPage(
         ? `<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`
         : "";
     const blogTagScriptMarkup = hasBlogTags ? renderBlogTagPointerScript() : "";
+    const updatedAtMarkup = post.updatedAt
+        ? `Updated ${escapeHtml(formatPublishedAt(post.updatedAt))}`
+        : "";
 
     return renderLayout({
         tools,
@@ -1493,6 +1543,8 @@ function renderBlogPostPage(
                     <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
                         ${escapeHtml(formatPublishedAt(post.publishedAt))}
                     </p>
+                    <span class="font-roboto-mono text-sm leading-relaxed opacity-75">${escapeHtml(post.kind)}</span>
+                    ${updatedAtMarkup ? `<span class="font-roboto-mono text-sm leading-relaxed opacity-75">${updatedAtMarkup}</span>` : ""}
                     ${renderBlogCollaborativeCallout()}
                 </div>
                 ${renderBlogTags(post.tags)}
@@ -1612,6 +1664,12 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
         assertNonEmpty(post.summary, "summary", "Blog post", post.slug);
         assertNonEmpty(post.publishedAt, "publishedAt", "Blog post", post.slug);
 
+        if (!BLOG_POST_KINDS.has(post.kind)) {
+            throw new Error(
+                `Blog post "${post.slug}" has invalid "kind" value "${post.kind}". Use note, project, or essay.`,
+            );
+        }
+
         if (!SLUG_PATTERN.test(post.slug)) {
             throw new Error(
                 `Invalid blog slug "${post.slug}". Use lowercase letters, numbers, and hyphens only.`,
@@ -1628,6 +1686,20 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
             throw new Error(
                 `Blog post "${post.slug}" has invalid "publishedAt" value "${post.publishedAt}". Use YYYY-MM-DD.`,
             );
+        }
+
+        if (post.updatedAt) {
+            if (!parsePublishedAt(post.updatedAt)) {
+                throw new Error(
+                    `Blog post "${post.slug}" has invalid "updatedAt" value "${post.updatedAt}". Use YYYY-MM-DD.`,
+                );
+            }
+
+            if (post.updatedAt < post.publishedAt) {
+                throw new Error(
+                    `Blog post "${post.slug}" has "updatedAt" before "publishedAt".`,
+                );
+            }
         }
 
         if (post.tags) {
@@ -1670,17 +1742,86 @@ async function validateBlogPosts(postEntries: BlogPost[]): Promise<void> {
             throw new Error(`Blog post "${post.slug}" must include at least one block.`);
         }
 
-        const hasImageBlock = post.blocks.some((block) => block.type === "image");
+        const hasImageBlock = post.blocks.some(
+            (block) =>
+                block.type === "image" ||
+                (block.type === "media-group" &&
+                    block.items.some((item) => item.type === "image")),
+        );
         if (!post.heroImage && !hasImageBlock) {
             throw new Error(
                 `Blog post "${post.slug}" must include "heroImage" or at least one image block so share metadata has an image.`,
             );
         }
 
-        for (const [blockIndex, block] of post.blocks.entries()) {
-            const blockPath = `blocks[${blockIndex}]`;
+        const blocksToValidate = post.blocks.flatMap((block, blockIndex) => [
+            { block, blockPath: `blocks[${blockIndex}]` },
+            ...(block.type === "media-group"
+                ? block.items.map((item, itemIndex) => ({
+                      block: item,
+                      blockPath: `blocks[${blockIndex}].items[${itemIndex}]`,
+                  }))
+                : []),
+        ]);
+        const seenBlockIds = new Set<string>();
 
-            if (block.type === "paragraph") {
+        for (const { block, blockPath } of blocksToValidate) {
+            if (block.id !== undefined) {
+                assertNonEmpty(block.id, `${blockPath}.id`, "Blog post", post.slug);
+                if (!BLOG_BLOCK_ID_PATTERN.test(block.id)) {
+                    throw new Error(
+                        `Blog post "${post.slug}" has invalid block id in "${blockPath}.id": ${block.id}`,
+                    );
+                }
+                if (seenBlockIds.has(block.id)) {
+                    throw new Error(
+                        `Blog post "${post.slug}" has duplicate block id "${block.id}".`,
+                    );
+                }
+                seenBlockIds.add(block.id);
+            }
+
+            if (
+                (block.type === "note" ||
+                    block.type === "caption" ||
+                    block.type === "media-group") &&
+                !block.id
+            ) {
+                throw new Error(
+                    `Blog post "${post.slug}" must give ${block.type} block "${blockPath}" a stable id.`,
+                );
+            }
+
+            if (block.type === "media-group") {
+                if (block.items.length === 0) {
+                    throw new Error(
+                        `Blog post "${post.slug}" must include at least one item in "${blockPath}.items".`,
+                    );
+                }
+                if (block.caption !== undefined) {
+                    assertNonEmpty(
+                        block.caption,
+                        `${blockPath}.caption`,
+                        "Blog post",
+                        post.slug,
+                    );
+                    for (const match of block.caption.matchAll(MARKDOWN_LINK_PATTERN)) {
+                        validateParagraphLink(
+                            match[2],
+                            "Blog post",
+                            post.slug,
+                            `${blockPath}.caption`,
+                        );
+                    }
+                }
+                continue;
+            }
+
+            if (
+                block.type === "paragraph" ||
+                block.type === "note" ||
+                block.type === "caption"
+            ) {
                 assertNonEmpty(block.text, `${blockPath}.text`, "Blog post", post.slug);
 
                 for (const match of block.text.matchAll(MARKDOWN_LINK_PATTERN)) {
@@ -1927,7 +2068,7 @@ async function validateGeneratedReferences(
     }
 }
 
-async function buildSite(): Promise<void> {
+async function buildSite(blogPosts: BlogPost[]): Promise<void> {
     const orderedBlogPosts = INCLUDE_UNPUBLISHED_POSTS
         ? blogPosts
         : blogPosts.filter((post) => post.published);
@@ -1956,7 +2097,8 @@ async function buildSite(): Promise<void> {
     await validateGeneratedReferences(generatedPages);
 }
 
-await buildSite();
+const blogPosts = await loadBlogPosts();
+await buildSite(blogPosts);
 const builtBlogPostCount = INCLUDE_UNPUBLISHED_POSTS
     ? blogPosts.length
     : blogPosts.filter((post) => post.published).length;

@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     slug: "victory-native-xl",
     title: "Building Charts in Victory Native XL",
+    kind: "essay",
     summary:
         "Helping out with chart feature work and OSS maintenance in Victory Native XL.",
     publishedAt: "2026-02-20",

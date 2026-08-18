@@ -18,14 +18,14 @@ This site now uses a Bun + TypeScript build step to generate static pages.
 Blog post files:
 
 - `content/blog-posts/*.ts` (one file per post)
-- `content/blog-posts/index.ts` (post exports + `blogPosts` ordering)
+- `content/blog-posts/index.ts` (automatic discovery + newest-first sorting)
 - `content/site-content.ts` (build entrypoint that re-exports blog content/types)
 
 When adding a new post:
 
 1. Add a new post file in `content/blog-posts/`.
 2. Set `published: false` while drafting, then flip to `published: true` when ready to ship.
-3. Export it from `content/blog-posts/index.ts` and include it in `blogPosts` ordering.
+3. Run the build. Post files are discovered automatically and sorted by `publishedAt`.
 
 Paragraph and summary text support a small inline markup set:
 
@@ -37,11 +37,18 @@ Paragraph and summary text support a small inline markup set:
 Blog posts support block-based composition:
 
 - `paragraph`
+- `note` (compact aside)
+- `caption` (compact connective text)
 - `heading`
 - `image`
+- `media-group` (one or more images/videos presented together)
 - `video` (MP4 via `<video>`, supports autoplay/loop/muted/controls)
 - `code` (Shiki-highlighted, light/dark theme aware)
 - `tweet` (Twitter/X status embed via URL)
+
+Posts also declare a `kind` (`note`, `project`, or `essay`). New and substantially edited
+blocks should have stable kebab-case `id` values. A post can optionally show its most recent
+material edit date with `updatedAt`.
 
 ### Build
 
@@ -198,6 +205,7 @@ npm run typecheck
 The build validates:
 
 - blog slug format, dates, and content blocks
+- post kinds, block-id uniqueness, and publication/update dates
 - blog code block language support
 - tweet block URL format (`twitter.com` / `x.com` status links)
 - blog share metadata image presence (`heroImage` or at least one `image` block)
@@ -225,7 +233,7 @@ This project is still a plain static site. There is no SSR/runtime requirement.
 
 ### Recommended flow
 
-1. Edit a post in `content/blog-posts/` (and/or `content/blog-posts/index.ts`), plus images in `img/blog/` (or reused assets).
+1. Edit a post in `content/blog-posts/`, plus images in `img/blog/` (or reused assets).
 2. Do not manually edit generated files in `blog/**` (they are overwritten by build).
 3. Run `bun run build`.
 4. Run `npm run typecheck`.

@@ -6,19 +6,19 @@
     <title>Adding Web to Hapax | Blog | Eli Zibin</title>
     <meta
         name="description"
-        content="I added web to Hapax, and it was pretty easy."
+        content="Hapax on my laptop, mostly for free."
     />
     <link rel="canonical" href="https://elizibin.com/blog/adding-web-to-hapax/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Adding Web to Hapax | Blog | Eli Zibin" />
-    <meta property="og:description" content="I added web to Hapax, and it was pretty easy." />
+    <meta property="og:description" content="Hapax on my laptop, mostly for free." />
     <meta property="og:url" content="https://elizibin.com/blog/adding-web-to-hapax/" />
-    <meta property="og:image" content="https://elizibin.com/img/blog/hapax-web/hapaxweb6.png" />
+    <meta property="og:image" content="https://elizibin.com/img/blog/hapax-web/dictionary-current.png" />
     <meta property="og:image:alt" content="Hero image for Adding Web to Hapax" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Adding Web to Hapax | Blog | Eli Zibin" />
-    <meta name="twitter:description" content="I added web to Hapax, and it was pretty easy." />
-    <meta name="twitter:image" content="https://elizibin.com/img/blog/hapax-web/hapaxweb6.png" />
+    <meta name="twitter:description" content="Hapax on my laptop, mostly for free." />
+    <meta name="twitter:image" content="https://elizibin.com/img/blog/hapax-web/dictionary-current.png" />
     <meta name="twitter:image:alt" content="Hero image for Adding Web to Hapax" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon" />
@@ -389,6 +389,8 @@
                     <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
                         19/03/2026
                     </p>
+                    <span class="font-roboto-mono text-sm leading-relaxed opacity-75">project</span>
+                    <span class="font-roboto-mono text-sm leading-relaxed opacity-75">Updated 18/08/2026</span>
                     <p class="blog-collab-callout" aria-label="AI collaboration note">
     CO-WRITTEN BY ELI AND CODEX
 </p>
@@ -404,81 +406,75 @@
 </div>
 
                 <p class="font-roboto-mono text-lg leading-relaxed mb-9">
-                    I added web to Hapax, and it was pretty easy.
+                    Hapax on my laptop, mostly for free.
                 </p>
-                <figure class="mb-9 max-w-3xl mx-auto">
-    <picture>
-        <source
-            srcset="../../img/blog/hapax-web/hapaxweb1.png"
-            media="(prefers-color-scheme: dark)"
-        />
-        <img
-            src="../../img/blog/hapax-web/hapaxweb6.png"
-            alt="Hapax running in Safari on the web, showing the main dictionary list in light and dark modes."
-            class="w-full h-auto rounded-xl border border-black/10 dark:border-white/15"
-        />
-    </picture>
-    <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Hapax, but in a browser window.</figcaption>
-</figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">I wanted Hapax in a browser so I could use it on my laptop sometimes. If you want the earlier iOS-first walkthrough first, it&#39;s <a href="/blog/hapax-offline-first-dictionary-ios/index.html" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">Building Hapax: An Offline-First Dictionary App</a>.</p>
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">It ended up being pretty easy. A few <code class="blog-inline-code">.web.ts</code> files, a few browser-specific fixes, and the app mostly just carried over. Expo and React Native Web have really come a long way.</p>
-                        <figure class="mb-9 max-w-3xl mx-auto">
-            <picture>
-    <source
-        srcset="../../img/blog/hapax-web/hapaxweb2.png"
-        media="(prefers-color-scheme: dark)"
-    />
-    <img
-        src="../../img/blog/hapax-web/hapaxweb5.png"
-        alt="Hapax entry detail page on the web showing a word, tags, etymology, example, notes, and actions."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 700px;"
-    />
-</picture>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Most of it stayed the same.</figcaption>
+                <p id="why-web" data-block-id="why-web" class="font-roboto-mono text-lg leading-relaxed mb-7">I wanted Hapax on my laptop. React Native Web made that surprisingly easy: a few <code class="blog-inline-code">.web.ts</code> files, a few browser-specific fixes, and most of the app just carried over. The original iOS version is <a href="/blog/hapax-offline-first-dictionary-ios/index.html" class="text-primary-light hover:text-secondary-light dark:text-[rgba(255,230,0,0.95)] dark:hover:text-[rgba(0,255,136,0.98)]">over here</a>.</p>
+                        <figure id="dictionary-list" data-block-id="dictionary-list" class="mb-9 max-w-3xl mx-auto">
+            <img
+    src="../../img/blog/hapax-web/dictionary-current.png"
+    alt="Hapax running in Safari, showing the current web dictionary with search, entries, tags, navigation, and toolbar actions."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 620px;"
+/>
+
         </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">The only real changes were the normal web ones: sheets, routing, auth callbacks, and getting SQLite behaving properly in the browser.</p>
-                        <figure class="mb-9 max-w-3xl mx-auto">
-            <picture>
-    <source
-        srcset="../../img/blog/hapax-web/hapaxweb3.png"
-        media="(prefers-color-scheme: dark)"
-    />
-    <img
-        src="../../img/blog/hapax-web/hapaxweb8.png"
-        alt="Add entry modal sheet on the web version of Hapax, with a word field and primary action button."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 680px;"
-    />
-</picture>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Most of the work was stuff like this.</figcaption>
+                <aside id="what-changed" data-block-id="what-changed" class="font-roboto-mono text-sm leading-relaxed mb-7 pl-4 border-l-2 border-black/20 dark:border-white/25 opacity-85">The app itself—dictionary, favorites, tags, review, sync—mostly just carried over. The actual web work was sheets, routing, auth callbacks, getting SQLite to behave in the browser, and some fiddly Cloudflare routing.</aside>
+                            <section id="web-screens" data-block-id="web-screens" class="mb-9 max-w-3xl mx-auto">
+                <div class="space-y-9">
+                            <figure id="favorites-list" data-block-id="favorites-list" class="m-0 min-w-0">
+            <img
+    src="../../img/blog/hapax-web/favorites-current.png"
+    alt="Hapax favorites screen in Safari, showing saved dictionary entries with definitions, tags, gem markers, search, and navigation."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 700px;"
+/>
+
         </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Cloudflare routing was the fiddliest part. After that it was done.</p>
-                        <figure class="mb-9 max-w-3xl mx-auto">
-            <picture>
-    <source
-        srcset="../../img/blog/hapax-web/hapaxweb4.png"
-        media="(prefers-color-scheme: dark)"
-    />
-    <img
-        src="../../img/blog/hapax-web/hapaxweb10.png"
-        alt="Hapax web data sheet showing JSON and CSV export actions in the browser."
-        loading="lazy"
-        class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
-        style="max-height: 720px;"
-    />
-</picture>
-            <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Exports are nicer on web too.</figcaption>
+        <figure id="tags-list" data-block-id="tags-list" class="m-0 min-w-0">
+            <img
+    src="../../img/blog/hapax-web/tags-current.png"
+    alt="Hapax tags screen in Safari, showing an alphabetical list of tags with colored underlines and navigation."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 700px;"
+/>
+
         </figure>
 
-                <p class="font-roboto-mono text-lg leading-relaxed mb-7">Anyway, it works, and I&#39;m happy it&#39;s there. It&#39;s pretty incredible to build from a single codebase and have it work on multiple platforms like this, especially when it&#39;s driven by an LLM too.</p>
+        <figure id="review-screen" data-block-id="review-screen" class="m-0 min-w-0">
+            <img
+    src="../../img/blog/hapax-web/review-current.png"
+    alt="Hapax review screen in Safari, showing a large dictionary entry card with navigation and shuffle controls."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 680px;"
+/>
+
+        </figure>
+
+        <figure id="sync-screen" data-block-id="sync-screen" class="m-0 min-w-0">
+            <img
+    src="../../img/blog/hapax-web/sync-current.png"
+    alt="Hapax sync settings in Safari, showing current sync status, refresh and cloud replacement actions, diagnostics, and a close button."
+    loading="lazy"
+    class="w-auto max-w-full h-auto object-contain block mx-auto rounded-xl border border-black/10 dark:border-white/15"
+    style="max-height: 720px;"
+/>
+
+        </figure>
+
+                </div>
+
+            </section>
+
+                <p id="done" data-block-id="done" class="font-roboto-mono text-sm leading-relaxed mb-7 opacity-75">After that it was done. I like when a project is this uneventful.</p>
             </article>
-            
+
             <script>
     (() => {
         if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {

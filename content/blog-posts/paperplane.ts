@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const paperplaneOneCommandTestflightPost: BlogPost = {
     slug: "paperplane",
     title: "From Manual TestFlight Chaos to One Command",
+    kind: "project",
     summary:
         "Turning a tedious iOS release routine into a minimal, deterministic CLI flow for TestFlight, without using Fastlane, EAS, or Xcode.",
     publishedAt: "2026-02-18",

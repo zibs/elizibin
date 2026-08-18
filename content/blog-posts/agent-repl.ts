@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const agentReplBuildLogPost: BlogPost = {
     slug: "agent-repl",
     title: "We Built a Minimal Agent REPL",
+    kind: "project",
     summary:
         "Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent.",
     publishedAt: "2026-02-16",

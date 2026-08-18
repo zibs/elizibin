@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     slug: "hapax-offline-first-dictionary-ios",
     title: "Building Hapax: An Offline-First Dictionary App",
+    kind: "project",
     summary:
         "A walkthrough of Hapax: an offline-first personal dictionary app.",
     publishedAt: "2026-02-24",

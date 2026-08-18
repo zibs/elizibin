@@ -3,6 +3,7 @@ import type { BlogPost } from "../blog-types";
 export const codeshLocalCodexUsageMenubarPost: BlogPost = {
     slug: "codesh",
     title: "Codesh: See Codex Session Usage in Your Menu Bar",
+    kind: "project",
     summary:
         "A tiny local-only macOS menu bar app to keep Codex session and weekly usage visible at a glance.",
     publishedAt: "2026-02-21",

@@ -1,38 +1,42 @@
+import { readdir } from "node:fs/promises";
+
 import type { BlogPost } from "../blog-types";
 
-import { agentReplBuildLogPost } from "./agent-repl";
-import { codeshLocalCodexUsageMenubarPost } from "./codesh";
-import { echoFirstSuccessPost } from "./echo-first-success";
-import { addingWebToHapaxPost } from "./adding-web-to-hapax";
-import { hapaxOfflineFirstDictionaryIosPost } from "./hapax-offline-first-dictionary-ios";
-import { nextJsPangramSolverPost } from "./nextjs-pangram-solver";
-import { paperplaneOneCommandTestflightPost } from "./paperplane";
-import { reactNativePeekieFourAnglesPost } from "./peekie";
-import { emojiSystemSuccessesPost } from "./emoji-system-successes";
-import { victoryNativeXlChartingAndMaintenancePost } from "./victory-native-xl";
+function isBlogPost(value: unknown): value is BlogPost {
+    return (
+        typeof value === "object" &&
+        value !== null &&
+        "slug" in value &&
+        "blocks" in value &&
+        Array.isArray(value.blocks)
+    );
+}
 
-export {
-    addingWebToHapaxPost,
-    agentReplBuildLogPost,
-    codeshLocalCodexUsageMenubarPost,
-    echoFirstSuccessPost,
-    emojiSystemSuccessesPost,
-    hapaxOfflineFirstDictionaryIosPost,
-    nextJsPangramSolverPost,
-    paperplaneOneCommandTestflightPost,
-    reactNativePeekieFourAnglesPost,
-    victoryNativeXlChartingAndMaintenancePost,
-};
+export async function loadBlogPosts(): Promise<BlogPost[]> {
+    const fileNames = (await readdir(new URL(".", import.meta.url)))
+        .filter((fileName) => fileName.endsWith(".ts") && fileName !== "index.ts")
+        .sort();
 
-export const blogPosts: BlogPost[] = [
-    addingWebToHapaxPost,
-    hapaxOfflineFirstDictionaryIosPost,
-    emojiSystemSuccessesPost,
-    echoFirstSuccessPost,
-    reactNativePeekieFourAnglesPost,
-    nextJsPangramSolverPost,
-    paperplaneOneCommandTestflightPost,
-    agentReplBuildLogPost,
-    codeshLocalCodexUsageMenubarPost,
-    victoryNativeXlChartingAndMaintenancePost,
-];
+    const posts = await Promise.all(
+        fileNames.map(async (fileName) => {
+            const postModule: Record<string, unknown> = await import(
+                new URL(fileName, import.meta.url).href
+            );
+            const exportedPosts = Object.values(postModule).filter(isBlogPost);
+
+            if (exportedPosts.length !== 1) {
+                throw new Error(
+                    `Expected exactly one BlogPost export in content/blog-posts/${fileName}, found ${exportedPosts.length}.`,
+                );
+            }
+
+            return exportedPosts[0];
+        }),
+    );
+
+    return posts.sort(
+        (left, right) =>
+            right.publishedAt.localeCompare(left.publishedAt) ||
+            left.slug.localeCompare(right.slug),
+    );
+}

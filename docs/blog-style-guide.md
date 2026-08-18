@@ -140,6 +140,25 @@ Better pattern:
 
 Most posts should feel more like a guided walk than a report.
 
+The default is now media-first. Start with the artifact, screenshot, chart, quotation, or
+other object that made the post worth publishing, then write only what the object cannot say
+by itself. A short post can be a title, a sentence or two, one media group, and a final caption.
+That is a complete post.
+
+Use the post kinds as editorial promises:
+
+- `note`: a small observation, link, artifact, or update; usually the shortest form
+- `project`: something made, changed, or tried; show it early and explain only the interesting parts
+- `essay`: a sustained argument or exploration where continuous prose actually earns its space
+
+Do not inflate a `note` into an `essay`, or turn every `project` into documentation. Use
+`note` blocks for brief context that should sit beside the main flow, `caption` blocks for
+small connective observations, and `media-group` when several images are really one piece of
+evidence. Captions should add information or judgment rather than restating the alt text.
+
+`content/blog-posts/adding-web-to-hapax.ts` is the reference for the compact media-first
+project shape.
+
 Good default shape for a small tool post:
 
 1. Start with the specific annoyance, curiosity, or desire.

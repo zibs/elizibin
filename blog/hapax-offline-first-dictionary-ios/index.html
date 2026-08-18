@@ -389,6 +389,8 @@
                     <p class="font-roboto-mono text-sm leading-relaxed opacity-75 m-0">
                         24/02/2026
                     </p>
+                    <span class="font-roboto-mono text-sm leading-relaxed opacity-75">project</span>
+
                     <p class="blog-collab-callout" aria-label="AI collaboration note">
     CO-WRITTEN BY ELI AND CODEX
 </p>
@@ -434,7 +436,7 @@
         muted
         controls
         playsinline
-        
+
     >
         Sorry, your browser does not support the video tag.
     </video>
@@ -453,7 +455,7 @@
         muted
         controls
         playsinline
-        
+
     >
         Sorry, your browser does not support the video tag.
     </video>
@@ -475,7 +477,7 @@
         muted
         controls
         playsinline
-        
+
     >
         Sorry, your browser does not support the video tag.
     </video>
@@ -496,7 +498,7 @@
         alt="Diagram mapping product constraints to architecture decisions in Hapax."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Desires and Decisions</figcaption>
@@ -515,7 +517,7 @@
         alt="System diagram of Hapax showing UI, local SQLite, sync engine, Supabase, edge functions, and export."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Local-first core with optional remote services.</figcaption>
@@ -535,7 +537,7 @@
         alt="Local SQLite data model diagram for entries, tags, entry_tags, and sync_state."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Core local schema.</figcaption>
@@ -565,7 +567,7 @@
         alt="State diagram for access modes supabase, local, and none."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Session and app access are related but separate.</figcaption>
@@ -585,7 +587,7 @@
         alt="Flow diagram showing local mode data migration from null user_id to signed-in user_id."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">How local data becomes syncable account data.</figcaption>
@@ -605,7 +607,7 @@
         alt="Sequence diagram showing push-then-pull sync flow between SQLite and Supabase."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Push first, then reconcile.</figcaption>
@@ -625,7 +627,7 @@
         alt="Timeline diagram showing last-write-wins conflict resolution using updated_at."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Simple conflict rule with clear tradeoffs.</figcaption>
@@ -645,7 +647,7 @@
         alt="Diagram of query cache persistence and cache invalidation during auth and access changes."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Warm cache when stable, reset when identity changes.</figcaption>
@@ -666,7 +668,7 @@
         muted
         controls
         playsinline
-        
+
     >
         Sorry, your browser does not support the video tag.
     </video>
@@ -685,7 +687,7 @@
         muted
         controls
         playsinline
-        
+
     >
         Sorry, your browser does not support the video tag.
     </video>
@@ -703,7 +705,7 @@
         alt="Flow diagram for entry lifecycle from create to edit, tagging, favorite, and soft delete."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Local-first mutation flow.</figcaption>
@@ -723,7 +725,7 @@
         alt="Flow diagram for AI enrichment from local entry to edge function and sync pull back."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">AI as assist, not source of truth.</figcaption>
@@ -743,7 +745,7 @@
         alt="Diagram showing AI suggestions cache hit and cache miss paths based on input hash."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">On-demand suggestions with cache reuse.</figcaption>
@@ -764,7 +766,7 @@
         muted
         controls
         playsinline
-        
+
     >
         Sorry, your browser does not support the video tag.
     </video>
@@ -782,7 +784,7 @@
         alt="Export flow diagram for JSON and CSV output on web and native."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Straightforward local export path.</figcaption>
@@ -800,7 +802,7 @@
         alt="Simple summary diagram of local-first data, sync, and user-controlled features."
         loading="lazy"
         class="w-full h-auto  rounded-xl border border-black/10 dark:border-white/15"
-        
+
     />
 </picture>
             <figcaption class="font-roboto-mono text-sm leading-relaxed mt-3 opacity-80">Small app, clear priorities.</figcaption>
@@ -809,7 +811,7 @@
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Hapax is intentionally simple. The main goal is to make word capture easy, with optional sync and optional AI on top. Altogether, it&#39;s working really well for my use cases. It&#39;s available on TestFlight, but probably won&#39;t make it to the App Store.</p>
                 <p class="font-roboto-mono text-lg leading-relaxed mb-7">Thanks for reading!</p>
             </article>
-            
+
             <script>
     (() => {
         if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
