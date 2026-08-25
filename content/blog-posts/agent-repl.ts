@@ -7,7 +7,7 @@ export const agentReplBuildLogPost: BlogPost = {
     summary:
         "Agents as While Loops: using a tiny terminal REPL to build a simple tool-calling agent.",
     publishedAt: "2026-02-16",
-    published: true,
+    published: false,
     heroImage: "/img/blog/agent-repl-build-log/system-image-light.png",
     heroImageDark: "/img/blog/agent-repl-build-log/system-image-dark.png",
     tags: ["agents", "repl", "typescript"],

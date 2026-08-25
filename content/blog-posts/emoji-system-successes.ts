@@ -6,7 +6,7 @@ export const emojiSystemSuccessesPost: BlogPost = {
     kind: "essay",
     summary: "A system that converts text into emoji-only lines.",
     publishedAt: "2026-03-04",
-    published: true,
+    published: false,
     heroImage: "/img/blog/emoji-system-successes/dickinson-woven.png",
     tags: ["emoji", "llm", "cli", "poetics"],
     blocks: [

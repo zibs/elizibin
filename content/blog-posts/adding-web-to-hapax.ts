@@ -7,7 +7,7 @@ export const addingWebToHapaxPost: BlogPost = {
     summary: "Hapax on my laptop, mostly for free.",
     publishedAt: "2026-03-19",
     updatedAt: "2026-08-18",
-    published: true,
+    published: false,
     heroImage: "/img/blog/hapax-web/dictionary-current.png",
     tags: ["hapax", "expo", "react-native", "web", "sqlite", "cloudflare"],
     blocks: [

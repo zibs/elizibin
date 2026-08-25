@@ -6,7 +6,7 @@ export const nextJsPangramSolverPost: BlogPost = {
     kind: "project",
     summary: "A tiny app for finding pangrams from seven letters and a required center letter.",
     publishedAt: "2026-03-05",
-    published: true,
+    published: false,
     heroImage: "/img/blog/nextjs-pangram-solver/system-flow-light.png",
     heroImageDark: "/img/blog/nextjs-pangram-solver/system-flow-dark.png",
     tags: ["nextjs", "openai", "spelling-bee"],

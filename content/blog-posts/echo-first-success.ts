@@ -6,7 +6,7 @@ export const echoFirstSuccessPost: BlogPost = {
     kind: "essay",
     summary: "Translating a novella from Spanish to English",
     publishedAt: "2026-03-04",
-    published: true,
+    published: false,
     heroImage: "/img/blog/echo-first-success/system-flow-light.png",
     heroImageDark: "/img/blog/echo-first-success/system-flow-dark.png",
     tags: ["echo", "translation", "ocr", "llm"],

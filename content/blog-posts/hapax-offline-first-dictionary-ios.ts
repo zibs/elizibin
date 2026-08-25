@@ -7,7 +7,7 @@ export const hapaxOfflineFirstDictionaryIosPost: BlogPost = {
     summary:
         "A walkthrough of Hapax: an offline-first personal dictionary app.",
     publishedAt: "2026-02-24",
-    published: true,
+    published: false,
     heroImage: "/img/blog/hapax-offline-first-dictionary-ios/system-map-light.png",
     heroImageDark: "/img/blog/hapax-offline-first-dictionary-ios/system-map-dark.png",
     tags: ["ios", "react-native", "offline-first", "sqlite", "supabase"],

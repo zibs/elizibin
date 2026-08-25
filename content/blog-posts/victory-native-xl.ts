@@ -7,7 +7,7 @@ export const victoryNativeXlChartingAndMaintenancePost: BlogPost = {
     summary:
         "Helping out with chart feature work and OSS maintenance in Victory Native XL.",
     publishedAt: "2026-02-20",
-    published: true,
+    published: false,
     githubUrl: "https://github.com/FormidableLabs/victory-native-xl",
     heroImage:
         "/img/blog/victory-native-xl-charting-and-maintenance/chart-architecture-light.png",
