@@ -799,11 +799,7 @@ function renderHomeBlogList(tools: RenderTools, blogEntries: BlogPost[]): string
     });
 
     if (allItems.length === 0) {
-        return html(`
-            <p class="font-roboto-mono text-lg leading-relaxed">
-                Nothing published yet.
-            </p>
-        `);
+        return "";
     }
 
     return html(`
@@ -898,12 +894,18 @@ function renderHomePage(
                     certificate in software development from <i>CodeCore</i>.
                 </p>
             </article>
-            <section class="max-w-3xl mx-auto">
-                <p class="font-roboto-mono text-lg leading-relaxed mb-6">
-                    Writing/OSS/Experiments:
-                </p>
-                ${renderHomeBlogList(tools, blogEntries)}
-            </section>
+            ${
+                blogEntries.length > 0
+                    ? html(`
+                        <section class="max-w-3xl mx-auto">
+                            <p class="font-roboto-mono text-lg leading-relaxed mb-6">
+                                Writing/OSS/Experiments:
+                            </p>
+                            ${renderHomeBlogList(tools, blogEntries)}
+                        </section>
+                    `)
+                    : ""
+            }
         `),
     });
 }
